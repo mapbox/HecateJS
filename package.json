@@ -1,0 +1,39 @@
+{
+  "name": "hecate",
+  "version": "3.1.0",
+  "main": "cli.js",
+  "repository": "git@github.com:mapcommons/HecateJS",
+  "author": "ingalls <ingalls@protonmail.com>",
+  "license": "MIT",
+  "bin": {
+    "hecate": "cli.js"
+  },
+  "devDependencies": {
+    "@mapbox/eslint-config-mapbox": "^1.1.0",
+    "eslint": "^4.19.1",
+    "eslint-plugin-node": "^6.0.1",
+    "tape": "^4.9.0"
+  },
+  "dependencies": {
+    "@mapbox/geojsonhint": "^2.0.1",
+    "@turf/turf": "^5.1.6",
+    "aws-sdk": "^2.224.1",
+    "d3-queue": "^3.0.7",
+    "geojson-validation": "^0.2.0",
+    "minimist": "^1.2.0",
+    "n-readlines": "^1.0.0 ",
+    "node-mb-string-size": "^1.0.3",
+    "prompt": "^1.0.0",
+    "request": "^2.83.0"
+  },
+  "eslintConfig": {
+    "extends": "@mapbox/eslint-config-mapbox"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "test": "tape test/*.test.js && eslint *.js */*.js",
+    "lint": "eslint *.js */*.js"
+  }
+}
