@@ -1,5 +1,5 @@
 {
-  "name": "hecate",
+  "name": "hecatejs",
   "version": "3.1.0",
   "main": "cli.js",
   "repository": "git@github.com:mapcommons/HecateJS",
