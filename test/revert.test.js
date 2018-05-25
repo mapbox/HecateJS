@@ -143,7 +143,6 @@ test('Assert fail when feature to revert is not found', (t) => {
   const oneHistory = [{ 'feat': { 'action': 'create', 'geometry': { 'coordinates': [13, 52], 'type': 'Point' }, 'id': 1, 'properties': { 'address': 'abc' }, 'type': 'Feature' }, 'id': 24, 'uid': 1, 'username': 'sm' }];
 
   const feature = { 'action': 'create', 'geometry': { 'coordinates': [120, 40], 'type': 'Point' }, 'id': 1, 'properties': { 'address': 'abc' }, 'type': 'Feature' };
-  const expectedRevertedFeature = { 'action': 'delete', 'geometry': null, 'id': 1, 'properties': null, 'type': 'Feature', 'version': 1 };
 
   t.throws(() => { revert.revertFeature(oneHistory, feature); }, /Feature to revert was not found in the history list./, 'Feature to revert was not found in the history list');
   t.end();
