@@ -20,6 +20,7 @@ class Hecate {
         this.register = new (require('./lib/register'))(this);
         this.schema = new (require('./lib/schema'))(this);
         this.import = new (require('./lib/import'))(this);
+        this.revert = new(require('./lib/revert'))(this);
     }
 
     static stack(stack, cb) {
@@ -76,6 +77,7 @@ if (require.main === module) {
         console.error('    schema   [--help]    Obtain the JSON schema for a given server');
         console.error('    auth     [--help]    Obtain the JSON Auth document');
         console.error('    query    [--help]    Download data from a given server');
+        console.error('    revert   [--help]    Revert data from an specified delta');
         console.error('');
         console.error('<options>');
         console.error('    --version            Print the current version of the CLI');

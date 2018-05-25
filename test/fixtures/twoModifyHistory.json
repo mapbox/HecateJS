@@ -1,0 +1,2 @@
+{"feat": {"action": "modify","geometry": {"coordinates": [13,52],"type": "Point"},"id": 1,"properties": {"address": "xyz"},"type": "Feature","version": 1},"id": 24,"uid": 1,"username": "sm"} 
+{"feat": {"action": "create","geometry": {"coordinates": [13,52],"type": "Point"},"id": 1,"properties": {"address": "abc"},"type": "Feature"},"id": 24,"uid": 1,"username": "sm"}
