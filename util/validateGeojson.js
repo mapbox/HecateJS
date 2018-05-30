@@ -16,7 +16,7 @@ function validateGeojson(filepath) {
     const corruptedfeatures = [];
 
     let line = true;
-     while (line) {
+    while (line) {
         line = rl.next();
         if (!line) break;
         validateFeature(line.toString('utf8'));

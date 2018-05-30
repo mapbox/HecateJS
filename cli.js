@@ -14,7 +14,7 @@ class Hecate {
         this.port = api.port ? api.port : '8000';
         this.auth_rules = api.auth_rules ? api.auth_rules : null;
 
-        //Instantiate New Library Instances
+        // Instantiate New Library Instances
         this.auth = new (require('./lib/auth'))(this);
         this.query = new (require('./lib/query'))(this);
         this.register = new (require('./lib/register'))(this);
@@ -54,7 +54,7 @@ class Hecate {
 
 module.exports = Hecate;
 
-//Run in CLI mode
+// Run in CLI mode
 if (require.main === module) {
     const argv = require('minimist')(process.argv, {
         boolean: ['help', 'version'],
@@ -91,13 +91,7 @@ if (require.main === module) {
         process.exit(0);
     }
 
-    if (argv.stack) {
-        Hecate.stack(argv.stack, command);
-    } else {
-        command(null, new Hecate());
-    }
-
-    function command(err, hecate) {
+    const command = (err, hecate) => {
         if (err) throw err;
 
         if (!hecate[argv._[2]] || !hecate[argv._[2]].cli) {
@@ -118,7 +112,7 @@ if (require.main === module) {
             type: 'string',
             required: 'true',
             default: hecate.url
-        },{ 
+        },{
             name: 'port',
             message: '8000 for local, 8888 for connect.sh, 80 for --stack ELB',
             type: 'string',
@@ -138,5 +132,13 @@ if (require.main === module) {
                 hecate[argv._[2]].cli(argv);
             });
         });
+    };
+
+
+    if (argv.stack) {
+        Hecate.stack(argv.stack, command);
+    } else {
+        command(null, new Hecate());
     }
+
 }
