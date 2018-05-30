@@ -1,4 +1,4 @@
-const prompt = require('prompt');
+'use strict';
 
 module.exports = (options = {}) => {
     return [{
@@ -14,5 +14,5 @@ module.exports = (options = {}) => {
         replace: '*',
         required: true,
         type: 'string'
-    }]
-}
+    }];
+};

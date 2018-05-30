@@ -132,7 +132,7 @@ const validBboxes = [
 // Assert the errors from invalid bbox inputs
 tape('Assert bbox fails', (t) => {
 
-    invalidBboxes.forEach(test => {
+    invalidBboxes.forEach((test) => {
         const expected = new RegExp(escapeRegExp(test.expectedMsg));
         t.throws(() => validateBbox(test.bboxInput), expected, test.description);
     });
@@ -142,7 +142,7 @@ tape('Assert bbox fails', (t) => {
 // Confirm valid bbox inputs
 tape('Assert valid bbox inputs', (t) => {
 
-    validBboxes.forEach(test => {
+    validBboxes.forEach((test) => {
         t.deepEquals(validateBbox(test.bboxInput), test.expected, test.description);
     });
     t.end();

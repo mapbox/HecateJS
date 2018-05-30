@@ -9,9 +9,9 @@
     "hecate": "cli.js"
   },
   "devDependencies": {
-    "@mapbox/eslint-config-mapbox": "^1.1.0",
+    "@mapbox/eslint-config-geocoding": "^1.0.1",
     "eslint": "^4.19.1",
-    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-node": "5.2.1",
     "tape": "^4.9.0"
   },
   "dependencies": {
@@ -27,13 +27,13 @@
     "request": "^2.83.0"
   },
   "eslintConfig": {
-    "extends": "@mapbox/eslint-config-mapbox"
+    "extends": "@mapbox/eslint-config-geocoding"
   },
   "engines": {
     "node": ">=6"
   },
   "scripts": {
-    "test": "tape test/*.test.js && eslint *.js */*.js",
+    "test": "yarn lint && tape test/*.test.js",
     "lint": "eslint *.js */*.js"
   }
 }
