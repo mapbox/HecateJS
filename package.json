@@ -33,7 +33,7 @@
     "node": ">=6"
   },
   "scripts": {
-    "test": "tape test/*.test.js && eslint *.js */*.js",
+    "test": "yarn lint && tape test/*.test.js",
     "lint": "eslint *.js */*.js"
   }
 }
