@@ -7,7 +7,7 @@ const request = require('request');
  */
 
 function getFeatureHistory(argv, featureId, callback) {
-  if (!featureId) throw new Error('A feature ID is required');
+  if (!featureId) return callback(new Error('A feature ID is required'));
 
   request({
     url: `http://${argv.url}:${argv.port}/api/data/feature/${featureId}/history`,
@@ -15,9 +15,9 @@ function getFeatureHistory(argv, featureId, callback) {
   }, (err, res) => {
     if (err) {
       console.error('ERROR: Could not retrieve the feature history list');
-      throw err;
+      return callback(err);
     }
-    return callback(res);
+    callback(null, res);
   });
 }
 

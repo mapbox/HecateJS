@@ -1,6 +1,0 @@
-{"feat": {"action": "modify","geometry": {"coordinates": [13,52],"type": "Point"},"id": 1,"properties": {"address": "xyz"},"type": "Feature","version": 5},"id": 24,"uid": 1,"username": "sm"} 
-{"feat": {"action": "restore","geometry": {"coordinates": [13,52],"type": "Point"},"id": 1,"properties": {"address": "abc"},"type": "Feature","version": 4},"id": 24,"uid": 1,"username": "sm"} 
-{"feat": {"action": "delete","geometry": null,"id": 1,"properties": null,"type": "Feature","version": 3},"id": 27,"uid": 1,"username": "sm"} 
-{"feat": {"action": "modify","geometry": {"coordinates": [13,52],"type": "Point"},"id": 1,"properties": {"address": "abc"},"type": "Feature","version": 2},"id": 24,"uid": 1,"username": "sm"} 
-{"feat": {"action": "modify","geometry": {"coordinates": [13,52],"type": "Point"},"id": 1,"properties": {"address": "xyz"},"type": "Feature","version": 1},"id": 24,"uid": 1,"username": "sm"} 
-{"feat": {"action": "create","geometry": {"coordinates": [13,52],"type": "Point"},"id": 1,"properties": {"address": "abc"},"type": "Feature"},"id": 24,"uid": 1,"username": "sm"}
