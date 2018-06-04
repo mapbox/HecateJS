@@ -15,7 +15,7 @@ test('Assert revert when action = create in long history list', (t) => {
     const historyList = [
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 5 } },
         { feat: { action: 'restore', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' }, version: 4 } },
-        { feat: { action: 'delete', geometry: null, properties: null, version: 3 } },
+        { feat: { action: 'delete', geometry: null, properties: {}, version: 3 } },
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' }, version: 2 } },
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 1 } },
         { feat: { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } } }
@@ -24,7 +24,7 @@ test('Assert revert when action = create in long history list', (t) => {
     const currentFeature = historyList[0].feat;
     const feature = historyList[5].feat;
     const revertToFeature = historyList[5].feat;
-    const expectedRevertedFeature = { action: 'delete', geometry: null, properties: null, version: 6 };
+    const expectedRevertedFeature = { action: 'delete', geometry: null, properties: {}, version: 6 };
 
     revert.revertFeature(currentFeature, feature, revertToFeature, (err, revertedFeature) => {
         t.deepEquals(revertedFeature, expectedRevertedFeature, 'feature to delete is the right one');
@@ -37,7 +37,7 @@ test('Assert revert when action = delete in long history list', (t) => {
     const historyList = [
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 5 } },
         { feat: { action: 'restore', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' }, version: 4 } },
-        { feat: { action: 'delete', geometry: null, properties: null, version: 3 } },
+        { feat: { action: 'delete', geometry: null, properties: {}, version: 3 } },
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' }, version: 2 } },
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 1 } },
         { feat: { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } } }
@@ -58,7 +58,7 @@ test('Assert revert when action = modify in long history list', (t) => {
     const historyList = [
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 5 } },
         { feat: { action: 'restore', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' }, version: 4 } },
-        { feat: { action: 'delete', geometry: null, properties: null, version: 3 } },
+        { feat: { action: 'delete', geometry: null, properties: {}, version: 3 } },
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' }, version: 2 } },
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 1 } },
         { feat: { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } } }
@@ -80,7 +80,7 @@ test('Assert revert when action = restore in long history list', (t) => {
     const historyList = [
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 5 } },
         { feat: { action: 'restore', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' }, version: 4 } },
-        { feat: { action: 'delete', geometry: null, properties: null, version: 3 } },
+        { feat: { action: 'delete', geometry: null, properties: {}, version: 3 } },
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' }, version: 2 } },
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 1 } },
         { feat: { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } } }
@@ -89,7 +89,7 @@ test('Assert revert when action = restore in long history list', (t) => {
     const currentFeature = historyList[0].feat;
     const feature = historyList[1].feat;
     const revertToFeature = historyList[2].feat;
-    const expectedRevertedFeature = { action: 'delete', geometry: null, properties: null, version: 6 };
+    const expectedRevertedFeature = { action: 'delete', geometry: null, properties: {}, version: 6 };
 
     revert.revertFeature(currentFeature, feature, revertToFeature, (err, revertedFeature) => {
         t.deepEquals(revertedFeature, expectedRevertedFeature, 'feature to delete is the right one');
@@ -108,22 +108,22 @@ test('Assert getting feature to revert to when history list is long', (t) => {
     const historyList = [
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 5 } },
         { feat: { action: 'restore', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' }, version: 4 } },
-        { feat: { action: 'delete', geometry: null, properties: null, version: 3 } },
+        { feat: { action: 'delete', geometry: null, properties: {}, version: 3 } },
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' }, version: 2 } },
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 1 } },
         { feat: { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } } }
     ];
     revert.getRevertToFeature(historyList, { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } }, (err, revertToFeature) => {
-        t.deepEquals(revertToFeature, { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } }, 'feature is the same first created one');
+        t.deepEquals(revertToFeature, { action: 'create', geometry: null, properties: {} }, 'feature is the same first created one');
     });
     revert.getRevertToFeature(historyList, { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 1 }, (err, revertToFeature) => {
         t.deepEquals(revertToFeature, { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } }, 'feature is previous to modified');
     });
-    revert.getRevertToFeature(historyList, { action: 'delete', geometry: null, properties: null, version: 3 }, (err, revertToFeature) => {
+    revert.getRevertToFeature(historyList, { action: 'delete', geometry: null, properties: {}, version: 3 }, (err, revertToFeature) => {
         t.deepEquals(revertToFeature, { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' }, version: 2 }, 'feature is previous to deleted');
     });
     revert.getRevertToFeature(historyList, { action: 'restore', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' }, version: 4 }, (err, revertToFeature) => {
-        t.deepEquals(revertToFeature, { action: 'delete', geometry: null, properties: null, version: 3 }, 'feature is previous to restored');
+        t.deepEquals(revertToFeature, { action: 'delete', geometry: null, properties: {}, version: 3 }, 'feature is previous to restored');
     });
     revert.getRevertToFeature(historyList, { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 5 }, (err, revertToFeature) => {
         t.deepEquals(revertToFeature, { action: 'restore', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' }, version: 4 }, 'feature is previous to restored');
@@ -134,17 +134,17 @@ test('Assert getting feature to revert to when history list is long', (t) => {
 
 test('Assert getting feature to revert to when history list size is 3', (t) => {
     const historyList = [
-        { feat: { action: 'delete', geometry: null, properties: null, version: 2 } },
+        { feat: { action: 'delete', geometry: null, properties: {}, version: 2 } },
         { feat: { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 1 } },
         { feat: { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } } }
     ];
     revert.getRevertToFeature(historyList, { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } }, (err, revertToFeature) => {
-        t.deepEquals(revertToFeature, { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } }, 'feature is the same first created one');
+        t.deepEquals(revertToFeature, { action: 'create', geometry: null, properties: {} }, 'feature is the same first created one');
     });
     revert.getRevertToFeature(historyList, { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 1 }, (err, revertToFeature) => {
         t.deepEquals(revertToFeature, { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } }, 'feature is previous to modified');
     });
-    revert.getRevertToFeature(historyList, { action: 'delete', geometry: null, properties: null, version: 2 }, (err, revertToFeature) => {
+    revert.getRevertToFeature(historyList, { action: 'delete', geometry: null, properties: {}, version: 2 }, (err, revertToFeature) => {
         t.deepEquals(revertToFeature, { action: 'modify', geometry: { coordinates: [13, 52] }, properties: { address: 'xyz' }, version: 1 }, 'feature is previous to deleted');
     });
     t.end();
@@ -152,13 +152,13 @@ test('Assert getting feature to revert to when history list size is 3', (t) => {
 
 test('Assert getting feature to revert to when history list size is 2', (t) => {
     const historyList = [
-        { feat: { action: 'delete', geometry: null, properties: null, version: 1 } },
+        { feat: { action: 'delete', geometry: null, properties: {}, version: 1 } },
         { feat: { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } } }
     ];
     revert.getRevertToFeature(historyList, { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } }, (err, revertToFeature) => {
-        t.deepEquals(revertToFeature, { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } }, 'feature is the same first created one');
+        t.deepEquals(revertToFeature, { action: 'create', geometry: null, properties: {} }, 'feature is the same first created one');
     });
-    revert.getRevertToFeature(historyList, { action: 'delete', geometry: null, properties: null, version: 1 }, (err, revertToFeature) => {
+    revert.getRevertToFeature(historyList, { action: 'delete', geometry: null, properties: {}, version: 1 }, (err, revertToFeature) => {
         t.deepEquals(revertToFeature, { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } }, 'feature is previous to deleted');
     });
     t.end();
@@ -169,7 +169,7 @@ test('Assert getting feature to revert to when history list size is 1', (t) => {
         { feat: { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } } }
     ];
     revert.getRevertToFeature(historyList, { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } }, (err, revertToFeature) => {
-        t.deepEquals(revertToFeature, { action: 'create', geometry: { coordinates: [13, 52] }, properties: { address: 'abc' } }, 'feature is the same first created one');
+        t.deepEquals(revertToFeature, { action: 'create', geometry: null, properties: {} }, 'feature is the same first created one');
     });
     t.end();
 });
@@ -194,10 +194,10 @@ test('Evaluate if feature has changed', (t) => {
 
 // revert()
 test('Assert fails due to missing parameter to revert delta', (t) => {
-    revert.revert({ port: '7777', username: 'user', password: 'psw', deltaId: 7 }, (err) => { t.deepEquals(err.message, 'url is required', 'url is required'); });
-    revert.revert({ url: 'url', username: 'user', password: 'psw', deltaId: 7 }, (err) => { t.deepEquals(err.message, 'port is required', 'port is required'); });
-    revert.revert({ url: 'url', port: '7777', password: 'psw', deltaId: 7 }, (err) => { t.deepEquals(err.message, 'username is required', 'username is required'); });
-    revert.revert({ url: 'url', port: '7777', username: 'user', deltaId: 7 }, (err) => { t.deepEquals(err.message, 'password is required', 'password is required'); });
-    revert.revert({ url: 'url', port: '7777', username: 'user', password: 'psw' }, (err) => { t.deepEquals(err.message, 'deltaId is required', 'deltaId is required'); });
+    revert.main({ port: '7777', username: 'user', password: 'psw', deltaId: 7 }, (err) => { t.deepEquals(err.message, 'url is required', 'url is required'); });
+    revert.main({ url: 'url', username: 'user', password: 'psw', deltaId: 7 }, (err) => { t.deepEquals(err.message, 'port is required', 'port is required'); });
+    revert.main({ url: 'url', port: '7777', password: 'psw', deltaId: 7 }, (err) => { t.deepEquals(err.message, 'username is required', 'username is required'); });
+    revert.main({ url: 'url', port: '7777', username: 'user', deltaId: 7 }, (err) => { t.deepEquals(err.message, 'password is required', 'password is required'); });
+    revert.main({ url: 'url', port: '7777', username: 'user', password: 'psw' }, (err) => { t.deepEquals(err.message, 'deltaId is required', 'deltaId is required'); });
     t.end();
 });
