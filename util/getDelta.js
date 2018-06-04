@@ -7,20 +7,20 @@ const request = require('request');
  */
 
 function getDelta(argv, callback) {
-  if (!argv.url) return callback(new Error('URL is required'));
-  if (!argv.port) return callback(new Error('A port is required'));
-  if (!argv.deltaId) return callback(new Error('A deltaId is required'));
+    if (!argv.url) return callback(new Error('URL is required'));
+    if (!argv.port) return callback(new Error('A port is required'));
+    if (!argv.deltaId) return callback(new Error('A deltaId is required'));
 
-  request({
-    url: `http://${argv.url}:${argv.port}/api/delta/${argv.deltaId}`,
-    json: true
-  }, (err, res) => {
-    if (err) {
-      console.error('ERROR: Could not retrieve the delta');
-      return callback(err);
-    }
-    callback(null, res);
-  });
+    request({
+        url: `http://${argv.url}:${argv.port}/api/delta/${argv.deltaId}`,
+        json: true
+    }, (err, res) => {
+        if (err) {
+            console.error('ERROR: Could not retrieve the delta');
+            return callback(err);
+        }
+        callback(null, res);
+    });
 }
 
 module.exports = getDelta;
