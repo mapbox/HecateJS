@@ -27,7 +27,6 @@ function validateGeojson(filepath) {
         linenumber++;
         let errors = [];
 
-
         const geojsonErrs = geojsonhint(feature);
         if (geojsonErrs.length) {
             errors = errors.concat(geojsonErrs);
