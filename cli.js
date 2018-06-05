@@ -15,12 +15,12 @@ class Hecate {
         this.auth_rules = api.auth_rules ? api.auth_rules : null;
 
         // Instantiate New Library Instances
-        this.auth = new(require('./lib/auth'))(this);
-        this.query = new(require('./lib/query'))(this);
-        this.register = new(require('./lib/register'))(this);
-        this.schema = new(require('./lib/schema'))(this);
-        this.import = new(require('./lib/import'))(this);
-        this.revert = new(require('./lib/revert'))(this);
+        this.auth = new (require('./lib/auth'))(this);
+        this.query = new (require('./lib/query'))(this);
+        this.register = new (require('./lib/register'))(this);
+        this.schema = new (require('./lib/schema'))(this);
+        this.import = new (require('./lib/import'))(this);
+        this.revert = new (require('./lib/revert'))(this);
     }
 
     static stack(stack, cb) {
