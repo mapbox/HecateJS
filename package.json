@@ -25,7 +25,8 @@
     "nock": "^9.3.0",
     "node-mb-string-size": "^1.0.3",
     "prompt": "^1.0.0",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "requestretry": "^1.13.0"
   },
   "eslintConfig": {
     "extends": "@mapbox/eslint-config-geocoding"
