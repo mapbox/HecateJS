@@ -6,7 +6,7 @@
   "author": "ingalls <ingalls@protonmail.com>",
   "license": "MIT",
   "bin": {
-    "hecate": "cli.js"
+    "hecatecli": "cli.js"
   },
   "devDependencies": {
     "@mapbox/eslint-config-geocoding": "^1.0.1",
