@@ -1,6 +1,6 @@
 <h1 align='center'>HecateJS</h1>
 
-<p align='center'>Javascript Library for [Hecate](https://github.com/mapbox/Hecate), the persistent, mutable data store focused on GeoJSON first interchange</p>
+<p align='center'>Javascript Library for <a href='https://github.com/mapbox/Hecate'>Hecate</a>, the persistent, mutable data store focused on GeoJSON first interchange</p>
 
 # General Usage
 
