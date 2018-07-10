@@ -21,8 +21,8 @@ class Hecate {
             register: new (require('./lib/register'))(this),
             schema: new (require('./lib/schema'))(this),
             import: new (require('./lib/import'))(this),
-            revert: new (require('./lib/revert'))(this),
-        }
+            revert: new (require('./lib/revert'))(this)
+        };
 
         this.auth = (...opts) => this._.auth.main(...opts);
         this.query = (...opts) => this._.query.main(...opts);
