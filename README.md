@@ -2,9 +2,7 @@
 
 <p align='center'>Javascript Library and CLI for <a href='https://github.com/mapbox/Hecate'>Hecate</a>, the persistent, mutable data store focused on GeoJSON first interchange</p>
 
-# General Usage
-
-## NodeJS Library
+## General Usage
 
 ### Installation
 
