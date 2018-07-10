@@ -95,7 +95,7 @@ const hecate = new Hecate({
     port: 8000
 });
 
-hecate.auth(null, (err, res) => {
+hecate.auth({}, (err, res) => {
     if (err) throw err;
 });
 ```
@@ -126,7 +126,7 @@ const hecate = new Hecate({
     port: 8000
 });
 
-hecate.schema(null, (err, res) => {
+hecate.schema({}, (err, res) => {
     if (err) throw err;
 });
 ```
@@ -142,7 +142,5 @@ hecate.schema(null, (err, res) => {
 To Be Written
 
 ### Generate Reversion Deltas
-
-To Be Written
 
 To Be Written
