@@ -66,11 +66,42 @@ const hecate = new Hecate({
     port: 8000
 });
 
-hecate.register
+hecate.register({
+    username: 'ingalls',
+    password: 'yeaheh',
+    email: 'ingalls@protonmail.com'
+}, (err, res) => {
+    if (err) throw err;
+});
 ```
 
 **CLI**
 
 ```sh
 ./cli.js register
+```
+
+### List Server Custom Authentication
+
+See the [custom authentication](https://github.com/mapbox/Hecate#custom-authentication) section of the Hecate readme for more info
+
+**JS Library**
+
+```js
+const Hecate = require('@mapbox/hecatejs');
+
+const hecate = new Hecate({
+    url: 'example.com/hecate',
+    port: 8000
+});
+
+hecate.auth(null, (err, res) => {
+    if (err) throw err;
+});
+```
+
+**CLI**
+
+```sh
+./cli.js auth
 ```

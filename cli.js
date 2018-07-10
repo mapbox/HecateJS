@@ -15,12 +15,21 @@ class Hecate {
         this.auth_rules = api.auth_rules ? api.auth_rules : null;
 
         // Instantiate New Library Instances
-        this.auth = new (require('./lib/auth'))(this);
-        this.query = new (require('./lib/query'))(this);
-        this.register = new (require('./lib/register'))(this);
-        this.schema = new (require('./lib/schema'))(this);
-        this.import = new (require('./lib/import'))(this);
-        this.revert = new (require('./lib/revert'))(this);
+        this._ = {
+            auth: new (require('./lib/auth'))(this),
+            query: new (require('./lib/query'))(this),
+            register: new (require('./lib/register'))(this),
+            schema: new (require('./lib/schema'))(this),
+            import: new (require('./lib/import'))(this),
+            revert: new (require('./lib/revert'))(this),
+        }
+
+        this.auth = (...opts) => this._.auth.main(...opts);
+        this.query = (...opts) => this._.query.main(...opts);
+        this.register = (...opts) => this._.register.main(...opts);
+        this.schema = (...opts) => this._.schema.main(...opts);
+        this.import = (...opts) => this._.import.main(...opts);
+        this.revert = (...opts) => this._.revert.main(...opts);
     }
 
     static stack(stack, cb) {
@@ -96,7 +105,7 @@ if (require.main === module) {
     const command = (err, hecate) => {
         if (err) throw err;
 
-        if (!hecate[argv._[2]] || !hecate[argv._[2]].cli) {
+        if (!hecate._[argv._[2]] || !hecate._[argv._[2]].cli) {
             console.error();
             console.error('subcommand not found! Run with no args for help');
             console.error();
@@ -126,12 +135,12 @@ if (require.main === module) {
             hecate.url = res.url;
             hecate.port = res.port;
 
-            hecate.auth.main(hecate, (err, auth_rules) => {
+            hecate.auth(null, (err, auth_rules) => {
                 if (err) throw err;
 
                 hecate.auth_rules = auth_rules;
 
-                hecate[argv._[2]].cli(argv);
+                hecate._[argv._[2]].cli(argv);
             });
         });
     };
