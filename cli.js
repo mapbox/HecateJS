@@ -135,7 +135,7 @@ if (require.main === module) {
             hecate.url = res.url;
             hecate.port = res.port;
 
-            hecate.auth(null, (err, auth_rules) => {
+            hecate.auth({}, (err, auth_rules) => {
                 if (err) throw err;
 
                 hecate.auth_rules = auth_rules;
