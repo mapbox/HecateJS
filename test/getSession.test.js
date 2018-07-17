@@ -21,7 +21,6 @@ test('Assert obtaining session info', (t) => {
 
     getSession(options, (err, res) => {
         t.equal(res.body, 'response is as expected', 'response is as expected');
-        nock.restore();
         t.end();
     });
 });
