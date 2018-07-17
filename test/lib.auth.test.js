@@ -13,7 +13,7 @@ test('Assert obtaining delta according to ID', (t) => {
         });
 
     const hecate = new Hecate({
-        host: 'localhost',
+        url: 'localhost',
         port: '7777'
     });
 

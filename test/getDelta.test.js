@@ -15,9 +15,12 @@ test('Assert obtaining delta according to ID', (t) => {
     nock('http://localhost:7777')
         .get('/api/delta/1')
         .reply(200, 'response is as expected');
-    const argv = { url: 'localhost', port: '7777', deltaId: 1 };
 
-    getDelta(argv, (err, res) => {
+    getDelta({
+        url: 'localhost',
+        port: '7777',
+        deltaId: 1
+    }, (err, res) => {
         t.equal(res.body, 'response is as expected', 'response is as expected');
         t.end();
     });
