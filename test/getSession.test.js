@@ -24,3 +24,8 @@ test('Assert obtaining session info', (t) => {
         t.end();
     });
 });
+
+test('Restore Nock', (t) => {
+    nock.cleanAll();
+    t.end();
+});

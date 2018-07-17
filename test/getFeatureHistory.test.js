@@ -22,3 +22,8 @@ test('Assert getting a feature history list', (t) => {
         t.end();
     });
 });
+
+test('Restore Nock', (t) => {
+    nock.cleanAll();
+    t.end();
+});

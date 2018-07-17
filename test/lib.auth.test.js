@@ -24,3 +24,8 @@ test('Assert obtaining delta according to ID', (t) => {
         t.end();
     });
 });
+
+test('Restore Nock', (t) => {
+    nock.cleanAll();
+    t.end();
+});
