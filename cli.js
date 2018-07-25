@@ -100,6 +100,10 @@ if (require.main === module) {
         console.error('');
         console.error('usage: cli.js <command> [--version] [--help] [--stack <STACK NAME>]');
         console.error('');
+        console.error('note: the --script flag can be applied to any mode to disable prompts');
+        console.error('      when used the user is responsible for making sure they have all the');
+        console.error('      correct flags');
+        console.error('');
         console.error('<command>');
         console.error('    help                 Displays this message');
         console.error('    register [--help]    Register a new user account with the server');
