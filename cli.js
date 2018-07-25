@@ -19,7 +19,7 @@ class Hecate {
             this.auth = {
                 username: api.username ? api.username : process.env.HECATE_USERNAME,
                 password: api.password ? api.password : process.env.HECATE_PASSWORD
-            }
+            };
         }
 
         this.auth_rules = api.auth_rules ? api.auth_rules : null;
