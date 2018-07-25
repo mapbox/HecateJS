@@ -20,12 +20,17 @@ yarn global add `@mapbox/hecatejs'
 
 ### Instantiation
 
+Note: if the username & password is not explicitly set, Hecate will fallback to checking for
+a `HECATE_USERNAME` & `HECATE_PASSWORD` environment variable.
+
 **JS Library**
 
 ```js
 const Hecate = require('@mapbox/hecatejs');
 
 const hecate = new Hecate({
+    username: 'ingalls',
+    password: 'yeaheh',
     url: 'example.com/hecate',
     port: 8000
 });
