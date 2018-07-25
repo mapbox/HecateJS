@@ -89,7 +89,7 @@ if (require.main === module) {
         return Hecate.stack(argv.stack, (err, res) => {
             if (err) throw err;
 
-            console.log(res);
+            console.log(res.url);
         });
     }
 
