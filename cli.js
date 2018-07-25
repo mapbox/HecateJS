@@ -85,6 +85,14 @@ if (require.main === module) {
         }
     });
 
+    if (!argv._[2] && argv.stack) {
+        return Hecate.stack(argv.stack, (err, res) => {
+            if (err) throw err;
+
+            console.log(res);
+        });
+    }
+
     if (!argv._[2] || (!argv._[2] && argv.help)) {
         console.error('');
         console.error('usage: cli.js <command> [--version] [--help] [--stack <STACK NAME>]');
