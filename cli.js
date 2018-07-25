@@ -27,7 +27,8 @@ class Hecate {
         // Instantiate New Library Instances
         this._ = {
             auth: new (require('./lib/auth'))(this),
-            query: new (require('./lib/query'))(this),
+            bbox: new (require('./lib/bbox'))(this),
+            bounds: new (require('./lib/bounds'))(this),
             register: new (require('./lib/register'))(this),
             schema: new (require('./lib/schema'))(this),
             import: new (require('./lib/import'))(this),
@@ -35,7 +36,9 @@ class Hecate {
         };
 
         this.auth = (...opts) => this._.auth.main(...opts);
-        this.query = (...opts) => this._.query.main(...opts);
+        this.bbox = (...opts) => this._.bbox.main(...opts);
+        this.listBounds = (...opts) => this._.list.main(...opts);
+        this.getBound = (...opts) => this._.get.main(...opts);
         this.register = (...opts) => this._.register.main(...opts);
         this.schema = (...opts) => this._.schema.main(...opts);
         this.import = (...opts) => this._.import.main(...opts);
@@ -103,7 +106,7 @@ if (require.main === module) {
         console.error('    import   [--help]    Import data into the server');
         console.error('    schema   [--help]    Obtain the JSON schema for a given server');
         console.error('    auth     [--help]    Obtain the JSON Auth document');
-        console.error('    query    [--help]    Download data from a given server');
+        console.error('    bbox     [--help]    Download data via bbox from a given server');
         console.error('    revert   [--help]    Revert data from an specified delta');
         console.error('');
         console.error('<options>');
@@ -162,7 +165,6 @@ if (require.main === module) {
             });
         });
     };
-
 
     if (argv.stack) {
         Hecate.stack(argv.stack, command);
