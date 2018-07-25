@@ -136,7 +136,9 @@ if (require.main === module) {
         }
 
         prompt.message = '$';
-        prompt.start();
+        prompt.start({
+            stdout: process.stderr
+        });
 
         prompt.get([{
             name: 'url',
