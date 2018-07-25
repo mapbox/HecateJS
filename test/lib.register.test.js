@@ -16,7 +16,7 @@ test('lib.register.test.js', (t) => {
     });
 
     t.test('lib.register.test.js - missing username', (q) => {
-        hecate.register(null, (err, res) => {
+        hecate.register(null, (err) => {
             q.equals(err.message, 'options.username required');
             q.end();
         });
@@ -24,8 +24,8 @@ test('lib.register.test.js', (t) => {
 
     t.test('lib.register.test.js - missing password', (q) => {
         hecate.register({
-            username: 'ingalls'    
-        }, (err, res) => {
+            username: 'ingalls'
+        }, (err) => {
             q.equals(err.message, 'options.password required');
             q.end();
         });
@@ -35,7 +35,7 @@ test('lib.register.test.js', (t) => {
         hecate.register({
             username: 'ingalls',
             password: 'yeaheh'
-        }, (err, res) => {
+        }, (err) => {
             q.equals(err.message, 'options.email required');
             q.end();
         });
@@ -48,6 +48,7 @@ test('lib.register.test.js', (t) => {
             email: 'nick@mapbox.com'
         }, (err, res) => {
             q.error(err, 'no errors');
+            q.equals(res, true);
             q.end();
         });
     });

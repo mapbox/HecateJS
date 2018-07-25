@@ -38,7 +38,7 @@ class Hecate {
         this.auth = (...opts) => this._.auth.main(...opts);
         this.bbox = (...opts) => this._.bbox.main(...opts);
         this.listBounds = (...opts) => this._.list.main(...opts);
-        this.getBound = (...opts) => this._.get.main(...opts);
+        this.getBound = (...opts) => this._.main.main(...opts);
         this.register = (...opts) => this._.register.main(...opts);
         this.schema = (...opts) => this._.schema.main(...opts);
         this.import = (...opts) => this._.import.main(...opts);
