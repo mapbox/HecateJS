@@ -13,10 +13,10 @@ class Hecate {
         this.url = api.url ? api.url : 'localhost';
         this.port = api.port ? api.port : '8000';
 
-        this.auth = false;
+        this.user = false;
 
-        if ( (api.username || process.env.HECATE_USERNAME) && (api.password || process.env.HECATE_PASSWORD)) {
-            this.auth = {
+        if ((api.username || process.env.HECATE_USERNAME) && (api.password || process.env.HECATE_PASSWORD)) {
+            this.user = {
                 username: api.username ? api.username : process.env.HECATE_USERNAME,
                 password: api.password ? api.password : process.env.HECATE_PASSWORD
             };
