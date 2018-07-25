@@ -12,6 +12,16 @@ class Hecate {
     constructor(api = {}) {
         this.url = api.url ? api.url : 'localhost';
         this.port = api.port ? api.port : '8000';
+
+        this.auth = false;
+
+        if ( (api.username || process.env.HECATE_USERNAME) && (api.password || process.env.HECATE_PASSWORD)) {
+            this.auth = {
+                username: api.username ? api.username : process.env.HECATE_USERNAME,
+                password: api.password ? api.password : process.env.HECATE_PASSWORD
+            }
+        }
+
         this.auth_rules = api.auth_rules ? api.auth_rules : null;
 
         // Instantiate New Library Instances
