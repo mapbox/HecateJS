@@ -5,7 +5,7 @@ const Hecate = require('../cli.js');
 const test = require('tape').test;
 const nock = require('nock');
 
-test('Assert obtaining delta according to ID', (t) => {
+test('lib.auth.test.js', (t) => {
     nock('http://localhost:7777')
         .get('/api/auth')
         .reply(200, {
@@ -25,7 +25,7 @@ test('Assert obtaining delta according to ID', (t) => {
     });
 });
 
-test('Restore Nock', (t) => {
+test('lib.auth.test.js - Restore Nock', (t) => {
     nock.cleanAll();
     t.end();
 });
