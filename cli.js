@@ -139,29 +139,37 @@ if (require.main === module) {
             return hecate[argv._[2]].help();
         }
 
-        prompt.message = '$';
-        prompt.start({
-            stdout: process.stderr
-        });
+        if (!argv.script) {
+            prompt.message = '$';
+            prompt.start({
+                stdout: process.stderr
+            });
 
-        prompt.get([{
-            name: 'url',
-            message: 'URL to hecate instance',
-            type: 'string',
-            required: 'true',
-            default: hecate.url
-        }, {
-            name: 'port',
-            message: '8000 for local, 8888 for connect.sh, 80 for --stack ELB',
-            type: 'string',
-            required: 'true',
-            default: hecate.port
-        }], (err, res) => {
-            if (err) throw err;
+            prompt.get([{
+                name: 'url',
+                message: 'URL to hecate instance',
+                type: 'string',
+                required: 'true',
+                default: hecate.url
+            }, {
+                name: 'port',
+                message: '8000 for local, 8888 for connect.sh, 80 for --stack ELB',
+                type: 'string',
+                required: 'true',
+                default: hecate.port
+            }], (err, res) => {
+                if (err) throw err;
 
-            hecate.url = res.url;
-            hecate.port = res.port;
+                hecate.url = res.url;
+                hecate.port = res.port;
 
+                return run();
+            });
+        } else {
+            return run();
+        }
+
+        function run() {
             hecate.auth({}, (err, auth_rules) => {
                 if (err) throw err;
 
@@ -169,7 +177,7 @@ if (require.main === module) {
 
                 hecate._[argv._[2]].cli(argv);
             });
-        });
+        }
     };
 
     if (argv.stack) {
