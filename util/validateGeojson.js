@@ -4,6 +4,7 @@ const geojsonhint = require('@mapbox/geojsonhint').hint;
 const readLineSync = require('n-readlines');
 const path = require('path');
 const turf = require('@turf/turf');
+const rewind = require('geojson-rewind');
 
 function validateGeojson(filepath) {
     // Read each feature
@@ -23,7 +24,7 @@ function validateGeojson(filepath) {
     }
     // Validate each feature
     function validateFeature(line) {
-        const feature = JSON.parse(line);
+        const feature = rewind(JSON.parse(line));
         linenumber++;
         let errors = [];
 

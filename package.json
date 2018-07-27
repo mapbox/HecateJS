@@ -21,6 +21,7 @@
     "@turf/turf": "^5.1.6",
     "aws-sdk": "^2.224.1",
     "d3-queue": "^3.0.7",
+    "geojson-rewind": "^0.3.1",
     "geojson-validation": "^0.2.0",
     "minimist": "^1.2.0",
     "n-readlines": "^1.0.0 ",
