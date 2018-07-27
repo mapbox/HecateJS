@@ -183,7 +183,7 @@ if (require.main === module) {
     if (argv.stack) {
         Hecate.stack(argv.stack, command);
     } else {
-        command(null, new Hecate());
+        command(null, new Hecate(argv));
     }
 
 }
