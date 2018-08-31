@@ -38,7 +38,7 @@ class Hecate {
 
         //Add Helper Functions
         this.auth = (...opts) => this._.auth.get(...opts);
-        this.bbox = (...opts) => this._.bbox.main(...opts);
+        this.bbox = (...opts) => this._.bbox.get(...opts);
         this.listBounds = (...opts) => this._.bounds.list(...opts);
         this.getBound = (...opts) => this._.bounds.main(...opts);
         this.register = (...opts) => this._.register.main(...opts);
