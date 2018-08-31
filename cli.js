@@ -41,7 +41,7 @@ class Hecate {
         this.bbox = (...opts) => this._.bbox.get(...opts);
         this.listBounds = (...opts) => this._.bounds.list(...opts);
         this.getBound = (...opts) => this._.bounds.get(...opts);
-        this.reister = (...opts) => this._.user.register(...opts);
+        this.register = (...opts) => this._.user.register(...opts);
         this.schema = (...opts) => this._.schema.main(...opts);
         this.import = (...opts) => this._.import.import(...opts);
         this.revert = (...opts) => this._.revert.main(...opts);
@@ -134,7 +134,7 @@ if (require.main === module) {
         if (err) throw err;
 
         if (
-            (argv._[2] && argv._[3] && !hecate._[argv._[2]] || !hecate._[argv._[2]][argv._[3]])
+            (argv._[2] && argv._[3] && (!hecate._[argv._[2]] || !hecate._[argv._[2]][argv._[3]]))
             || (argv._[2] && !argv._[3] && !hecate[argv._[2]])
         ) {
             console.error();

@@ -5,13 +5,13 @@ const test = require('tape');
 
 test('util/getAuth', (t) => {
     t.deepEquals(getAuth(), [{
-        name: 'username',
+        name: 'hecate_username',
         message: 'Your Slack/Github Username',
         type: 'string',
         required: true,
         default: undefined
     },{
-        name: 'password',
+        name: 'hecate_password',
         message: 'secure password to be used at login',
         hidden: true,
         replace: '*',
@@ -23,13 +23,13 @@ test('util/getAuth', (t) => {
     t.deepEquals(getAuth({
         username: 'ingalls' 
     }), [{
-        name: 'username',
+        name: 'hecate_username',
         message: 'Your Slack/Github Username',
         type: 'string',
         required: true,
         default: 'ingalls'
     },{
-        name: 'password',
+        name: 'hecate_password',
         message: 'secure password to be used at login',
         hidden: true,
         replace: '*',
@@ -41,13 +41,13 @@ test('util/getAuth', (t) => {
     t.deepEquals(getAuth({
         password: 'yeaheh' 
     }), [{
-        name: 'username',
+        name: 'hecate_username',
         message: 'Your Slack/Github Username',
         type: 'string',
         required: true,
         default: undefined
     },{
-        name: 'password',
+        name: 'hecate_password',
         message: 'secure password to be used at login',
         hidden: true,
         replace: '*',
@@ -60,13 +60,13 @@ test('util/getAuth', (t) => {
         username: 'ingalls',
         password: 'yeaheh' 
     }), [{
-        name: 'username',
+        name: 'hecate_username',
         message: 'Your Slack/Github Username',
         type: 'string',
         required: true,
         default: 'ingalls'
     },{
-        name: 'password',
+        name: 'hecate_password',
         message: 'secure password to be used at login',
         hidden: true,
         replace: '*',
