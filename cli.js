@@ -29,6 +29,7 @@ class Hecate {
             auth: new (require('./lib/auth'))(this),
             bbox: new (require('./lib/bbox'))(this),
             bounds: new (require('./lib/bounds'))(this),
+            feature: new (require('./lib/feature'))(this),
             register: new (require('./lib/register'))(this),
             schema: new (require('./lib/schema'))(this),
             import: new (require('./lib/import'))(this),
