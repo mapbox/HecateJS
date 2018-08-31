@@ -42,9 +42,9 @@ class Hecate {
         this.listBounds = (...opts) => this._.bounds.list(...opts);
         this.getBound = (...opts) => this._.bounds.get(...opts);
         this.register = (...opts) => this._.user.register(...opts);
-        this.schema = (...opts) => this._.schema.main(...opts);
+        this.schema = (...opts) => this._.schema.get(...opts);
         this.import = (...opts) => this._.import.import(...opts);
-        this.revert = (...opts) => this._.revert.main(...opts);
+        this.revert = (...opts) => this._.revert.revert(...opts);
     }
 
     static stack(stack, cb) {
