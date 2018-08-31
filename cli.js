@@ -28,6 +28,7 @@ class Hecate {
         this._ = {
             auth: new (require('./lib/auth'))(this),
             bbox: new (require('./lib/bbox'))(this),
+            clone: new (require('./lib/clone'))(this),
             bounds: new (require('./lib/bounds'))(this),
             feature: new (require('./lib/feature'))(this),
             user: new (require('./lib/user'))(this),
@@ -38,6 +39,7 @@ class Hecate {
 
         //Add Helper Functions
         this.auth = (...opts) => this._.auth.get(...opts);
+        this.clone = (...opts) => this._.clone.get(...opts);
         this.bbox = (...opts) => this._.bbox.get(...opts);
         this.listBounds = (...opts) => this._.bounds.list(...opts);
         this.getBound = (...opts) => this._.bounds.get(...opts);
@@ -114,6 +116,7 @@ if (require.main === module) {
         console.error('    schema   [--help]    Obtain the JSON schema for a given server');
         console.error('    auth     [--help]    Obtain the JSON Auth document');
         console.error('    bbox     [--help]    Download data via bbox from a given server');
+        console.error('    clone    [--help]    Download the complete server dataset');
         console.error('    revert   [--help]    Revert data from an specified delta');
         console.error('');
         console.error('<options>');
