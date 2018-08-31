@@ -33,6 +33,7 @@ class Hecate {
             feature: new (require('./lib/feature'))(this),
             user: new (require('./lib/user'))(this),
             schema: new (require('./lib/schema'))(this),
+            server: new (require('./lib/server'))(this),
             import: new (require('./lib/import'))(this),
             revert: new (require('./lib/revert'))(this)
         };
@@ -40,6 +41,7 @@ class Hecate {
         //Add Helper Functions
         this.auth = (...opts) => this._.auth.get(...opts);
         this.clone = (...opts) => this._.clone.get(...opts);
+        this.server = (...opts) => this._.server.get(...opts);
         this.bbox = (...opts) => this._.bbox.get(...opts);
         this.listBounds = (...opts) => this._.bounds.list(...opts);
         this.getBound = (...opts) => this._.bounds.get(...opts);
