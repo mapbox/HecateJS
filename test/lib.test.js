@@ -9,8 +9,6 @@ for (const lib of fs.readdirSync(path.resolve(__dirname, '../lib'))) {
         const loaded = new (require(`../lib/${lib}`))({});
 
         t.ok(loaded.help, 'Exposes help() function');
-        t.ok(loaded.cli, 'Exposes cli() function');
-        t.ok(loaded.main, 'Exposes main() function');
 
         t.end();
     });

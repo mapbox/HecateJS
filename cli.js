@@ -36,7 +36,8 @@ class Hecate {
             revert: new (require('./lib/revert'))(this)
         };
 
-        this.auth = (...opts) => this._.auth.main(...opts);
+        //Add Helper Functions
+        this.auth = (...opts) => this._.auth.get(...opts);
         this.bbox = (...opts) => this._.bbox.main(...opts);
         this.listBounds = (...opts) => this._.bounds.list(...opts);
         this.getBound = (...opts) => this._.bounds.main(...opts);
@@ -109,6 +110,7 @@ if (require.main === module) {
         console.error('    help                 Displays this message');
         console.error('    register [--help]    Register a new user account with the server');
         console.error('    import   [--help]    Import data into the server');
+        console.error('    feature  [--help]    Download individual features & their history');
         console.error('    schema   [--help]    Obtain the JSON schema for a given server');
         console.error('    auth     [--help]    Obtain the JSON Auth document');
         console.error('    bbox     [--help]    Download data via bbox from a given server');
@@ -131,9 +133,12 @@ if (require.main === module) {
     const command = (err, hecate) => {
         if (err) throw err;
 
-        if (!hecate._[argv._[2]] || !hecate._[argv._[2]].cli) {
+        if (
+            (argv._[2] && argv._[3] && !hecate._[argv._[2]])
+            || (argv._[2] && !argv._[3] && !hecate[argv._[2]])
+        ) {
             console.error();
-            console.error('subcommand not found! Run with no args for help');
+            console.error('Command not found! Run with no args for help');
             console.error();
             process.exit(1);
         } else if (argv.help) {
@@ -164,6 +169,8 @@ if (require.main === module) {
                 hecate.url = res.url;
                 hecate.port = res.port;
 
+                argv.cli = true;
+
                 return run();
             });
         } else {
@@ -176,7 +183,11 @@ if (require.main === module) {
 
                 hecate.auth_rules = auth_rules;
 
-                hecate._[argv._[2]].cli(argv);
+                if (!argv._[3]) {
+                    hecate[argv._[2]](argv);
+                } else {
+                    hecate._[argv._[2]][argv._[3]](argv);
+                }
             });
         }
     };
