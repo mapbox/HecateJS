@@ -30,7 +30,7 @@ class Hecate {
             bbox: new (require('./lib/bbox'))(this),
             bounds: new (require('./lib/bounds'))(this),
             feature: new (require('./lib/feature'))(this),
-            register: new (require('./lib/register'))(this),
+            user: new (require('./lib/user'))(this),
             schema: new (require('./lib/schema'))(this),
             import: new (require('./lib/import'))(this),
             revert: new (require('./lib/revert'))(this)
@@ -41,7 +41,7 @@ class Hecate {
         this.bbox = (...opts) => this._.bbox.get(...opts);
         this.listBounds = (...opts) => this._.bounds.list(...opts);
         this.getBound = (...opts) => this._.bounds.get(...opts);
-        this.register = (...opts) => this._.register.main(...opts);
+        this.reister = (...opts) => this._.user.register(...opts);
         this.schema = (...opts) => this._.schema.main(...opts);
         this.import = (...opts) => this._.import.import(...opts);
         this.revert = (...opts) => this._.revert.main(...opts);
@@ -108,7 +108,7 @@ if (require.main === module) {
         console.error('');
         console.error('<command>');
         console.error('    help                 Displays this message');
-        console.error('    register [--help]    Register a new user account with the server');
+        console.error('    user [--help]        User Management');
         console.error('    import   [--help]    Import data into the server');
         console.error('    feature  [--help]    Download individual features & their history');
         console.error('    schema   [--help]    Obtain the JSON schema for a given server');
