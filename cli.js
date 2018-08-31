@@ -134,7 +134,7 @@ if (require.main === module) {
         if (err) throw err;
 
         if (
-            (argv._[2] && argv._[3] && !hecate._[argv._[2]])
+            (argv._[2] && argv._[3] && !hecate._[argv._[2]] || !hecate._[argv._[2]][argv._[3]])
             || (argv._[2] && !argv._[3] && !hecate[argv._[2]])
         ) {
             console.error();
