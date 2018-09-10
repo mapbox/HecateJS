@@ -2,13 +2,13 @@
 
 module.exports = (auth = {}) => {
     return [{
-        name: 'username',
+        name: 'hecate_username',
         message: 'Your Slack/Github Username',
         type: 'string',
         required: true,
         default: auth.username
     }, {
-        name: 'password',
+        name: 'hecate_password',
         message: 'secure password to be used at login',
         hidden: true,
         replace: '*',

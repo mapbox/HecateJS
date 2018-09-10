@@ -28,21 +28,27 @@ class Hecate {
         this._ = {
             auth: new (require('./lib/auth'))(this),
             bbox: new (require('./lib/bbox'))(this),
+            clone: new (require('./lib/clone'))(this),
             bounds: new (require('./lib/bounds'))(this),
-            register: new (require('./lib/register'))(this),
+            feature: new (require('./lib/feature'))(this),
+            user: new (require('./lib/user'))(this),
             schema: new (require('./lib/schema'))(this),
+            server: new (require('./lib/server'))(this),
             import: new (require('./lib/import'))(this),
             revert: new (require('./lib/revert'))(this)
         };
 
-        this.auth = (...opts) => this._.auth.main(...opts);
-        this.bbox = (...opts) => this._.bbox.main(...opts);
+        // Add Helper Functions
+        this.auth = (...opts) => this._.auth.get(...opts);
+        this.clone = (...opts) => this._.clone.get(...opts);
+        this.server = (...opts) => this._.server.get(...opts);
+        this.bbox = (...opts) => this._.bbox.get(...opts);
         this.listBounds = (...opts) => this._.bounds.list(...opts);
-        this.getBound = (...opts) => this._.bounds.main(...opts);
-        this.register = (...opts) => this._.register.main(...opts);
-        this.schema = (...opts) => this._.schema.main(...opts);
-        this.import = (...opts) => this._.import.main(...opts);
-        this.revert = (...opts) => this._.revert.main(...opts);
+        this.getBound = (...opts) => this._.bounds.get(...opts);
+        this.register = (...opts) => this._.user.register(...opts);
+        this.schema = (...opts) => this._.schema.get(...opts);
+        this.import = (...opts) => this._.import.import(...opts);
+        this.revert = (...opts) => this._.revert.revert(...opts);
     }
 
     static stack(stack, cb) {
@@ -106,11 +112,13 @@ if (require.main === module) {
         console.error('');
         console.error('<command>');
         console.error('    help                 Displays this message');
-        console.error('    register [--help]    Register a new user account with the server');
+        console.error('    user [--help]        User Management');
         console.error('    import   [--help]    Import data into the server');
+        console.error('    feature  [--help]    Download individual features & their history');
         console.error('    schema   [--help]    Obtain the JSON schema for a given server');
         console.error('    auth     [--help]    Obtain the JSON Auth document');
         console.error('    bbox     [--help]    Download data via bbox from a given server');
+        console.error('    clone    [--help]    Download the complete server dataset');
         console.error('    revert   [--help]    Revert data from an specified delta');
         console.error('');
         console.error('<options>');
@@ -130,9 +138,12 @@ if (require.main === module) {
     const command = (err, hecate) => {
         if (err) throw err;
 
-        if (!hecate._[argv._[2]] || !hecate._[argv._[2]].cli) {
+        if (
+            (argv._[2] && argv._[3] && (!hecate._[argv._[2]] || !hecate._[argv._[2]][argv._[3]]))
+            || (argv._[2] && !argv._[3] && !hecate[argv._[2]])
+        ) {
             console.error();
-            console.error('subcommand not found! Run with no args for help');
+            console.error('Command not found! Run with no args for help');
             console.error();
             process.exit(1);
         } else if (argv.help) {
@@ -163,6 +174,8 @@ if (require.main === module) {
                 hecate.url = res.url;
                 hecate.port = res.port;
 
+                argv.cli = true;
+
                 return run();
             });
         } else {
@@ -175,7 +188,11 @@ if (require.main === module) {
 
                 hecate.auth_rules = auth_rules;
 
-                hecate._[argv._[2]].cli(argv);
+                if (!argv._[3]) {
+                    hecate[argv._[2]](argv);
+                } else {
+                    hecate._[argv._[2]][argv._[3]](argv);
+                }
             });
         }
     };
