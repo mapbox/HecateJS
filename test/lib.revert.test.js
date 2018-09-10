@@ -191,11 +191,3 @@ test('Evaluate if feature has changed', (t) => {
     t.deepEquals(revert.hasFeatureChanged({ action: 'delete', geometry: null, properties: null, version: 5 }, { action: 'create', geometry: null, properties: null }), false, 'feature has not changed');
     t.end();
 });
-
-// revert()
-test('Assert fails due to missing parameter to revert delta', (t) => {
-    revert.main({ port: '7777', username: 'user', password: 'psw', deltaId: 7 }, (err) => { t.deepEquals(err.message, 'url is required', 'url is required'); });
-    revert.main({ url: 'url', username: 'user', password: 'psw', deltaId: 7 }, (err) => { t.deepEquals(err.message, 'port is required', 'port is required'); });
-    revert.main({ url: 'url', port: '7777', username: 'user', password: 'psw' }, (err) => { t.deepEquals(err.message, 'deltaId is required', 'deltaId is required'); });
-    t.end();
-});
