@@ -38,7 +38,7 @@ class Hecate {
             revert: new (require('./lib/revert'))(this)
         };
 
-        //Add Helper Functions
+        // Add Helper Functions
         this.auth = (...opts) => this._.auth.get(...opts);
         this.clone = (...opts) => this._.clone.get(...opts);
         this.server = (...opts) => this._.server.get(...opts);

@@ -18,10 +18,10 @@ test('util/getAuth', (t) => {
         required: true,
         type: 'string',
         default: undefined
-    }], 'no auth provided')
+    }], 'no auth provided');
 
     t.deepEquals(getAuth({
-        username: 'ingalls' 
+        username: 'ingalls'
     }), [{
         name: 'hecate_username',
         message: 'Your Slack/Github Username',
@@ -36,10 +36,10 @@ test('util/getAuth', (t) => {
         required: true,
         type: 'string',
         default: undefined
-    }], 'username provided')
+    }], 'username provided');
 
     t.deepEquals(getAuth({
-        password: 'yeaheh' 
+        password: 'yeaheh'
     }), [{
         name: 'hecate_username',
         message: 'Your Slack/Github Username',
@@ -54,11 +54,11 @@ test('util/getAuth', (t) => {
         required: true,
         type: 'string',
         default: 'yeaheh'
-    }], 'password provided')
+    }], 'password provided');
 
     t.deepEquals(getAuth({
         username: 'ingalls',
-        password: 'yeaheh' 
+        password: 'yeaheh'
     }), [{
         name: 'hecate_username',
         message: 'Your Slack/Github Username',
@@ -73,7 +73,7 @@ test('util/getAuth', (t) => {
         required: true,
         type: 'string',
         default: 'yeaheh'
-    }], 'username & password provided')
+    }], 'username & password provided');
 
     t.end();
 });
