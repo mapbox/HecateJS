@@ -35,7 +35,7 @@
     "extends": "@mapbox/eslint-config-geocoding"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   },
   "scripts": {
     "test": "yarn lint && tape test/*.test.js",
