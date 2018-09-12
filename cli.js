@@ -47,7 +47,7 @@ class Hecate {
         this.getBound = (...opts) => this._.bounds.get(...opts);
         this.register = (...opts) => this._.user.register(...opts);
         this.schema = (...opts) => this._.schema.get(...opts);
-        this.import = (...opts) => this._.import.import(...opts);
+        this.import = (...opts) => this._.import.multi(...opts);
         this.revert = (...opts) => this._.revert.revert(...opts);
     }
 
