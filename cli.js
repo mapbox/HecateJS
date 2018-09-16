@@ -102,7 +102,10 @@ if (require.main === module) {
         });
     }
 
-    if (!argv._[2] || (!argv._[2] && argv.help)) {
+    if (argv.version) {
+        console.error('hecate-cli@' + settings.version);
+        process.exit(0);
+    } else if (!argv._[2] || (!argv._[2] && argv.help)) {
         console.error('');
         console.error('usage: cli.js <command> [--version] [--help] [--stack <STACK NAME>]');
         console.error('');
@@ -129,9 +132,6 @@ if (require.main === module) {
         console.error('                         Specify the hecate-internal stack name and it will');
         console.error('                         connect via the exported ELB');
         console.error();
-        process.exit(0);
-    } else if (argv.version) {
-        console.error('hecate-cli@' + settings.version);
         process.exit(0);
     }
 
