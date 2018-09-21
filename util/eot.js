@@ -1,5 +1,6 @@
+'use strict';
+
 const Transform = require('stream').Transform;
-const util = require('util');
 
 class EOT extends Transform {
     constructor(cb) {
@@ -17,7 +18,7 @@ class EOT extends Transform {
         if (chunk.indexOf('\u0004') === chunk.length - 1) {
             this.eot = true;
 
-            const str = String(chunk)
+            const str = String(chunk);
             chunk = new Buffer(str.slice(str.length - 1, 1));
         }
 
