@@ -19,7 +19,7 @@ class EOT extends Transform {
             this.eot = true;
 
             const str = String(chunk);
-            chunk = new Buffer(str.slice(str.length - 1, 1));
+            chunk = new Buffer(str.slice(0, str.length - 1));
         }
 
         this.push(chunk);
