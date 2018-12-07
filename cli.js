@@ -30,6 +30,7 @@ class Hecate {
             bbox: new (require('./lib/bbox'))(this),
             clone: new (require('./lib/clone'))(this),
             bounds: new (require('./lib/bounds'))(this),
+            styles: new (require('./lib/styles'))(this),
             feature: new (require('./lib/feature'))(this),
             user: new (require('./lib/user'))(this),
             schema: new (require('./lib/schema'))(this),
