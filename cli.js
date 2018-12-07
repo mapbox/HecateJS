@@ -119,6 +119,8 @@ if (require.main === module) {
         console.error('    user [--help]        User Management');
         console.error('    import   [--help]    Import data into the server');
         console.error('    feature  [--help]    Download individual features & their history');
+        console.error('    bounds   [--help]    Obtain and download features by bounds');
+        console.error('    styles   [--help]    Manage and get mapbox-gl styles');
         console.error('    schema   [--help]    Obtain the JSON schema for a given server');
         console.error('    auth     [--help]    Obtain the JSON Auth document');
         console.error('    bbox     [--help]    Download data via bbox from a given server');
