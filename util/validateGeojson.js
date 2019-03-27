@@ -6,7 +6,14 @@ const path = require('path');
 const turf = require('@turf/turf');
 const rewind = require('geojson-rewind');
 
-function validateGeojson(filepath) {
+/**
+ * Ensure geometries are valid before import
+ *
+ * @param {String} filepath File to validate against
+ * @param {Object} opts
+ * @param {boolean} opts.ignoreRHR=false Ignore Right Hand Rule errors
+ */
+function validateGeojson(filepath, opts = {}) {
     // Read each feature
     const rl = new readLineSync(filepath);
     // Get the file name
@@ -32,7 +39,15 @@ function validateGeojson(filepath) {
         linenumber++;
         let errors = [];
 
-        const geojsonErrs = geojsonhint(feature);
+        const geojsonErrs = geojsonhint(feature).filter((err) => {
+            if (opts.ignoreRHR && err.message === 'Polygons and MultiPolygons should follow the right-hand rule') {
+                return true;
+            } else {
+                return false;
+            }
+        
+        });
+
         if (geojsonErrs.length) {
             errors = errors.concat(geojsonErrs);
         } else { // if the geojson is invalid, turf will err
