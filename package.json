@@ -9,15 +9,15 @@
     "hecatecli": "cli.js"
   },
   "devDependencies": {
-    "@mapbox/eslint-config-geocoding": "^1.0.1",
+    "@mapbox/eslint-config-geocoding": "^2.0.0",
     "codecov": "^3.0.4",
     "eslint": "^5.5.0",
-    "eslint-plugin-node": "7.0.1",
+    "eslint-plugin-node": "8.0.1",
     "nyc": "^13.0.1",
     "tape": "^4.9.0"
   },
   "dependencies": {
-    "@mapbox/geojsonhint": "^2.0.1",
+    "@mapbox/geojsonhint": "^3.0.0",
     "@turf/turf": "^5.1.6",
     "aws-sdk": "^2.224.1",
     "d3-queue": "^3.0.7",
@@ -25,11 +25,11 @@
     "geojson-validation": "^0.2.0",
     "minimist": "^1.2.0",
     "n-readlines": "^1.0.0 ",
-    "nock": "^9.3.0",
+    "nock": "^10.0.6",
     "node-mb-string-size": "^1.0.3",
     "prompt": "^1.0.0",
-    "request": "^2.83.0",
-    "requestretry": "^2.0.2"
+    "request": "^2.88.0",
+    "requestretry": "^4.0.0"
   },
   "eslintConfig": {
     "extends": "@mapbox/eslint-config-geocoding"

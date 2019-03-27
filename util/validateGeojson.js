@@ -17,11 +17,15 @@ function validateGeojson(filepath) {
     const corruptedfeatures = [];
 
     let line = true;
+
     while (line) {
         line = rl.next();
         if (!line) break;
         validateFeature(line.toString('utf8'));
+
+        if (corruptedfeatures.length > 100) break;
     }
+
     // Validate each feature
     function validateFeature(line) {
         const feature = rewind(JSON.parse(line));
@@ -48,6 +52,7 @@ function validateGeojson(filepath) {
             corruptedfeatures.push(JSON.stringify({ 'linenumber': linenumber, 'error': errors, 'filename': filename }));
         }
     }
+
     return corruptedfeatures;
 }
 
