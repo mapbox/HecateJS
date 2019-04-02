@@ -6,7 +6,14 @@ const path = require('path');
 const turf = require('@turf/turf');
 const rewind = require('geojson-rewind');
 
-function validateGeojson(filepath) {
+/**
+ * Ensure geometries are valid before import
+ *
+ * @param {String} filepath File to validate against
+ * @param {Object} opts
+ * @param {boolean} opts.ignoreRHR=false Ignore Right Hand Rule errors
+ */
+function validateGeojson(filepath, opts = {}) {
     // Read each feature
     const rl = new readLineSync(filepath);
     // Get the file name
@@ -17,18 +24,29 @@ function validateGeojson(filepath) {
     const corruptedfeatures = [];
 
     let line = true;
+
     while (line) {
         line = rl.next();
         if (!line) break;
         validateFeature(line.toString('utf8'));
+
+        if (corruptedfeatures.length > 100) break;
     }
+
     // Validate each feature
     function validateFeature(line) {
         const feature = rewind(JSON.parse(line));
         linenumber++;
         let errors = [];
 
-        const geojsonErrs = geojsonhint(feature);
+        const geojsonErrs = geojsonhint(feature).filter((err) => {
+            if (opts.ignoreRHR && err.message === 'Polygons and MultiPolygons should follow the right-hand rule') {
+                return false;
+            } else {
+                return true;
+            }
+        });
+
         if (geojsonErrs.length) {
             errors = errors.concat(geojsonErrs);
         } else { // if the geojson is invalid, turf will err
@@ -44,10 +62,12 @@ function validateGeojson(filepath) {
                 }
             });
         }
+
         if (errors.length) {
             corruptedfeatures.push(JSON.stringify({ 'linenumber': linenumber, 'error': errors, 'filename': filename }));
         }
     }
+
     return corruptedfeatures;
 }
 
