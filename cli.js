@@ -31,6 +31,7 @@ class Hecate {
             clone: new (require('./lib/clone'))(this),
             bounds: new (require('./lib/bounds'))(this),
             feature: new (require('./lib/feature'))(this),
+            deltas: new (require('./lib/deltas'))(this),
             user: new (require('./lib/user'))(this),
             schema: new (require('./lib/schema'))(this),
             server: new (require('./lib/server'))(this),
@@ -43,6 +44,8 @@ class Hecate {
         this.clone = (...opts) => this._.clone.get(...opts);
         this.server = (...opts) => this._.server.get(...opts);
         this.bbox = (...opts) => this._.bbox.get(...opts);
+        this.listDeltas = (...opts) => this._.deltas.list(...opts);
+        this.getDelta = (...opts) => this._.deltas.get(...opts);
         this.listBounds = (...opts) => this._.bounds.list(...opts);
         this.getBound = (...opts) => this._.bounds.get(...opts);
         this.register = (...opts) => this._.user.register(...opts);
