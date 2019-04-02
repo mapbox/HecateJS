@@ -10,15 +10,19 @@
 
 ## Version History
 
-## v7.1.0
+###
+
+- :bug: Avoid memory overflow bug if all features in a large file are invalid
+
+### v7.1.0
 
 - :tada: Add `get` & `list` support for deltas API
 
-## v7.0.1
+### v7.0.1
 
 - :bug: Ensure data chunk with EOT is written with EOT stripped
 
-## v7.0.0
+### v7.0.0
 
 - :tada: Introduce EOT checks on all streaming API endpoints
 
