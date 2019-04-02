@@ -44,6 +44,8 @@ class Hecate {
         this.clone = (...opts) => this._.clone.get(...opts);
         this.server = (...opts) => this._.server.get(...opts);
         this.bbox = (...opts) => this._.bbox.get(...opts);
+        this.listDeltas = (...opts) => this._.deltas.list(...opts);
+        this.getDelta = (...opts) => this._.deltas.get(...opts);
         this.listBounds = (...opts) => this._.bounds.list(...opts);
         this.getBound = (...opts) => this._.bounds.get(...opts);
         this.register = (...opts) => this._.user.register(...opts);
