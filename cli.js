@@ -31,6 +31,7 @@ class Hecate {
             clone: new (require('./lib/clone'))(this),
             bounds: new (require('./lib/bounds'))(this),
             feature: new (require('./lib/feature'))(this),
+            deltas: new (require('./lib/deltas'))(this),
             user: new (require('./lib/user'))(this),
             schema: new (require('./lib/schema'))(this),
             server: new (require('./lib/server'))(this),
