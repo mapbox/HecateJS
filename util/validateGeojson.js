@@ -45,7 +45,7 @@ function validateGeojson(filepath, opts = {}) {
             } else {
                 return false;
             }
-        
+
         });
 
         if (geojsonErrs.length) {
