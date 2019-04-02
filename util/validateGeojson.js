@@ -41,11 +41,10 @@ function validateGeojson(filepath, opts = {}) {
 
         const geojsonErrs = geojsonhint(feature).filter((err) => {
             if (opts.ignoreRHR && err.message === 'Polygons and MultiPolygons should follow the right-hand rule') {
-                return true;
-            } else {
                 return false;
+            } else {
+                return true;
             }
-
         });
 
         if (geojsonErrs.length) {
@@ -63,6 +62,7 @@ function validateGeojson(filepath, opts = {}) {
                 }
             });
         }
+
         if (errors.length) {
             corruptedfeatures.push(JSON.stringify({ 'linenumber': linenumber, 'error': errors, 'filename': filename }));
         }
