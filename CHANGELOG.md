@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v7.2.0
+
+- :tada: Add basic `mvt` tiles API support
+
 ### v7.1.1
 
 - :bug: Avoid memory overflow bug if all features in a large file are invalid
