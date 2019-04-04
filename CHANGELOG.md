@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v7.3.2
+
+- :bug: Fix options name mismatch on bounds set
+
 ### v7.3.1
 
 - :rocket: Add `setBound` alias
