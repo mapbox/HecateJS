@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v8.0.1
+
+- :rocket: Uniform `options.geometry`
+
 ### v8.0.0
 
 - :rocket: Add ability to include username & pass via `stack `instantiation
