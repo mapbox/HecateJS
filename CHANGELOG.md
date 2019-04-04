@@ -10,7 +10,7 @@
 
 ## Version History
 
-### v8.0.1
+### v8.0.1 & v8.0.2
 
 - :rocket: Uniform `options.geometry`
 
