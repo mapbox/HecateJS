@@ -57,7 +57,7 @@ class Hecate {
         this.revert = (...opts) => this._.revert.revert(...opts);
     }
 
-    static stack(stack, cb) {
+    static stack(stack, auth, cb) {
         cf.describeStacks({
             StackName: `hecate-internal-${stack}`
         }, (err, res) => {
@@ -78,9 +78,13 @@ class Hecate {
 
                 if (res.statusCode !== 200) throw new Error('Connected but recieved status code: ' + res.statusCode);
 
+                if (!auth) auth = {};
+
                 return cb(null, new Hecate({
                     url: elb,
-                    port: 80
+                    port: 80,
+                    username: auth.username,
+                    password: auth.password
                 }));
             });
         });
