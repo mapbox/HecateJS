@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v7.3.1
+
+- :rocket: Add `setBound` alias
+
 ### v7.3.0
 
 - :tada: Add hecate meta bounds API
