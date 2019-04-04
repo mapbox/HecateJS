@@ -1,6 +1,6 @@
 {
   "name": "@mapbox/hecatejs",
-  "version": "7.3.2",
+  "version": "8.0.0",
   "main": "cli.js",
   "repository": "git@github.com:mapcommons/HecateJS",
   "author": "ingalls <ingalls@protonmail.com>",
