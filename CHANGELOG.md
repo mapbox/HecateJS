@@ -10,6 +10,11 @@
 
 ## Version History
 
+### v7.3.0
+
+- :tada: Add hecate meta bounds API
+- :pencil2: Add missing bounds documentation
+
 ### v7.2.0
 
 - :tada: Add basic `mvt` tiles API support
