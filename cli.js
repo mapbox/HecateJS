@@ -49,6 +49,7 @@ class Hecate {
         this.getDelta = (...opts) => this._.deltas.get(...opts);
         this.listBounds = (...opts) => this._.bounds.list(...opts);
         this.getBound = (...opts) => this._.bounds.get(...opts);
+        this.getBoundMeta = (...opts) => this._.bounds.meta(...opts);
         this.register = (...opts) => this._.user.register(...opts);
         this.schema = (...opts) => this._.schema.get(...opts);
         this.import = (...opts) => this._.import.multi(...opts);
