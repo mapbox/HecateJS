@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v8.0.0
+
+- :rocket: Add ability to include username & pass via `stack `instantiation
+
 ### v7.3.2
 
 - :bug: Fix options name mismatch on bounds set
