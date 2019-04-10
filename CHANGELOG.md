@@ -10,6 +10,11 @@
 
 ## Version History
 
+### v8.0.3
+
+- :bug: Update `--stack` cli command expectations
+- :pencil2: Fix formatting of help text
+
 ### v8.0.1 & v8.0.2
 
 - :rocket: Uniform `options.geometry`
