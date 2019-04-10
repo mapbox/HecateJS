@@ -125,7 +125,7 @@ if (require.main === module) {
         console.error('');
         console.error('<command>');
         console.error('    help                 Displays this message');
-        console.error('    user [--help]        User Management');
+        console.error('    user     [--help]    User Management');
         console.error('    import   [--help]    Import data into the server');
         console.error('    feature  [--help]    Download individual features & their history');
         console.error('    schema   [--help]    Obtain the JSON schema for a given server');
@@ -208,7 +208,7 @@ if (require.main === module) {
     };
 
     if (argv.stack) {
-        Hecate.stack(argv.stack, command);
+        Hecate.stack(argv.stack, {}, command);
     } else {
         command(null, new Hecate(argv));
     }
