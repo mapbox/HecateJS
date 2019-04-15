@@ -18,7 +18,9 @@ yarn add '@mapbox/hecatejs'
 yarn global add `@mapbox/hecatejs'
 ```
 
-### Instantiation
+<h3 align=center>Instantiation</h3>
+
+<details>
 
 Note: if the username & password is not explicitly set, Hecate will fallback to checking for
 a `HECATE_USERNAME` & `HECATE_PASSWORD` environment variable.
@@ -55,7 +57,15 @@ but are omitted in this guide for clarity.
 ```
 _Would find the AWS ELB for a CloudFormation stack called `hecate-internal-buildings`_
 
-### Registering a User Account
+</details>
+
+<h3 align=center>User Options</h3>
+
+<details>
+
+<p align=right><a href="https://github.com/mapbox/hecate#get-apiusercreate"><strong>Hecate Docs</strong></a></p>
+
+<h4>Create a New User</h4>
 
 By default, most hecate instances are fairly open and will allow a wide range
 of operations without authentication. Editing however, and querying on boxes with
@@ -86,9 +96,15 @@ hecate.register({
 ./cli.js register
 ```
 
-### List Server Custom Authentication
+</details>
 
-See the [custom authentication](https://github.com/mapbox/Hecate#custom-authentication) section of the Hecate readme for more info
+<h3 align=center>Authentication</h3>
+
+<details>
+
+<p align=right><a href="https://github.com/mapbox/hecate#get-apiauth"><strong>Hecate Docs</strong></a></p>
+
+<h4>Authentication</h4>
 
 **JS Library**
 
@@ -110,42 +126,3 @@ hecate.auth({}, (err, res) => {
 ```sh
 ./cli.js auth
 ```
-
-### Query Data
-
-To Be Written
-
-### List JSON Schema Requirements
-
-A hecate instance can optionally require that all the properties of GeoJSON features stored by the server
-conform to a given JSON Schema. Failure to meet this schema will result in the import being rejected.
-
-
-**JS Library**
-
-```js
-const Hecate = require('@mapbox/hecatejs');
-
-const hecate = new Hecate({
-    url: 'example.com/hecate',
-    port: 8000
-});
-
-hecate.schema({}, (err, res) => {
-    if (err) throw err;
-});
-```
-
-**CLI**
-
-```sh
-./cli.js schema
-```
-
-### Import Data
-
-To Be Written
-
-### Generate Reversion Deltas
-
-To Be Written
