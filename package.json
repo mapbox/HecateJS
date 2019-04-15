@@ -39,7 +39,7 @@
     "node": ">=8"
   },
   "scripts": {
-    "doc": "$(yarn bin)/documentation build --config docs/documentation.yml --access public --github --format md --output docs/api.md index.js lib/**",
+    "doc": "$(yarn bin)/documentation build --github --format md --output docs/api.md cli.js lib/**",
     "test": "yarn lint && tape test/*.test.js",
     "coverage": "TESTING=true nyc tape 'test/**/*.js' && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint": "eslint cli.js lib/*.js util/*.js test/*.js"
