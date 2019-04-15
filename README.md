@@ -59,70 +59,7 @@ _Would find the AWS ELB for a CloudFormation stack called `hecate-internal-build
 
 </details>
 
-<h3 align=center>User Options</h3>
+<h2 align=center>API Documentation</h2>
 
-<details>
-
-<p align=right><a href="https://github.com/mapbox/hecate#get-apiusercreate"><strong>Hecate Docs</strong></a></p>
-
-<h4>Create a New User</h4>
-
-By default, most hecate instances are fairly open and will allow a wide range
-of operations without authentication. Editing however, and querying on boxes with
-tighter access restrictions will require registering a new account.
-
-**JS Library**
-
-```js
-const Hecate = require('@mapbox/hecatejs');
-
-const hecate = new Hecate({
-    url: 'example.com/hecate',
-    port: 8000
-});
-
-hecate.register({
-    username: 'ingalls',
-    password: 'yeaheh',
-    email: 'ingalls@protonmail.com'
-}, (err, res) => {
-    if (err) throw err;
-});
-```
-
-**CLI**
-
-```sh
-./cli.js register
-```
-
-</details>
-
-<h3 align=center>Authentication</h3>
-
-<details>
-
-<p align=right><a href="https://github.com/mapbox/hecate#get-apiauth"><strong>Hecate Docs</strong></a></p>
-
-<h4>Authentication</h4>
-
-**JS Library**
-
-```js
-const Hecate = require('@mapbox/hecatejs');
-
-const hecate = new Hecate({
-    url: 'example.com/hecate',
-    port: 8000
-});
-
-hecate.auth({}, (err, res) => {
-    if (err) throw err;
-});
-```
-
-**CLI**
-
-```sh
-./cli.js auth
-```
+The [API documentation](/docs/API.md) can be found in the `docs/API.md` file. This file is automatically
+generated from the internal JSDocs.
