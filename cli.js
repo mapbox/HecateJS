@@ -8,6 +8,9 @@ const settings = require('./package.json');
 const request = require('request');
 const prompt = require('prompt');
 
+/**
+ * @class Hecate
+ */
 class Hecate {
     constructor(api = {}) {
         this.url = api.url ? api.url : 'localhost';
@@ -105,7 +108,7 @@ if (require.main === module) {
     });
 
     if (!argv._[2] && argv.stack) {
-        return Hecate.stack(argv.stack, (err, res) => {
+        Hecate.stack(argv.stack, (err, res) => {
             if (err) throw err;
 
             console.log(res.url);
