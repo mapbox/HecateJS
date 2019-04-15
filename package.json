@@ -11,6 +11,7 @@
   "devDependencies": {
     "@mapbox/eslint-config-geocoding": "^2.0.0",
     "codecov": "^3.0.4",
+    "documentation": "^9.3.1",
     "eslint": "^5.5.0",
     "eslint-plugin-node": "8.0.1",
     "nyc": "^13.0.1",
