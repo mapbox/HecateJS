@@ -61,5 +61,5 @@ _Would find the AWS ELB for a CloudFormation stack called `hecate-internal-build
 
 <h2 align=center>API Documentation</h2>
 
-The [API documentation](/docs/API.md) can be found in the `docs/API.md` file. This file is automatically
+The [API documentation](/docs/api.md) can be found in the `docs/API.md` file. This file is automatically
 generated from the internal JSDocs.
