@@ -51,11 +51,11 @@ function validateGeojson(filepath, opts = {}) {
         if (
             !feature.geometry
             || !feature.geometry.coordinates.length
-        ) corruptedFeatures.push({
+        ) {
             errors.push({
                 "message": "Null or Invalid Geometry"
             });
-        });
+        }
 
         if (geojsonErrs.length) {
             errors = errors.concat(geojsonErrs);
