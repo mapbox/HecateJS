@@ -36,7 +36,7 @@
     "extends": "@mapbox/eslint-config-geocoding"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "scripts": {
     "doc": "$(yarn bin)/documentation build --github --format md --output docs/api.md cli.js lib/**",
