@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v9.0.1
+
+- :bug: Fix `hecate.stack` call with 2nd argument
+
 ### v9.0.0
 
 - :rocket: Drop support for node 8, lock to node 10
