@@ -1,6 +1,6 @@
 {
   "name": "@mapbox/hecatejs",
-  "version": "8.0.4",
+  "version": "9.0.1",
   "main": "cli.js",
   "repository": "git@github.com:mapcommons/HecateJS",
   "author": "ingalls <ingalls@protonmail.com>",
@@ -36,7 +36,7 @@
     "extends": "@mapbox/eslint-config-geocoding"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "scripts": {
     "doc": "$(yarn bin)/documentation build --github --format md --output docs/api.md cli.js lib/**",

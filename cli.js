@@ -108,7 +108,7 @@ if (require.main === module) {
     });
 
     if (!argv._[2] && argv.stack) {
-        Hecate.stack(argv.stack, (err, res) => {
+        Hecate.stack(argv.stack, {}, (err, res) => {
             if (err) throw err;
 
             console.log(res.url);
