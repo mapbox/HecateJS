@@ -50,6 +50,7 @@ function validateGeojson(filepath, opts = {}) {
 
         if (
             !feature.geometry
+            || !feature.geometry.coordinates
             || !feature.geometry.coordinates.length
         ) {
             errors.push({
