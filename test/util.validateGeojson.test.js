@@ -38,7 +38,7 @@ tape('Assert fails', (t) => {
                 break;
             case 3:
                 linenumber = 4;
-                error = '[{"message":"\\"geometry\\" member required"}]';
+                error = '[{"message":"Null or Invalid Geometry"},{"message":"\\"geometry\\" member required"}]';
                 description = 'geometry member required';
                 break;
             case 4:
@@ -48,7 +48,7 @@ tape('Assert fails', (t) => {
                 break;
             case 5:
                 linenumber = 6;
-                error = '[{"message":"\\"coordinates\\" member required"}]';
+                error = '[{"message":"Null or Invalid Geometry"},{"message":"\\"coordinates\\" member required"}]';
                 description = 'coordinates member required';
                 break;
         }

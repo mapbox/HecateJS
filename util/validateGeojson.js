@@ -28,6 +28,7 @@ function validateGeojson(filepath, opts = {}) {
     while (line) {
         line = rl.next();
         if (!line) break;
+
         validateFeature(line.toString('utf8'));
 
         if (corruptedfeatures.length > 100) break;
@@ -46,6 +47,16 @@ function validateGeojson(filepath, opts = {}) {
                 return true;
             }
         });
+
+        if (
+            !feature.geometry
+            || !feature.geometry.coordinates
+            || !feature.geometry.coordinates.length
+        ) {
+            errors.push({
+                'message': 'Null or Invalid Geometry'
+            });
+        }
 
         if (geojsonErrs.length) {
             errors = errors.concat(geojsonErrs);
