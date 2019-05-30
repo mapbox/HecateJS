@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v9.0.2
+
+- :rocket: Add additional null geometry checks
+
 ### v9.0.1
 
 - :bug: Fix `hecate.stack` call with 2nd argument
