@@ -53,7 +53,7 @@ function validateGeojson(filepath, opts = {}) {
             || !feature.geometry.coordinates.length
         ) {
             errors.push({
-                "message": "Null or Invalid Geometry"
+                'message': 'Null or Invalid Geometry'
             });
         }
 
