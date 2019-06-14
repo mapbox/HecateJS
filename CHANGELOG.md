@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v9.0.4
+
+- :arrow_up: Update to latest deps
+
 ### v9.0.3
 
 - :bug: Show help information if no subcommand is given
