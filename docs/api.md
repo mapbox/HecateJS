@@ -284,13 +284,13 @@ GeoJSON Feature
 
 ## Import
 
-[lib/import.js:23-190][89]
+[lib/import.js:41-208][89]
 
 -   **See: [Hecate Documentation][90]**
 
 ## validateGeojson
 
-[util/validateGeojson.js:16-72][91]
+[util/validateGeojson.js:16-83][91]
 
 Ensure geometries are valid before import
 
@@ -382,7 +382,7 @@ Fetch a Mapbox Vector Tile for the given zxy
 
 ## User
 
-[lib/user.js:15-245][106]
+[lib/user.js:15-246][106]
 
 -   **See: [Hecate Documentation][107]**
 
@@ -496,23 +496,23 @@ Fetch a Mapbox Vector Tile for the given zxy
 
 [55]: #user
 
-[56]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/cli.js#L14-L95 "Source code on GitHub"
+[56]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/cli.js#L14-L95 "Source code on GitHub"
 
-[57]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/auth.js#L13-L72 "Source code on GitHub"
+[57]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/auth.js#L13-L72 "Source code on GitHub"
 
 [58]: https://github.com/mapbox/hecate#authentication
 
-[59]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/auth.js#L36-L71 "Source code on GitHub"
+[59]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/auth.js#L36-L71 "Source code on GitHub"
 
 [60]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
 [61]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[62]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/bbox.js#L17-L115 "Source code on GitHub"
+[62]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/bbox.js#L17-L115 "Source code on GitHub"
 
 [63]: https://github.com/mapbox/hecate#downloading-multiple-features-via-bbox
 
-[64]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/bbox.js#L43-L114 "Source code on GitHub"
+[64]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/bbox.js#L43-L114 "Source code on GitHub"
 
 [65]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
@@ -520,82 +520,82 @@ Fetch a Mapbox Vector Tile for the given zxy
 
 [67]: https://nodejs.org/api/stream.html
 
-[68]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/util/validateBbox.js#L9-L39 "Source code on GitHub"
+[68]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/util/validateBbox.js#L9-L39 "Source code on GitHub"
 
-[69]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/bounds.js#L16-L516 "Source code on GitHub"
+[69]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/bounds.js#L16-L516 "Source code on GitHub"
 
 [70]: https://github.com/mapbox/hecate#boundaries
 
-[71]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/bounds.js#L44-L113 "Source code on GitHub"
+[71]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/bounds.js#L44-L113 "Source code on GitHub"
 
-[72]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/bounds.js#L122-L181 "Source code on GitHub"
+[72]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/bounds.js#L122-L181 "Source code on GitHub"
 
-[73]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/bounds.js#L193-L263 "Source code on GitHub"
+[73]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/bounds.js#L193-L263 "Source code on GitHub"
 
-[74]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/bounds.js#L273-L344 "Source code on GitHub"
+[74]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/bounds.js#L273-L344 "Source code on GitHub"
 
-[75]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/bounds.js#L354-L422 "Source code on GitHub"
+[75]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/bounds.js#L354-L422 "Source code on GitHub"
 
-[76]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/bounds.js#L433-L515 "Source code on GitHub"
+[76]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/bounds.js#L433-L515 "Source code on GitHub"
 
-[77]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/clone.js#L16-L101 "Source code on GitHub"
+[77]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/clone.js#L16-L101 "Source code on GitHub"
 
 [78]: https://github.com/mapbox/hecate#downloading-via-clone
 
-[79]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/clone.js#L40-L100 "Source code on GitHub"
+[79]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/clone.js#L40-L100 "Source code on GitHub"
 
-[80]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/deltas.js#L15-L187 "Source code on GitHub"
+[80]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/deltas.js#L15-L187 "Source code on GitHub"
 
 [81]: https://github.com/mapbox/api-geocoder/pull/2634#issuecomment-481255528
 
-[82]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/deltas.js#L39-L109 "Source code on GitHub"
+[82]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/deltas.js#L39-L109 "Source code on GitHub"
 
-[83]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/deltas.js#L118-L186 "Source code on GitHub"
+[83]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/deltas.js#L118-L186 "Source code on GitHub"
 
-[84]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/feature.js#L15-L268 "Source code on GitHub"
+[84]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/feature.js#L15-L268 "Source code on GitHub"
 
 [85]: https://github.com/mapbox/hecate#downloading-individual-features
 
-[86]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/feature.js#L41-L109 "Source code on GitHub"
+[86]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/feature.js#L41-L109 "Source code on GitHub"
 
-[87]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/feature.js#L120-L188 "Source code on GitHub"
+[87]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/feature.js#L120-L188 "Source code on GitHub"
 
-[88]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/feature.js#L199-L267 "Source code on GitHub"
+[88]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/feature.js#L199-L267 "Source code on GitHub"
 
-[89]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/import.js#L23-L190 "Source code on GitHub"
+[89]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/import.js#L41-L208 "Source code on GitHub"
 
 [90]: https://github.com/mapbox/hecate#feature-creation
 
-[91]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/util/validateGeojson.js#L16-L72 "Source code on GitHub"
+[91]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/util/validateGeojson.js#L16-L83 "Source code on GitHub"
 
 [92]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[93]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/revert.js#L14-L244 "Source code on GitHub"
+[93]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/revert.js#L14-L244 "Source code on GitHub"
 
-[94]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/util/getDelta.js#L9-L24 "Source code on GitHub"
+[94]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/util/getDelta.js#L9-L24 "Source code on GitHub"
 
 [95]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[96]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/util/getFeatureHistory.js#L9-L22 "Source code on GitHub"
+[96]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/util/getFeatureHistory.js#L9-L22 "Source code on GitHub"
 
-[97]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/schema.js#L15-L94 "Source code on GitHub"
+[97]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/schema.js#L15-L94 "Source code on GitHub"
 
 [98]: https://github.com/mapbox/hecate#schema
 
-[99]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/server.js#L15-L164 "Source code on GitHub"
+[99]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/server.js#L15-L164 "Source code on GitHub"
 
 [100]: https://github.com/mapbox/hecate#meta
 
-[101]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/server.js#L39-L96 "Source code on GitHub"
+[101]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/server.js#L39-L96 "Source code on GitHub"
 
-[102]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/server.js#L105-L163 "Source code on GitHub"
+[102]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/server.js#L105-L163 "Source code on GitHub"
 
-[103]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/tiles.js#L15-L107 "Source code on GitHub"
+[103]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/tiles.js#L15-L107 "Source code on GitHub"
 
 [104]: https://github.com/mapbox/hecate#vector-tiles
 
-[105]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/tiles.js#L38-L106 "Source code on GitHub"
+[105]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/tiles.js#L38-L106 "Source code on GitHub"
 
-[106]: https://git@github.com/:mapbox/HecateJS/blob/8c2cfa084ff5daad018635dc53b6cd225d3f53d4/lib/user.js#L15-L245 "Source code on GitHub"
+[106]: https://git@github.com/:mapbox/HecateJS/blob/7188fbb4a41c5b3a39818ef9a7b38422e295cea8/lib/user.js#L15-L246 "Source code on GitHub"
 
 [107]: https://github.com/mapbox/hecate#user-options
