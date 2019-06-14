@@ -118,7 +118,7 @@ if (require.main === module) {
     if (argv.version) {
         console.error('hecate-cli@' + settings.version);
         process.exit(0);
-    } else if (!argv._[2] || (!argv._[2] && argv.help)) {
+    } else if (!argv._[2] || (!argv._[2] && argv.help) || argv._[2] === 'help') {
         console.error('');
         console.error('usage: cli.js <command> [--version] [--help] [--stack <STACK NAME>]');
         console.error('');
@@ -151,16 +151,16 @@ if (require.main === module) {
     const command = (err, hecate) => {
         if (err) throw err;
 
-        if (
-            (argv._[2] && argv._[3] && (!hecate._[argv._[2]] || !hecate._[argv._[2]][argv._[3]]))
-            || (argv._[2] && !argv._[3] && !hecate[argv._[2]])
-        ) {
+        const command = argv._[2];
+        const subcommand = argv._[3];
+
+        if (command && !hecate._[command]) {
             console.error();
-            console.error('Command not found! Run with no args for help');
+            console.error(`"${command}" command not found!`);
             console.error();
             process.exit(1);
-        } else if (argv.help) {
-            return hecate[argv._[2]].help();
+        } else if (argv.help || !subcommand) {
+            return hecate._[command].help();
         }
 
         if (!argv.script) {
