@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v9.0.3
+
+- :bug: Show help information if no subcommand is given
+
 ### v9.0.2
 
 - :rocket: Add additional null geometry checks
