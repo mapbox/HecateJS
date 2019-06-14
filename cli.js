@@ -31,6 +31,7 @@ class Hecate {
         this._ = {
             auth: new (require('./lib/auth'))(this),
             bbox: new (require('./lib/bbox'))(this),
+            webhooks: new (require('./lib/webhooks'))(this),
             tiles: new (require('./lib/tiles'))(this),
             clone: new (require('./lib/clone'))(this),
             bounds: new (require('./lib/bounds'))(this),
