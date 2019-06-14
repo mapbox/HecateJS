@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v9.1.0
+
+- :tada: Add support for the new webhooks API
+
 ### v9.0.4
 
 - :arrow_up: Update to latest deps
