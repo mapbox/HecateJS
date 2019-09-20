@@ -4,9 +4,10 @@
 
 const AWS = require('aws-sdk');
 const cf = new AWS.CloudFormation({ region: 'us-east-1' });
-const settings = require('./package.json');
 const request = require('request');
 const prompt = require('prompt');
+const auth = require('./util/get_auth');
+const settings = require('./package.json');
 
 /**
  * @class Hecate
@@ -24,8 +25,6 @@ class Hecate {
                 password: api.password ? api.password : process.env.HECATE_PASSWORD
             };
         }
-
-        this.auth_rules = api.auth_rules ? api.auth_rules : null;
 
         // Instantiate New Library Instances
         this._ = {
@@ -170,7 +169,7 @@ if (require.main === module) {
                 stdout: process.stderr
             });
 
-            prompt.get([{
+            let args = [{
                 name: 'url',
                 message: 'URL to hecate instance',
                 type: 'string',
@@ -182,11 +181,25 @@ if (require.main === module) {
                 type: 'string',
                 required: 'true',
                 default: hecate.port
-            }], (err, res) => {
+            }];
+
+            // if the username and password hasn't already been set, prompt for it
+            if (!hecate.user) {
+                args = args.concat(auth(hecate.user));
+            }
+
+            prompt.get(args, (err, res) => {
                 if (err) throw err;
 
                 hecate.url = res.url;
                 hecate.port = res.port;
+
+                if (res.hecate_username && res.hecate_password) {
+                    hecate.user = {
+                        username: res.hecate_username,
+                        password: res.hecate_password
+                    };
+                }
 
                 argv.cli = true;
 
@@ -197,17 +210,11 @@ if (require.main === module) {
         }
 
         function run() {
-            hecate.auth({}, (err, auth_rules) => {
-                if (err) throw err;
-
-                hecate.auth_rules = auth_rules;
-
-                if (!argv._[3]) {
-                    hecate[argv._[2]](argv);
-                } else {
-                    hecate._[argv._[2]][argv._[3]](argv);
-                }
-            });
+            if (!subcommand) {
+                hecate[command](argv);
+            } else {
+                hecate._[command][subcommand](argv);
+            }
         }
     };
 
