@@ -198,7 +198,7 @@ if (require.main === module) {
                     // fetch auth
                     hecate.auth({}, (err, auth_rules) => {
                         // if requesting auth returns a 401
-                        if (err.message === '401: Unauthorized') {
+                        if (err && err.message === '401: Unauthorized') {
                             // if username and password isn't set, prompt for it
                             if (!hecate.user) {
                                 prompt.get(auth(hecate.user), (err, res) => {
@@ -215,10 +215,7 @@ if (require.main === module) {
                                     });
                                 });
                             } else {
-                                console.error();
-                                console.error(`user ${hecate.user.username} is unauthorized to accesss /auth endpoint`);
-                                console.error();
-                                process.exit(1);
+                                return run();
                             }
                         } else {
                             hecate.auth_rules = auth_rules;
