@@ -16,7 +16,6 @@ class Hecate {
     constructor(api = {}) {
         this.url = api.url ? api.url : 'localhost';
         this.port = api.port ? api.port : '8000';
-
         this.user = false;
 
         if ((api.username || process.env.HECATE_USERNAME) && (api.password || process.env.HECATE_PASSWORD)) {
@@ -25,6 +24,8 @@ class Hecate {
                 password: api.password ? api.password : process.env.HECATE_PASSWORD
             };
         }
+
+        this.auth_rules = api.auth_rules ? api.auth_rules : null;
 
         // Instantiate New Library Instances
         this._ = {
@@ -159,6 +160,11 @@ if (require.main === module) {
             console.error(`"${command}" command not found!`);
             console.error();
             process.exit(1);
+        } else if (command && subcommand && !hecate._[command][subcommand]) {
+            console.error();
+            console.error(`"${command} ${subcommand}" command not found!`);
+            console.error();
+            process.exit(1);
         } else if (argv.help || !subcommand) {
             return hecate._[command].help();
         }
@@ -169,7 +175,7 @@ if (require.main === module) {
                 stdout: process.stderr
             });
 
-            let args = [{
+            prompt.get([{
                 name: 'url',
                 message: 'URL to hecate instance',
                 type: 'string',
@@ -181,29 +187,45 @@ if (require.main === module) {
                 type: 'string',
                 required: 'true',
                 default: hecate.port
-            }];
-
-            // if the username and password hasn't already been set, prompt for it
-            if (!hecate.user) {
-                args = args.concat(auth(hecate.user));
-            }
-
-            prompt.get(args, (err, res) => {
+            }], (err, res) => {
                 if (err) throw err;
-
                 hecate.url = res.url;
                 hecate.port = res.port;
-
-                if (res.hecate_username && res.hecate_password) {
-                    hecate.user = {
-                        username: res.hecate_username,
-                        password: res.hecate_password
-                    };
-                }
-
                 argv.cli = true;
 
-                return run();
+                // if a custom auth policy hasn't been passed
+                if (!hecate.auth_rules) {
+                    // fetch auth
+                    hecate.auth({}, (err, auth_rules) => {
+                        // if requesting auth returns a 401
+                        if (err.message === '401: Unauthorized') {
+                            // if username and password isn't set, prompt for it
+                            if (!hecate.user) {
+                                prompt.get(auth(hecate.user), (err, res) => {
+                                    if (err) throw err;
+                                    hecate.user = {
+                                        username: res.hecate_username,
+                                        password: res.hecate_password
+                                    };
+                                    // request auth again
+                                    hecate.auth({}, (err, auth_rules) => {
+                                        if (err) throw err;
+                                        hecate.auth_rules = auth_rules;
+                                        return run();
+                                    });
+                                });
+                            } else {
+                                console.error();
+                                console.error(`user ${hecate.user.username} is unauthorized to accesss /auth endpoint`);
+                                console.error();
+                                process.exit(1);
+                            }
+                        } else {
+                            hecate.auth_rules = auth_rules;
+                            return run();
+                        }
+                    });
+                } else return run();
             });
         } else {
             return run();
