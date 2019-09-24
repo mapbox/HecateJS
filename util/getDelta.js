@@ -12,7 +12,7 @@ function getDelta(argv, callback) {
     if (!argv.deltaId) return callback(new Error('A deltaId is required'));
 
     request({
-        url: `http://${argv.url}:${argv.port}/api/delta/${argv.deltaId}`,
+        url: `https://${argv.url}:${argv.port}/api/delta/${argv.deltaId}`,
         json: true
     }, (err, res) => {
         if (err) {

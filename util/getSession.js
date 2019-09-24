@@ -8,7 +8,7 @@ function getSession(options, callback) {
     if (!options.port) return callback(new Error('port is required'));
 
     request({
-        url: `http://${options.username}:${options.password}@${options.url}:${options.port}/api/user/session`,
+        url: `https://${options.username}:${options.password}@${options.url}:${options.port}/api/user/session`,
         json: true
     }, (err, res) => {
         if (err) {

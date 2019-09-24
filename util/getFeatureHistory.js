@@ -10,7 +10,7 @@ function getFeatureHistory(argv, featureId, callback) {
     if (!featureId) return callback(new Error('A feature ID is required'));
 
     request({
-        url: `http://${argv.url}:${argv.port}/api/data/feature/${featureId}/history`,
+        url: `https://${argv.url}:${argv.port}/api/data/feature/${featureId}/history`,
         json: true
     }, (err, res) => {
         if (err) {

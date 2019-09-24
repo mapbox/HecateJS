@@ -6,7 +6,7 @@ const test = require('tape').test;
 const nock = require('nock');
 
 test('lib.register.test.js', (t) => {
-    nock('http://localhost:7777')
+    nock('https://localhost:7777')
         .get('/api/user/create?username=ingalls&password=yeaheh&email=nick%40mapbox.com')
         .reply(200, true);
 

@@ -6,7 +6,7 @@ const test = require('tape').test;
 const nock = require('nock');
 
 test('lib.deltas.test.js', (t) => {
-    nock('http://localhost:7777')
+    nock('https://localhost:7777')
         .get('/api/deltas?limit=100')
         .reply(200, true);
 
@@ -23,7 +23,7 @@ test('lib.deltas.test.js', (t) => {
         });
     });
 
-    nock('http://localhost:7777')
+    nock('https://localhost:7777')
         .get('/api/deltas?limit=1')
         .reply(200, true);
 

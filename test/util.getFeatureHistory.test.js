@@ -10,7 +10,7 @@ test('Assert fails per missing arguments', (t) => {
 });
 
 test('Assert getting a feature history list', (t) => {
-    nock('http://localhost:7777')
+    nock('https://localhost:7777')
         .get('/api/data/feature/7/history')
         .reply(200, 'response is as expected');
 

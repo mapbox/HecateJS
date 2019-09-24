@@ -6,7 +6,7 @@ const test = require('tape').test;
 const nock = require('nock');
 
 test('lib.auth.test.js', (t) => {
-    nock('http://localhost:7777')
+    nock('https://localhost:7777')
         .get('/api/auth')
         .reply(200, {
             custom: 'auth'

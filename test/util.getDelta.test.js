@@ -12,7 +12,7 @@ test('Assert fails per missing arguments', (t) => {
 });
 
 test('Assert obtaining delta according to ID', (t) => {
-    nock('http://localhost:7777')
+    nock('https://localhost:7777')
         .get('/api/delta/1')
         .reply(200, 'response is as expected');
 

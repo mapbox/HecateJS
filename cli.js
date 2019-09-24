@@ -77,7 +77,7 @@ class Hecate {
             if (!elb.length || elb.length > 1) throw new Error('Could not find a single matching ELB Endpoint');
             elb = elb[0].OutputValue;
 
-            request(`http://${elb}`, (err, res) => {
+            request(`https://${elb}`, (err, res) => {
                 if (err) throw new Error('Failed to connect to ELB, are you in the same VPC?');
 
                 if (res.statusCode !== 200) throw new Error('Connected but recieved status code: ' + res.statusCode);
