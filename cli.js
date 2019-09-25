@@ -2,8 +2,6 @@
 
 'use strict';
 
-const AWS = require('aws-sdk');
-const cf = new AWS.CloudFormation({ region: 'us-east-1' });
 const request = require('request');
 const prompt = require('prompt');
 const auth = require('./util/get_auth');
@@ -62,35 +60,20 @@ class Hecate {
     }
 
     static stack(stack, auth, cb) {
-        cf.describeStacks({
-            StackName: `hecate-internal-${stack}`
-        }, (err, res) => {
-            if (err) return cb(err, res);
+        const url = `https://hecate-internal-${stack}.tilestream.net`;
+        request(url, (err, res) => {
+            if (err) throw new Error('Failed to connect');
 
-            // TODO: iterate through stacks and see if there is an exact match and not just multi-prefix match
-            if (res.Stacks.length > 1) throw new Error('Found more than 1 stack with that name');
+            if (res.statusCode !== 200) throw new Error('Connected but recieved status code: ' + res.statusCode);
 
-            let elb = res.Stacks[0].Outputs;
+            if (!auth) auth = {};
 
-            elb = elb.filter((output) => { return output.OutputKey === 'HecateELB'; });
-
-            if (!elb.length || elb.length > 1) throw new Error('Could not find a single matching ELB Endpoint');
-            elb = elb[0].OutputValue;
-
-            request(`https://${elb}`, (err, res) => {
-                if (err) throw new Error('Failed to connect to ELB, are you in the same VPC?');
-
-                if (res.statusCode !== 200) throw new Error('Connected but recieved status code: ' + res.statusCode);
-
-                if (!auth) auth = {};
-
-                return cb(null, new Hecate({
-                    url: elb,
-                    port: 80,
-                    username: auth.username,
-                    password: auth.password
-                }));
-            });
+            return cb(null, new Hecate({
+                url: url,
+                port: 80,
+                username: auth.username,
+                password: auth.password
+            }));
         });
     }
 }
@@ -184,9 +167,7 @@ if (require.main === module) {
             }, {
                 name: 'port',
                 message: '8000 for local, 8888 for connect.sh, 80 for --stack ELB',
-                type: 'string',
-                required: 'true',
-                default: hecate.port
+                type: 'string'
             }], (err, res) => {
                 if (err) throw err;
                 hecate.url = res.url;
