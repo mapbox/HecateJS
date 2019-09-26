@@ -6,15 +6,14 @@ const test = require('tape').test;
 const nock = require('nock');
 
 test('lib.auth.test.js', (t) => {
-    nock('https://localhost:7777')
+    nock('http://localhost:7777')
         .get('/api/auth')
         .reply(200, {
             custom: 'auth'
         });
 
     const hecate = new Hecate({
-        url: 'localhost',
-        port: '7777'
+        url: 'http://localhost:7777'
     });
 
     hecate.auth(null, (err, res) => {

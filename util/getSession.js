@@ -5,11 +5,11 @@ function getSession(options, callback) {
     if (!options.username) return callback(new Error('username is required'));
     if (!options.password) return callback(new Error('password is required'));
     if (!options.url) return callback(new Error('URL is required'));
-    if (!options.port) return callback(new Error('port is required'));
 
     request({
-        url: `https://${options.username}:${options.password}@${options.url}:${options.port}/api/user/session`,
-        json: true
+        url: new URL('/api/user/session', options.url),
+        json: true,
+        auth: { username: options.username, password: options.password }
     }, (err, res) => {
         if (err) {
             console.error(`ERROR: Could not retrieve session of ${options.username}`);

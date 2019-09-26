@@ -6,13 +6,12 @@ const test = require('tape').test;
 const nock = require('nock');
 
 test('lib.deltas.test.js', (t) => {
-    nock('https://localhost:7777')
+    nock('http://localhost:7777')
         .get('/api/deltas?limit=100')
         .reply(200, true);
 
     const hecate = new Hecate({
-        url: 'localhost',
-        port: '7777'
+        url: 'http://localhost:7777'
     });
 
     t.test('lib.deltas.test.js - default', (q) => {
@@ -23,7 +22,7 @@ test('lib.deltas.test.js', (t) => {
         });
     });
 
-    nock('https://localhost:7777')
+    nock('http://localhost:7777')
         .get('/api/deltas?limit=1')
         .reply(200, true);
 

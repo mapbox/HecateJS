@@ -6,13 +6,12 @@ const test = require('tape').test;
 const nock = require('nock');
 
 test('lib.register.test.js', (t) => {
-    nock('https://localhost:7777')
+    nock('http://localhost:7777')
         .get('/api/user/create?username=ingalls&password=yeaheh&email=nick%40mapbox.com')
         .reply(200, true);
 
     const hecate = new Hecate({
-        url: 'localhost',
-        port: '7777'
+        url: 'http://localhost:7777'
     });
 
     t.test('lib.register.test.js - missing username', (q) => {
