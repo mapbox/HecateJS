@@ -13,8 +13,7 @@ test('lib.auth.test.js', (t) => {
         });
 
     const hecate = new Hecate({
-        url: 'localhost',
-        port: '7777'
+        url: 'http://localhost:7777'
     });
 
     hecate.auth(null, (err, res) => {

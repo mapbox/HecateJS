@@ -23,7 +23,7 @@ yarn global add `@mapbox/hecatejs'
 <details>
 
 Note: if the username & password is not explicitly set, Hecate will fallback to checking for
-a `HECATE_USERNAME` & `HECATE_PASSWORD` environment variable.
+a `HECATE_USERNAME` & `HECATE_PASSWORD` environment variable. For the `url` parameter, be sure to include the protocol and (if necessary) port number.
 
 **JS Library**
 
@@ -33,29 +33,26 @@ const Hecate = require('@mapbox/hecatejs');
 const hecate = new Hecate({
     username: 'ingalls',
     password: 'yeaheh',
-    url: 'example.com/hecate',
-    port: 8000
+    url: 'https://example.com/hecate',
 });
 ```
 
 **CLI**
 
 The CLI tool must be provided the URL to connect to for each subcommand.
-This can be accomplished by manually setting the URL/Port or by letting it
-query for Hecate resources on a signed in AWS account.
+This can be accomplished by providing the URL to a local or remote Hecate server. Be sure to include the protocol and, for local connections, the port number.
 
-
-The --url/port or --stack options must be provided for every subcommand
-but are omitted in this guide for clarity.
+The --url option must be provided for every subcommand but is omitted in this guide for clarity.
 
 ```sh
-./cli.js --url 'example.com' --port 8000
+# Connecting to a remote hecate server
+./cli.js --url 'https://example.com'
 ```
 
 ```sh
-./cli.js --stack buildings
+# Connecting to a local hecate server
+./cli.js --url 'http://localhost:8000'
 ```
-_Would find the AWS ELB for a CloudFormation stack called `hecate-internal-buildings`_
 
 </details>
 

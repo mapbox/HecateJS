@@ -8,11 +8,10 @@ const request = require('request');
 
 function getDelta(argv, callback) {
     if (!argv.url) return callback(new Error('URL is required'));
-    if (!argv.port) return callback(new Error('A port is required'));
     if (!argv.deltaId) return callback(new Error('A deltaId is required'));
 
     request({
-        url: `http://${argv.url}:${argv.port}/api/delta/${argv.deltaId}`,
+        url: new URL(`/api/delta/${argv.deltaId}`, argv.url),
         json: true
     }, (err, res) => {
         if (err) {

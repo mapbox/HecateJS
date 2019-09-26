@@ -11,8 +11,7 @@ test('lib.register.test.js', (t) => {
         .reply(200, true);
 
     const hecate = new Hecate({
-        url: 'localhost',
-        port: '7777'
+        url: 'http://localhost:7777'
     });
 
     t.test('lib.register.test.js - missing username', (q) => {
