@@ -10,6 +10,13 @@
 
 ## Version History
 
+### v10.0.0
+
+- :tada: Add support for authenticating all requests to Hecate
+- :rocket: Remove support for `stack` parameter and ELB lookup
+- :rocket: Remove support for `port` parameter; should be included with `url`
+- :rocket: Add `url` validation
+
 ### v9.1.0
 
 - :tada: Add support for the new webhooks API
@@ -83,4 +90,3 @@
 ### v7.0.0
 
 - :tada: Introduce EOT checks on all streaming API endpoints
-
