@@ -15,7 +15,7 @@ yarn add '@mapbox/hecatejs'
 **CLI**
 
 ```sh
-yarn global add `@mapbox/hecatejs'
+yarn global add '@mapbox/hecatejs'
 ```
 
 <h3 align=center>Instantiation</h3>
