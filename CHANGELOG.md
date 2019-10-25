@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v10.0.1
+
+- :rocket: Add helper functions for features endpoints
+
 ### v10.0.0
 
 - :tada: Add support for authenticating all requests to Hecate
