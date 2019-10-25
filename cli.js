@@ -55,6 +55,9 @@ class Hecate {
         this.schema = (...opts) => this._.schema.get(...opts);
         this.import = (...opts) => this._.import.multi(...opts);
         this.revert = (...opts) => this._.revert.revert(...opts);
+        this.getFeatureHistory = (...opts) => this._.feature.history(...opts);
+        this.getFeatureKey = (...opts) => this._.feature.key(...opts);
+        this.getFeature = (...opts) => this._.feature.get(...opts);
     }
 }
 
