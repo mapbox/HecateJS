@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v10.0.2
+
+- :rocket: Add support for `offset` parameter for list deltas endpoint
+
 ### v10.0.1
 
 - :rocket: Add helper functions for features endpoints
