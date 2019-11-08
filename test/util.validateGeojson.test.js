@@ -3,6 +3,7 @@
 // Test lib/validateGeojson.js to confirm that the errors and asserts are the expected ones
 const path = require('path');
 const tape = require('tape');
+const fs = require('fs');
 const validateGeojson = require('../util/validateGeojson.js');
 
 // Assert the errors in the geojson file
@@ -68,3 +69,61 @@ tape('Assert valid features', (t) => {
     t.equals(geojsonErrs.length, 0, 'file is a valid geoJSON file');
     t.end();
 });
+
+tape.only('Assert fails according to schema ', (t) => {
+    const pathName = path.resolve(__dirname, '.', './fixtures/invalid-geojson-schema.json');
+    const schema = fs.readFileSync(path.resolve(__dirname, '.', './fixtures/schema.json'), 'utf8');
+    let message;
+    let error;
+    let description;
+    let linenumber;
+
+    // Validate the corrupted sample data
+    const geojsonErrs = validateGeojson(pathName, { schema: JSON.parse(schema) });
+    t.ok(geojsonErrs.length > 0, true, 'file is not a valid geoJSON file');
+    
+    for (let item in geojsonErrs) {
+        message = JSON.parse(geojsonErrs[item]);
+        item = parseInt(item);
+
+        switch (item) {
+            case 0:
+                linenumber = 1;
+                error = '[{"message":"should have required property \'source\'"}]';
+                description = 'should have required property \'source\'';
+                break;
+            case 1:
+                linenumber = 2;
+                error = '[{"message":"should have required property \'street\'"}]';
+                description = 'should have required property \'street\'';
+                break;
+            case 2:
+                linenumber = 3;
+                error = '[{"message":"should have required property \'number\'"}]';
+                description = 'should have required property \'number\'';
+                break;
+            case 3:
+                linenumber = 4;
+                error = '[{"message":"should be equal to one of the allowed values"}]';
+                description = 'prop1 should be equal to one of the allowed values';
+                break;
+            case 4:
+                linenumber = 5;
+                error = '[{"message":"should be string,number"}]';
+                description = 'postcode should be string,number';
+                break;
+            case 5:
+                linenumber = 6;
+                error = '[{"message":"should be array"}]';
+                description = 'street should be array';
+                break;
+        }
+
+        if (linenumber) {
+            t.equals(message.linenumber, linenumber, `the line number is ${linenumber}`);
+            t.equals(JSON.stringify(message.error), error, description);
+        }
+    }
+    t.end();
+});
+

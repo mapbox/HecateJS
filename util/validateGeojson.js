@@ -5,6 +5,7 @@ const readLineSync = require('n-readlines');
 const path = require('path');
 const turf = require('@turf/turf');
 const rewind = require('geojson-rewind');
+const Ajv = require('ajv');
 
 /**
  * Ensure geometries are valid before import
@@ -48,6 +49,14 @@ function validateGeojson(filepath, opts = {}) {
             }
         });
 
+        // Validate that the feature has the required properties by the schema
+        if (opts.schema) {
+            validateBySchema(opts.schema, feature.properties, (err, res) => {
+                if (err) errors.push({ message: err.message });
+                else if (res) res.forEach((e) => { errors.push({ message: e.message }); });
+            });
+        }
+
         if (
             !feature.geometry
             || !feature.geometry.coordinates
@@ -77,6 +86,15 @@ function validateGeojson(filepath, opts = {}) {
         if (errors.length) {
             corruptedfeatures.push(JSON.stringify({ 'linenumber': linenumber, 'error': errors, 'filename': filename }));
         }
+    }
+
+    function validateBySchema(schema, feature, callback) {
+        const ajv = new Ajv({ schemaId: 'id' });
+
+        ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
+        const valid = ajv.validate(schema, feature);
+        if (!valid) return callback(null, ajv.errors);
+        return callback();
     }
 
     return corruptedfeatures;
