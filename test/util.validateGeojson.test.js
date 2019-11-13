@@ -81,7 +81,7 @@ tape.only('Assert fails according to schema ', (t) => {
     // Validate the corrupted sample data
     const geojsonErrs = validateGeojson(pathName, { schema: JSON.parse(schema) });
     t.ok(geojsonErrs.length > 0, true, 'file is not a valid geoJSON file');
-    
+
     for (let item in geojsonErrs) {
         message = JSON.parse(geojsonErrs[item]);
         item = parseInt(item);
