@@ -1,11 +1,22 @@
 'use strict';
 
+const transform = require('parallel-transform');
 const geojsonhint = require('@mapbox/geojsonhint').hint;
 const readLineSync = require('n-readlines');
 const path = require('path');
 const turf = require('@turf/turf');
 const rewind = require('geojson-rewind');
 const Ajv = require('ajv');
+
+const ajv = new Ajv({
+    schemaId: 'auto'
+});
+
+ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
+
+
+// list of errors linked to the file name and line number
+const corruptedfeatures = [];
 
 /**
  * Ensure geometries are valid before import
@@ -15,36 +26,29 @@ const Ajv = require('ajv');
  * @param {boolean} opts.ignoreRHR=false Ignore Right Hand Rule errors
  */
 function validateGeojson(filepath, opts = {}) {
-    // Read each feature
-    const rl = new readLineSync(filepath);
-    // Get the file name
-    const filename = path.basename(filepath);
     // Flag to track the feature line number
     let linenumber = 0;
-    // list of errors linked to the file name and line number
-    const corruptedfeatures = [];
-
-    const ajv = new Ajv({
-        schemaId: 'auto'
-    });
 
     let validate = false;
 
-    ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
     if (opts.schema) {
         validate = ajv.compile(opts.schema);
     }
 
-    let line = true;
+    return transform(1, (feat, cb) => {
+        if (!feat || !feat.trim()) return;
 
-    while (line) {
-        line = rl.next();
-        if (!line) break;
+        validateFeature(feat.toString('utf8'));
 
-        validateFeature(line.toString('utf8'));
+        if (corruptedfeatures.length) {
+            corruptedfeatures((feat) => {
+                console.error(feat);
+            });
+            throw new Error('Invalid Features');
+        };
 
-        if (corruptedfeatures.length > 100) break;
-    }
+        return cb();
+    });
 
     // Validate each feature
     function validateFeature(line) {
@@ -62,10 +66,14 @@ function validateGeojson(filepath, opts = {}) {
 
         // Validate that the feature has the required properties by the schema
         if (validate) {
-            validateBySchema(feature.properties, (err, res) => {
-                if (err) errors.push({ message: err.message });
-                else if (res) res.forEach((e) => { errors.push({ message: e.message }); });
-            });
+            const schemaErrors = validate(feature.properties);
+            if (schemaErrors) {
+                schemaErrors.forEach((e) => {
+                    errors.push({
+                        message: e.message
+                    });
+                });
+            }
         }
 
         if (
@@ -95,17 +103,13 @@ function validateGeojson(filepath, opts = {}) {
         }
 
         if (errors.length) {
-            corruptedfeatures.push(JSON.stringify({ 'linenumber': linenumber, 'error': errors, 'filename': filename }));
+            corruptedfeatures.push(JSON.stringify({
+                'linenumber': linenumber,
+                'error': errors,
+                'filename': filename
+            }));
         }
     }
-
-    function validateBySchema(feature, callback) {
-        const valid = validate(feature.properties);
-        if (!valid) return callback(null, ajv.errors);
-        return callback();
-    }
-
-    return corruptedfeatures;
 }
 
 module.exports = validateGeojson;

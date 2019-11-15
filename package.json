@@ -28,9 +28,11 @@
     "n-readlines": "^1.0.0 ",
     "nock": "^10.0.6",
     "node-mb-string-size": "^1.0.3",
+    "parallel-transform": "^1.2.0",
     "prompt": "^1.0.0",
     "request": "^2.88.0",
-    "requestretry": "^4.0.0"
+    "requestretry": "^4.0.0",
+    "split": "^1.0.1"
   },
   "eslintConfig": {
     "extends": "@mapbox/eslint-config-geocoding"
