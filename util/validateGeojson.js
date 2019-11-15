@@ -24,6 +24,17 @@ function validateGeojson(filepath, opts = {}) {
     // list of errors linked to the file name and line number
     const corruptedfeatures = [];
 
+    const ajv = new Ajv({
+        schemaId: 'auto'
+    });
+
+    let validate = false;
+
+    ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
+    if (opts.schema) {
+        validate = ajv.compile(opts.schema);
+    }
+
     let line = true;
 
     while (line) {
@@ -50,8 +61,8 @@ function validateGeojson(filepath, opts = {}) {
         });
 
         // Validate that the feature has the required properties by the schema
-        if (opts.schema) {
-            validateBySchema(opts.schema, feature.properties, (err, res) => {
+        if (validate) {
+            validateBySchema(feature.properties, (err, res) => {
                 if (err) errors.push({ message: err.message });
                 else if (res) res.forEach((e) => { errors.push({ message: e.message }); });
             });
@@ -88,11 +99,8 @@ function validateGeojson(filepath, opts = {}) {
         }
     }
 
-    function validateBySchema(schema, feature, callback) {
-        const ajv = new Ajv({ schemaId: 'id' });
-
-        ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
-        const valid = ajv.validate(schema, feature);
+    function validateBySchema(feature, callback) {
+        const valid = validate(feature.properties);
         if (!valid) return callback(null, ajv.errors);
         return callback();
     }
