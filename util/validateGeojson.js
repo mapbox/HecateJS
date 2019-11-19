@@ -21,11 +21,11 @@ const corruptedfeatures = [];
 /**
  * Ensure geometries are valid before import
  *
- * @param {String} filepath File to validate against
- * @param {Object} opts
+ * @param {Object} opts Options object
  * @param {boolean} opts.ignoreRHR=false Ignore Right Hand Rule errors
+ * @param {Object} opts.schema JSON Schema to validate properties against
  */
-function validateGeojson(filepath, opts = {}) {
+function validateGeojson(opts = {}) {
     // Flag to track the feature line number
     let linenumber = 0;
 
@@ -36,7 +36,7 @@ function validateGeojson(filepath, opts = {}) {
     }
 
     return transform(1, (feat, cb) => {
-        if (!feat || !feat.trim()) return;
+        if (!feat || !feat.trim()) return cb(null, '');
 
         validateFeature(feat.toString('utf8'));
 
@@ -47,7 +47,7 @@ function validateGeojson(filepath, opts = {}) {
             throw new Error('Invalid Features');
         };
 
-        return cb();
+        return cb(null, '');
     });
 
     // Validate each feature
