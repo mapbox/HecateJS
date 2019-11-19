@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v10.0.3
+
+- :arrow_up: Update to latest base dependencies
+
 ### v10.0.2
 
 - :rocket: Add support for `offset` parameter for list deltas endpoint
