@@ -2,8 +2,6 @@
 
 const transform = require('parallel-transform');
 const geojsonhint = require('@mapbox/geojsonhint').hint;
-const readLineSync = require('n-readlines');
-const path = require('path');
 const turf = require('@turf/turf');
 const rewind = require('geojson-rewind');
 const Ajv = require('ajv');
@@ -45,7 +43,7 @@ function validateGeojson(opts = {}) {
                 console.error(error);
             });
             throw new Error('Invalid Feature');
-        };
+        }
 
         return cb(null, '');
     });
