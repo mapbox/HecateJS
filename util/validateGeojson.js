@@ -15,9 +15,6 @@ const ajv = new Ajv({
 ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
 
 
-// list of errors linked to the file name and line number
-const corruptedfeatures = [];
-
 /**
  * Ensure geometries are valid before import
  *
@@ -29,22 +26,25 @@ function validateGeojson(opts = {}) {
     // Flag to track the feature line number
     let linenumber = 0;
 
-    let validate = false;
+    let validateSchema = false;
 
     if (opts.schema) {
-        validate = ajv.compile(opts.schema);
+        validateSchema = ajv.compile(opts.schema);
     }
+
+    // list of errors linked to the file name and line number
+    const errors = [];
 
     return transform(1, (feat, cb) => {
         if (!feat || !feat.trim()) return cb(null, '');
 
         validateFeature(feat.toString('utf8'));
 
-        if (corruptedfeatures.length) {
-            corruptedfeatures((feat) => {
-                console.error(feat);
+        if (errors.length) {
+            errors.map((error) => {
+                console.error(error);
             });
-            throw new Error('Invalid Features');
+            throw new Error('Invalid Feature');
         };
 
         return cb(null, '');
@@ -54,7 +54,6 @@ function validateGeojson(opts = {}) {
     function validateFeature(line) {
         const feature = rewind(JSON.parse(line));
         linenumber++;
-        let errors = [];
 
         const geojsonErrs = geojsonhint(feature).filter((err) => {
             if (opts.ignoreRHR && err.message === 'Polygons and MultiPolygons should follow the right-hand rule') {
@@ -65,12 +64,13 @@ function validateGeojson(opts = {}) {
         });
 
         // Validate that the feature has the required properties by the schema
-        if (validate) {
-            const schemaErrors = validate(feature.properties);
-            if (schemaErrors) {
-                schemaErrors.forEach((e) => {
+        if (validateSchema) {
+            validateSchema(feature.properties);
+            if (validateSchema.errors) {
+                validateSchema.errors.forEach((e) => {
                     errors.push({
-                        message: e.message
+                        message: e.message,
+                        linenumber: linenumber
                     });
                 });
             }
@@ -82,32 +82,40 @@ function validateGeojson(opts = {}) {
             || !feature.geometry.coordinates.length
         ) {
             errors.push({
-                'message': 'Null or Invalid Geometry'
+                'message': 'Null or Invalid Geometry',
+                linenumber: linenumber
             });
         }
 
         if (geojsonErrs.length) {
-            errors = errors.concat(geojsonErrs);
+            for (const err of geojsonErrs) {
+                errors.push({
+                    message: err.message,
+                    linenumber: linenumber
+                });
+            }
         } else { // if the geojson is invalid, turf will err
             turf.coordEach(feature, (coords) => {
                 if (coords[0] < -180 || coords[0] > 180) {
-                    errors.push('longitude must be between -180 and 180');
+                    errors.push({
+                        message: 'longitude must be between -180 and 180',
+                        linenumber: linenumber
+                    });
                 }
                 if (coords[1] < -90 || coords[1] > 90) {
-                    errors.push('latitude must be between -90 and 90');
+
+                    errors.push({
+                        message: 'latitude must be between -90 and 90',
+                        linenumber: linenumber
+                    });
                 }
                 if (coords[0] === 0 && coords[1] === 0) {
-                    errors.push('coordinates must be other than [0,0]');
+                    errors.push({
+                        message: 'coordinates must be other than [0,0]',
+                        linenumber: linenumber
+                    });
                 }
             });
-        }
-
-        if (errors.length) {
-            corruptedfeatures.push(JSON.stringify({
-                'linenumber': linenumber,
-                'error': errors,
-                'filename': filename
-            }));
         }
     }
 }
