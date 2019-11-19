@@ -9,79 +9,79 @@
 -   [BBox][5]
     -   [get][6]
         -   [Parameters][7]
--   [Bounds][8]
-    -   [stats][9]
-        -   [Parameters][10]
-    -   [list][11]
+-   [validateBbox][8]
+    -   [Parameters][9]
+-   [Bounds][10]
+    -   [stats][11]
         -   [Parameters][12]
-    -   [get][13]
+    -   [list][13]
         -   [Parameters][14]
-    -   [meta][15]
+    -   [get][15]
         -   [Parameters][16]
-    -   [delete][17]
+    -   [meta][17]
         -   [Parameters][18]
-    -   [set][19]
+    -   [delete][19]
         -   [Parameters][20]
--   [Clone][21]
-    -   [get][22]
-        -   [Parameters][23]
--   [Deltas][24]
-    -   [list][25]
-        -   [Parameters][26]
-    -   [get][27]
+    -   [set][21]
+        -   [Parameters][22]
+-   [Clone][23]
+    -   [get][24]
+        -   [Parameters][25]
+-   [Deltas][26]
+    -   [list][27]
         -   [Parameters][28]
--   [Feature][29]
-    -   [history][30]
-        -   [Parameters][31]
-    -   [key][32]
+    -   [get][29]
+        -   [Parameters][30]
+-   [Feature][31]
+    -   [history][32]
         -   [Parameters][33]
-    -   [get][34]
+    -   [key][34]
         -   [Parameters][35]
--   [Import][36]
--   [validateGeojson][37]
-    -   [Parameters][38]
--   [Revert][39]
--   [getDelta][40]
-    -   [Parameters][41]
--   [getFeatureHistory][42]
+    -   [get][36]
+        -   [Parameters][37]
+-   [Import][38]
+-   [validateGeojson][39]
+    -   [Parameters][40]
+-   [Revert][41]
+-   [getDelta][42]
     -   [Parameters][43]
--   [Schema][44]
--   [Server][45]
-    -   [get][46]
-        -   [Parameters][47]
-    -   [stats][48]
+-   [getFeatureHistory][44]
+    -   [Parameters][45]
+-   [Schema][46]
+-   [Server][47]
+    -   [get][48]
         -   [Parameters][49]
--   [Tiles][50]
-    -   [get][51]
-        -   [Parameters][52]
--   [User][53]
--   [Webhooks][54]
-    -   [list][55]
-        -   [Parameters][56]
-    -   [get][57]
+    -   [stats][50]
+        -   [Parameters][51]
+-   [Tiles][52]
+    -   [get][53]
+        -   [Parameters][54]
+-   [User][55]
+-   [Webhooks][56]
+    -   [list][57]
         -   [Parameters][58]
-    -   [delete][59]
+    -   [get][59]
         -   [Parameters][60]
-    -   [update][61]
+    -   [delete][61]
         -   [Parameters][62]
-    -   [create][63]
+    -   [update][63]
         -   [Parameters][64]
--   [validateBbox][65]
-    -   [Parameters][66]
+    -   [create][65]
+        -   [Parameters][66]
 
 ## Hecate
 
-[cli.js:14-96][67]
+[cli.js:12-62][67]
 
 ## Auth
 
-[lib/auth.js:13-72][68]
+[lib/auth.js:13-73][68]
 
 -   **See: [Hecate Documentation][69]**
 
 ### get
 
-[lib/auth.js:36-71][70]
+[lib/auth.js:36-72][70]
 
 Return the auth settings for a given hecate instance
 
@@ -110,15 +110,27 @@ Currently supports downloading features by bbox
     -   `options.output` **[Stream][78]?** Stream to write line-delimited GeoJSON to
 -   `cb` **[function][72]** (err, res) style callback function
 
+## validateBbox
+
+[util/validateBbox.js:9-39][79]
+
+Accepts a bbox as a string or array, and validates (naive with regards to the Antimeridian)
+
+### Parameters
+
+-   `bboxInput` **([Array][76] \| [string][77])** Array in the format [minX,minY,maxX,maxY] or string in the format minX,minY,maxX,maxY
+
+Returns **[string][77]** String in the format minX,minY,maxX,maxY
+
 ## Bounds
 
-[lib/bounds.js:16-516][79]
+[lib/bounds.js:16-516][80]
 
--   **See: [Hecate Documentation][80]**
+-   **See: [Hecate Documentation][81]**
 
 ### stats
 
-[lib/bounds.js:44-113][81]
+[lib/bounds.js:44-113][82]
 
 Return stats of geo data within a give bounds
 
@@ -129,7 +141,7 @@ Return stats of geo data within a give bounds
 
 ### list
 
-[lib/bounds.js:122-181][82]
+[lib/bounds.js:122-181][83]
 
 Return a list of the bounds that are currently loaded on the server
 
@@ -140,7 +152,7 @@ Return a list of the bounds that are currently loaded on the server
 
 ### get
 
-[lib/bounds.js:193-263][83]
+[lib/bounds.js:193-263][84]
 
 Queries the /api/data/bounds endpoints, returning a
 line-delimited stream of GeoJSON Features
@@ -154,7 +166,7 @@ line-delimited stream of GeoJSON Features
 
 ### meta
 
-[lib/bounds.js:273-344][84]
+[lib/bounds.js:273-344][85]
 
 Returns underlying bounds geojson for a given bounds
 
@@ -166,7 +178,7 @@ Returns underlying bounds geojson for a given bounds
 
 ### delete
 
-[lib/bounds.js:354-422][85]
+[lib/bounds.js:354-422][86]
 
 Delete a boundary file
 
@@ -178,7 +190,7 @@ Delete a boundary file
 
 ### set
 
-[lib/bounds.js:433-515][86]
+[lib/bounds.js:433-515][87]
 
 Create or update a boundary file
 
@@ -191,13 +203,13 @@ Create or update a boundary file
 
 ## Clone
 
-[lib/clone.js:16-101][87]
+[lib/clone.js:16-101][88]
 
--   **See: [Hecate Documentation][88]**
+-   **See: [Hecate Documentation][89]**
 
 ### get
 
-[lib/clone.js:40-100][89]
+[lib/clone.js:40-100][90]
 
 Clone all data on a given hecate server
 
@@ -209,13 +221,13 @@ Clone all data on a given hecate server
 
 ## Deltas
 
-[lib/deltas.js:15-187][90]
+[lib/deltas.js:15-198][91]
 
--   **See: [Hecate Documentation][91]**
+-   **See: [Hecate Documentation][92]**
 
 ### list
 
-[lib/deltas.js:39-109][92]
+[lib/deltas.js:40-119][93]
 
 Queries the recent deltas list, returning the most recent 100 deltas
 
@@ -223,11 +235,12 @@ Queries the recent deltas list, returning the most recent 100 deltas
 
 -   `options` **![Object][71]** Options for making a request to the deltas endpoint (optional, default `{}`)
     -   `options.limit` **[String][77]** Number of deltas to list by default (optional, default `100`)
+    -   `options.offset` **[String][77]?** delta id to start listing at
 -   `cb` **[function][72]** (err, res) style callback function
 
 ### get
 
-[lib/deltas.js:118-186][93]
+[lib/deltas.js:128-197][94]
 
 Returns data about a specific delta
 
@@ -238,13 +251,13 @@ Returns data about a specific delta
 
 ## Feature
 
-[lib/feature.js:15-268][94]
+[lib/feature.js:15-271][95]
 
--   **See: [Hecate Documentation][95]**
+-   **See: [Hecate Documentation][96]**
 
 ### history
 
-[lib/feature.js:41-109][96]
+[lib/feature.js:41-110][97]
 
 Queries the feature store endpoint, returning a history of a
 GeoJSON Feature
@@ -257,7 +270,7 @@ GeoJSON Feature
 
 ### key
 
-[lib/feature.js:120-188][97]
+[lib/feature.js:121-190][98]
 
 Queries the feature store endpoint by key, returning a
 GeoJSON Feature
@@ -270,7 +283,7 @@ GeoJSON Feature
 
 ### get
 
-[lib/feature.js:199-267][98]
+[lib/feature.js:201-270][99]
 
 Queries the feature store endpoint, returning a
 GeoJSON Feature
@@ -283,13 +296,13 @@ GeoJSON Feature
 
 ## Import
 
-[lib/import.js:41-208][99]
+[lib/import.js:41-208][100]
 
--   **See: [Hecate Documentation][100]**
+-   **See: [Hecate Documentation][101]**
 
 ## validateGeojson
 
-[util/validateGeojson.js:16-83][101]
+[util/validateGeojson.js:16-83][102]
 
 Ensure geometries are valid before import
 
@@ -297,15 +310,15 @@ Ensure geometries are valid before import
 
 -   `filepath` **[String][77]** File to validate against
 -   `opts` **[Object][71]**  (optional, default `{}`)
-    -   `opts.ignoreRHR` **[boolean][102]** =false Ignore Right Hand Rule errors
+    -   `opts.ignoreRHR` **[boolean][103]** =false Ignore Right Hand Rule errors
 
 ## Revert
 
-[lib/revert.js:14-244][103]
+[lib/revert.js:14-243][104]
 
 ## getDelta
 
-[util/getDelta.js:9-24][104]
+[util/getDelta.js:9-23][105]
 
 Get a specific delta that contains a feature collection
 
@@ -313,35 +326,35 @@ Get a specific delta that contains a feature collection
 
 -   `argv` **[object][71]** 
 -   `callback`  
--   `id` **[number][105]** 
+-   `id` **[number][106]** 
 
 ## getFeatureHistory
 
-[util/getFeatureHistory.js:9-22][106]
+[util/getFeatureHistory.js:9-22][107]
 
 Get history of a specific feature
 
 ### Parameters
 
 -   `argv` **[object][71]** 
--   `featureId` **[number][105]** 
+-   `featureId` **[number][106]** 
 -   `callback`  
 
 ## Schema
 
-[lib/schema.js:15-94][107]
+[lib/schema.js:15-94][108]
 
--   **See: [Hecate Documentation][108]**
+-   **See: [Hecate Documentation][109]**
 
 ## Server
 
-[lib/server.js:15-164][109]
+[lib/server.js:15-163][110]
 
--   **See: [Hecate Documentation][110]**
+-   **See: [Hecate Documentation][111]**
 
 ### get
 
-[lib/server.js:39-96][111]
+[lib/server.js:39-96][112]
 
 Get server metadata
 
@@ -352,7 +365,7 @@ Get server metadata
 
 ### stats
 
-[lib/server.js:105-163][112]
+[lib/server.js:105-162][113]
 
 Get server stats
 
@@ -363,13 +376,13 @@ Get server stats
 
 ## Tiles
 
-[lib/tiles.js:15-107][113]
+[lib/tiles.js:15-108][114]
 
--   **See: [Hecate Documentation][114]**
+-   **See: [Hecate Documentation][115]**
 
 ### get
 
-[lib/tiles.js:38-106][115]
+[lib/tiles.js:38-107][116]
 
 Fetch a Mapbox Vector Tile for the given zxy
 
@@ -381,19 +394,19 @@ Fetch a Mapbox Vector Tile for the given zxy
 
 ## User
 
-[lib/user.js:15-246][116]
+[lib/user.js:15-246][117]
 
--   **See: [Hecate Documentation][117]**
+-   **See: [Hecate Documentation][118]**
 
 ## Webhooks
 
-[lib/webhooks.js:17-476][118]
+[lib/webhooks.js:15-475][119]
 
--   **See: [Hecate Documentation][119]**
+-   **See: [Hecate Documentation][120]**
 
 ### list
 
-[lib/webhooks.js:43-102][120]
+[lib/webhooks.js:42-101][121]
 
 Queries hecate /api/webhooks endpoint
 
@@ -404,38 +417,38 @@ Queries hecate /api/webhooks endpoint
 
 ### get
 
-[lib/webhooks.js:112-181][121]
+[lib/webhooks.js:111-180][122]
 
 Get a specific webhook given the ID
 
 #### Parameters
 
 -   `options` **![Object][71]** Options for making a request to the hecate /api/webhooks endpoint (optional, default `{}`)
-    -   `options.id` **[Number][105]** ID of the webhook to retreive
+    -   `options.id` **[Number][106]** ID of the webhook to retreive
 -   `cb` **[function][72]** (err, res) style callback function
 
 ### delete
 
-[lib/webhooks.js:191-260][122]
+[lib/webhooks.js:190-259][123]
 
 Delete a specific webhook given the ID
 
 #### Parameters
 
 -   `options` **![Object][71]** Options for making a request to the hecate /api/webhooks endpoint (optional, default `{}`)
-    -   `options.id` **[Number][105]** ID of the webhook to delete
+    -   `options.id` **[Number][106]** ID of the webhook to delete
 -   `cb` **[function][72]** (err, res) style callback function
 
 ### update
 
-[lib/webhooks.js:273-372][123]
+[lib/webhooks.js:272-371][124]
 
 Update a given webhook ID
 
 #### Parameters
 
 -   `options` **![Object][71]** Options for making a request to the hecate /api/webhooks endpoint (optional, default `{}`)
-    -   `options.id` **[Number][105]** ID of the webhook to update
+    -   `options.id` **[Number][106]** ID of the webhook to update
     -   `options.name` **[String][77]** Name of the webhook
     -   `options.url` **[String][77]** URL of the webhook
     -   `options.actions` **[Array][76]&lt;[String][77]>** server actions the webhook should be fired on
@@ -443,7 +456,7 @@ Update a given webhook ID
 
 ### create
 
-[lib/webhooks.js:384-475][124]
+[lib/webhooks.js:383-474][125]
 
 Create a new webhook
 
@@ -454,18 +467,6 @@ Create a new webhook
     -   `options.url` **[String][77]** URL of the webhook
     -   `options.actions` **[Array][76]&lt;[String][77]>** server actions the webhook should be fired on
 -   `cb` **[function][72]** (err, res) style callback function
-
-## validateBbox
-
-[util/validateBbox.js:9-39][125]
-
-Accepts a bbox as a string or array, and validates (naive with regards to the Antimeridian)
-
-### Parameters
-
--   `bboxInput` **([Array][76] \| [string][77])** Array in the format [minX,minY,maxX,maxY] or string in the format minX,minY,maxX,maxY
-
-Returns **[string][77]** String in the format minX,minY,maxX,maxY
 
 [1]: #hecate
 
@@ -481,141 +482,141 @@ Returns **[string][77]** String in the format minX,minY,maxX,maxY
 
 [7]: #parameters-1
 
-[8]: #bounds
+[8]: #validatebbox
 
-[9]: #stats
+[9]: #parameters-2
 
-[10]: #parameters-2
+[10]: #bounds
 
-[11]: #list
+[11]: #stats
 
 [12]: #parameters-3
 
-[13]: #get-2
+[13]: #list
 
 [14]: #parameters-4
 
-[15]: #meta
+[15]: #get-2
 
 [16]: #parameters-5
 
-[17]: #delete
+[17]: #meta
 
 [18]: #parameters-6
 
-[19]: #set
+[19]: #delete
 
 [20]: #parameters-7
 
-[21]: #clone
+[21]: #set
 
-[22]: #get-3
+[22]: #parameters-8
 
-[23]: #parameters-8
+[23]: #clone
 
-[24]: #deltas
+[24]: #get-3
 
-[25]: #list-1
+[25]: #parameters-9
 
-[26]: #parameters-9
+[26]: #deltas
 
-[27]: #get-4
+[27]: #list-1
 
 [28]: #parameters-10
 
-[29]: #feature
+[29]: #get-4
 
-[30]: #history
+[30]: #parameters-11
 
-[31]: #parameters-11
+[31]: #feature
 
-[32]: #key
+[32]: #history
 
 [33]: #parameters-12
 
-[34]: #get-5
+[34]: #key
 
 [35]: #parameters-13
 
-[36]: #import
+[36]: #get-5
 
-[37]: #validategeojson
+[37]: #parameters-14
 
-[38]: #parameters-14
+[38]: #import
 
-[39]: #revert
+[39]: #validategeojson
 
-[40]: #getdelta
+[40]: #parameters-15
 
-[41]: #parameters-15
+[41]: #revert
 
-[42]: #getfeaturehistory
+[42]: #getdelta
 
 [43]: #parameters-16
 
-[44]: #schema
+[44]: #getfeaturehistory
 
-[45]: #server
+[45]: #parameters-17
 
-[46]: #get-6
+[46]: #schema
 
-[47]: #parameters-17
+[47]: #server
 
-[48]: #stats-1
+[48]: #get-6
 
 [49]: #parameters-18
 
-[50]: #tiles
+[50]: #stats-1
 
-[51]: #get-7
+[51]: #parameters-19
 
-[52]: #parameters-19
+[52]: #tiles
 
-[53]: #user
+[53]: #get-7
 
-[54]: #webhooks
+[54]: #parameters-20
 
-[55]: #list-2
+[55]: #user
 
-[56]: #parameters-20
+[56]: #webhooks
 
-[57]: #get-8
+[57]: #list-2
 
 [58]: #parameters-21
 
-[59]: #delete-1
+[59]: #get-8
 
 [60]: #parameters-22
 
-[61]: #update
+[61]: #delete-1
 
 [62]: #parameters-23
 
-[63]: #create
+[63]: #update
 
 [64]: #parameters-24
 
-[65]: #validatebbox
+[65]: #create
 
 [66]: #parameters-25
 
-[67]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/cli.js#L14-L96 "Source code on GitHub"
+[67]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/cli.js#L12-L62 "Source code on GitHub"
 
-[68]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/auth.js#L13-L72 "Source code on GitHub"
+[68]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/auth.js#L13-L73 "Source code on GitHub"
 
 [69]: https://github.com/mapbox/hecate#authentication
 
-[70]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/auth.js#L36-L71 "Source code on GitHub"
+[70]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/auth.js#L36-L72 "Source code on GitHub"
 
 [71]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
 [72]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[73]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/bbox.js#L17-L115 "Source code on GitHub"
+[73]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/bbox.js#L17-L115 "Source code on GitHub"
 
 [74]: https://github.com/mapbox/hecate#downloading-multiple-features-via-bbox
 
-[75]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/bbox.js#L43-L114 "Source code on GitHub"
+[75]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/bbox.js#L43-L114 "Source code on GitHub"
 
 [76]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
@@ -623,96 +624,96 @@ Returns **[string][77]** String in the format minX,minY,maxX,maxY
 
 [78]: https://nodejs.org/api/stream.html
 
-[79]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/bounds.js#L16-L516 "Source code on GitHub"
+[79]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/util/validateBbox.js#L9-L39 "Source code on GitHub"
 
-[80]: https://github.com/mapbox/hecate#boundaries
+[80]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/bounds.js#L16-L516 "Source code on GitHub"
 
-[81]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/bounds.js#L44-L113 "Source code on GitHub"
+[81]: https://github.com/mapbox/hecate#boundaries
 
-[82]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/bounds.js#L122-L181 "Source code on GitHub"
+[82]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/bounds.js#L44-L113 "Source code on GitHub"
 
-[83]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/bounds.js#L193-L263 "Source code on GitHub"
+[83]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/bounds.js#L122-L181 "Source code on GitHub"
 
-[84]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/bounds.js#L273-L344 "Source code on GitHub"
+[84]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/bounds.js#L193-L263 "Source code on GitHub"
 
-[85]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/bounds.js#L354-L422 "Source code on GitHub"
+[85]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/bounds.js#L273-L344 "Source code on GitHub"
 
-[86]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/bounds.js#L433-L515 "Source code on GitHub"
+[86]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/bounds.js#L354-L422 "Source code on GitHub"
 
-[87]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/clone.js#L16-L101 "Source code on GitHub"
+[87]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/bounds.js#L433-L515 "Source code on GitHub"
 
-[88]: https://github.com/mapbox/hecate#downloading-via-clone
+[88]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/clone.js#L16-L101 "Source code on GitHub"
 
-[89]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/clone.js#L40-L100 "Source code on GitHub"
+[89]: https://github.com/mapbox/hecate#downloading-via-clone
 
-[90]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/deltas.js#L15-L187 "Source code on GitHub"
+[90]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/clone.js#L40-L100 "Source code on GitHub"
 
-[91]: https://github.com/mapbox/api-geocoder/pull/2634#issuecomment-481255528
+[91]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/deltas.js#L15-L198 "Source code on GitHub"
 
-[92]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/deltas.js#L39-L109 "Source code on GitHub"
+[92]: https://github.com/mapbox/api-geocoder/pull/2634#issuecomment-481255528
 
-[93]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/deltas.js#L118-L186 "Source code on GitHub"
+[93]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/deltas.js#L40-L119 "Source code on GitHub"
 
-[94]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/feature.js#L15-L268 "Source code on GitHub"
+[94]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/deltas.js#L128-L197 "Source code on GitHub"
 
-[95]: https://github.com/mapbox/hecate#downloading-individual-features
+[95]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/feature.js#L15-L271 "Source code on GitHub"
 
-[96]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/feature.js#L41-L109 "Source code on GitHub"
+[96]: https://github.com/mapbox/hecate#downloading-individual-features
 
-[97]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/feature.js#L120-L188 "Source code on GitHub"
+[97]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/feature.js#L41-L110 "Source code on GitHub"
 
-[98]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/feature.js#L199-L267 "Source code on GitHub"
+[98]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/feature.js#L121-L190 "Source code on GitHub"
 
-[99]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/import.js#L41-L208 "Source code on GitHub"
+[99]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/feature.js#L201-L270 "Source code on GitHub"
 
-[100]: https://github.com/mapbox/hecate#feature-creation
+[100]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/import.js#L41-L208 "Source code on GitHub"
 
-[101]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/util/validateGeojson.js#L16-L83 "Source code on GitHub"
+[101]: https://github.com/mapbox/hecate#feature-creation
 
-[102]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[102]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/util/validateGeojson.js#L16-L83 "Source code on GitHub"
 
-[103]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/revert.js#L14-L244 "Source code on GitHub"
+[103]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[104]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/util/getDelta.js#L9-L24 "Source code on GitHub"
+[104]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/revert.js#L14-L243 "Source code on GitHub"
 
-[105]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[105]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/util/getDelta.js#L9-L23 "Source code on GitHub"
 
-[106]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/util/getFeatureHistory.js#L9-L22 "Source code on GitHub"
+[106]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[107]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/schema.js#L15-L94 "Source code on GitHub"
+[107]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/util/getFeatureHistory.js#L9-L22 "Source code on GitHub"
 
-[108]: https://github.com/mapbox/hecate#schema
+[108]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/schema.js#L15-L94 "Source code on GitHub"
 
-[109]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/server.js#L15-L164 "Source code on GitHub"
+[109]: https://github.com/mapbox/hecate#schema
 
-[110]: https://github.com/mapbox/hecate#meta
+[110]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/server.js#L15-L163 "Source code on GitHub"
 
-[111]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/server.js#L39-L96 "Source code on GitHub"
+[111]: https://github.com/mapbox/hecate#meta
 
-[112]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/server.js#L105-L163 "Source code on GitHub"
+[112]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/server.js#L39-L96 "Source code on GitHub"
 
-[113]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/tiles.js#L15-L107 "Source code on GitHub"
+[113]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/server.js#L105-L162 "Source code on GitHub"
 
-[114]: https://github.com/mapbox/hecate#vector-tiles
+[114]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/tiles.js#L15-L108 "Source code on GitHub"
 
-[115]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/tiles.js#L38-L106 "Source code on GitHub"
+[115]: https://github.com/mapbox/hecate#vector-tiles
 
-[116]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/user.js#L15-L246 "Source code on GitHub"
+[116]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/tiles.js#L38-L107 "Source code on GitHub"
 
-[117]: https://github.com/mapbox/hecate#user-options
+[117]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/user.js#L15-L246 "Source code on GitHub"
 
-[118]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/webhooks.js#L17-L476 "Source code on GitHub"
+[118]: https://github.com/mapbox/hecate#user-options
 
-[119]: https://github.com/mapbox/hecate#webhooks
+[119]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/webhooks.js#L15-L475 "Source code on GitHub"
 
-[120]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/webhooks.js#L43-L102 "Source code on GitHub"
+[120]: https://github.com/mapbox/hecate#webhooks
 
-[121]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/webhooks.js#L112-L181 "Source code on GitHub"
+[121]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/webhooks.js#L42-L101 "Source code on GitHub"
 
-[122]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/webhooks.js#L191-L260 "Source code on GitHub"
+[122]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/webhooks.js#L111-L180 "Source code on GitHub"
 
-[123]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/webhooks.js#L273-L372 "Source code on GitHub"
+[123]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/webhooks.js#L190-L259 "Source code on GitHub"
 
-[124]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/lib/webhooks.js#L384-L475 "Source code on GitHub"
+[124]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/webhooks.js#L272-L371 "Source code on GitHub"
 
-[125]: https://git@github.com/:mapbox/HecateJS/blob/d92fc3519d9b6207bc02724ac15cf6eaf9db3da7/util/validateBbox.js#L9-L39 "Source code on GitHub"
+[125]: https://github.com/mapbox/HecateJS/blob/a235d686e060e39022bec95ff2c2af0addbfce45/lib/webhooks.js#L383-L474 "Source code on GitHub"
