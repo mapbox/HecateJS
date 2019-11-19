@@ -1,6 +1,6 @@
 {
   "name": "@mapbox/hecatejs",
-  "version": "10.0.2",
+  "version": "10.0.3",
   "main": "cli.js",
   "repository": "git@github.com:mapcommons/HecateJS",
   "author": "ingalls <ingalls@protonmail.com>",
@@ -11,9 +11,9 @@
   "devDependencies": {
     "@mapbox/eslint-config-geocoding": "^2.0.0",
     "codecov": "^3.0.4",
-    "documentation": "^11.0.1",
-    "eslint": "^5.5.0",
-    "eslint-plugin-node": "9.1.0",
+    "documentation": "^12.1.4",
+    "eslint": "^6.6.0",
+    "eslint-plugin-node": "10.0.0",
     "nyc": "^14.1.1",
     "tape": "^4.9.0"
   },
@@ -26,7 +26,7 @@
     "geojson-validation": "^0.2.0",
     "minimist": "^1.2.0",
     "n-readlines": "^1.0.0 ",
-    "nock": "^10.0.6",
+    "nock": "^11.7.0",
     "node-mb-string-size": "^1.0.3",
     "parallel-transform": "^1.2.0",
     "prompt": "^1.0.0",
