@@ -33,8 +33,10 @@ function validateGeojson(opts = {}) {
     return transform(1, (feat, cb) => {
         if (!feat || !feat.trim()) return cb(null, '');
 
+        linenumber++;
         const errors = validateFeature(feat.toString('utf8'), {
             linenumber: linenumber,
+            ignoreRFR: options.ignoreRHR,
             schema: schema
         });
 
@@ -52,14 +54,23 @@ function validateGeojson(opts = {}) {
 
 // Validate each feature
 function validateFeature(line, options) {
+    if (!options) options = {}
+    if (!options.linenumber) options.linenumber = 0;
+
     // list of errors linked to the file name and line number
     const errors = [];
 
-    const feature = rewind(JSON.parse(line));
-    options.linenumber++;
+    let feature;
+    if (typeof line === 'object') {
+        feature = line;
+    } else {
+        feature = JSON.parse(line);
+    }
+
+    feature = rewind(feature);
 
     const geojsonErrs = geojsonhint(feature).filter((err) => {
-        if (opts.ignoreRHR && err.message === 'Polygons and MultiPolygons should follow the right-hand rule') {
+        if (options.ignoreRHR && err.message === 'Polygons and MultiPolygons should follow the right-hand rule') {
             return false;
         } else {
             return true;
@@ -125,3 +136,4 @@ function validateFeature(line, options) {
 }
 
 module.exports = validateGeojson;
+module.exports.validateFeature = validateFeature;
