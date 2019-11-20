@@ -1,21 +1,24 @@
 'use strict';
 
-// Test lib/validateGeojson.js to confirm that the errors and asserts are the expected ones
+const fs = require('fs');
+const path = require('path');
 const tape = require('tape');
 const validateGeojson = require('../util/validateGeojson.js');
+const pipeline = require('stream').pipeline;
+const split = require('split');
 
 // Assert the errors in the geojson file
 tape('Assert fails', (t) => {
     // Validate the corrupted sample data
     t.deepEquals(validateGeojson.validateFeature({
-        "properties": {
-            "number":0,
-            "street":[{"display":"\\N","priority":0}]
+        'properties': {
+            'number':0,
+            'street':[{ 'display':'\\N','priority':0 }]
         },
-        "geometry":{
-            "type":"Point",
-            "coordinates": [23.6,23.5]
-        },
+        'geometry':{
+            'type':'Point',
+            'coordinates': [23.6,23.5]
+        }
     }), [{
         message: '"type" member required',
         linenumber: 0
@@ -23,28 +26,28 @@ tape('Assert fails', (t) => {
 
     t.deepEquals(validateGeojson.validateFeature({
         type: 'Feature',
-        "properties": {
-            "number":0,
-            "street":[{"display":"\\N","priority":0}]
+        'properties': {
+            'number':0,
+            'street':[{ 'display':'\\N','priority':0 }]
         },
-        "geometry":{
-            "type":"Point",
-            "coordinates": [null,23.5]
-        },
+        'geometry':{
+            'type':'Point',
+            'coordinates': [null,23.5]
+        }
     }), [{
-        message: "each element in a position must be a number",
+        message: 'each element in a position must be a number',
         linenumber: 0
     }]);
 
     t.deepEquals(validateGeojson.validateFeature({
         type: 'Feature',
-        "properties": {
-            "number":0,
-            "street":[{"display":"\\N","priority":0}]
+        'properties': {
+            'number':0,
+            'street':[{ 'display':'\\N','priority':0 }]
         },
-        "geometry":{
-            "coordinates": [null,23.5]
-        },
+        'geometry':{
+            'coordinates': [null,23.5]
+        }
     }), [{
         message: '"type" member required',
         linenumber: 0
@@ -52,9 +55,9 @@ tape('Assert fails', (t) => {
 
     t.deepEquals(validateGeojson.validateFeature({
         type: 'Feature',
-        "properties": {
-            "number":0,
-            "street":[{"display":"\\N","priority":0}]
+        'properties': {
+            'number':0,
+            'street':[{ 'display':'\\N','priority':0 }]
         }
     }), [{
         message: 'Null or Invalid Geometry',
@@ -66,9 +69,9 @@ tape('Assert fails', (t) => {
 
     t.deepEquals(validateGeojson.validateFeature({
         type: 'Feature',
-        "properties": {
-            "number":0,
-            "street":[{"display":"\\N","priority":0}]
+        'properties': {
+            'number':0,
+            'street':[{ 'display':'\\N','priority':0 }]
         },
         geometry: {
             type: 'Point',
@@ -81,9 +84,9 @@ tape('Assert fails', (t) => {
 
     t.deepEquals(validateGeojson.validateFeature({
         type: 'Feature',
-        "properties": {
-            "number":0,
-            "street":[{"display":"\\N","priority":0}]
+        'properties': {
+            'number':0,
+            'street':[{ 'display':'\\N','priority':0 }]
         },
         geometry: {
             type: 'Point'
@@ -99,15 +102,20 @@ tape('Assert fails', (t) => {
     t.end();
 });
 
-/**
 // Confirm that the sample geojson file is a valid geojson file
 tape('Assert valid features', (t) => {
-    const pathName = path.resolve(__dirname, '.', './fixtures/valid-geojson.json');
-    const geojsonErrs = validateGeojson(pathName);
-    t.equals(geojsonErrs.length, 0, 'file is a valid geoJSON file');
-    t.end();
+    pipeline(
+        fs.createReadStream(path.resolve(__dirname, '.', './fixtures/valid-geojson.json')),
+        split(),
+        validateGeojson(),
+        (err) => {
+            t.error(err);
+            t.end();
+        }
+    );
 });
 
+/**
 tape.only('Assert fails according to schema ', (t) => {
     const pathName = path.resolve(__dirname, '.', './fixtures/invalid-geojson-schema.json');
     const schema = fs.readFileSync(path.resolve(__dirname, '.', './fixtures/schema.json'), 'utf8');

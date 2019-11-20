@@ -12,7 +12,6 @@ const ajv = new Ajv({
 
 ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
 
-
 /**
  * Ensure geometries are valid before import
  *
@@ -36,7 +35,7 @@ function validateGeojson(opts = {}) {
         linenumber++;
         const errors = validateFeature(feat.toString('utf8'), {
             linenumber: linenumber,
-            ignoreRFR: options.ignoreRHR,
+            ignoreRFR: opts.ignoreRHR,
             schema: schema
         });
 
@@ -52,9 +51,19 @@ function validateGeojson(opts = {}) {
 
 }
 
-// Validate each feature
+/**
+ * Validate a single feature
+ *
+ * @param {Object|String} line Feature to validate
+ * @param {Object} options
+ * @param {boolean} options.ignoreRHR Ignore winding order
+ * @param {Function} options.schema AJV Function to validate feature properties against a JSON Schema
+ * @param {number} options.linenumber Linenumber to output in error object
+ *
+ * @returns {Array} Array of errors (empty array if none)
+ */
 function validateFeature(line, options) {
-    if (!options) options = {}
+    if (!options) options = {};
     if (!options.linenumber) options.linenumber = 0;
 
     // list of errors linked to the file name and line number
