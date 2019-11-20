@@ -15,8 +15,10 @@ tape('Assert fails', (t) => {
     let linenumber;
 
     // Validate the corrupted sample data
-    const geojsonErrs = validateGeojson(pathName);
-    t.ok(geojsonErrs.length > 0, true, 'file is not a valid geoJSON file');
+    const geojsonErrs = validateGeojson.validateFeature({
+    
+    });
+
     for (let item in geojsonErrs) {
         message = JSON.parse(geojsonErrs[item]);
         item = parseInt(item);
