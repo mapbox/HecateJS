@@ -1,0 +1,6 @@
+{"type":"Feature","geometry":{"type":"Point","coordinates":[23.5,12.34]},"properties":{"number":0,"street":[{"display":"\\N","priority":0}]}}
+{"type":"Feature","geometry":{"type":"Point","coordinates":[0,-1]},"properties":{"source":"mbx","number":0}}
+{"type":"Feature","geometry":{"type":"Point","coordinates":[0,-1]},"properties":{"source":"mbx","street":[{"display":"\\N","priority":0}]}}
+{"type":"Feature","geometry":{"type":"Point","coordinates":[0,-1]},"properties":{"source":"mbx","number":0, "street":[{"display":"\\N","priority":0}], "prop1":"line"}}
+{"type":"Feature","geometry":{"type":"Point","coordinates":[0,-1]},"properties":{"source":"mbx","number":0, "street":[{"display":"\\N","priority":0}], "postcode":true}}
+{"type":"Feature","geometry":{"type":"Point","coordinates":[0,-1]},"properties":{"source":"mbx","number":0, "street":"none"}}
