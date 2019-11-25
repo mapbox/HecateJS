@@ -79,13 +79,13 @@ function validateFeature(line, options) {
         feature = JSON.parse(line);
     }
 
-    if (feature.id && Set.has(feature.id)) {
+    if (feature.id && options.ids.has(feature.id)) {
         errors.push({
             message: `Feature ID: ${feature.id} exists more than once`,
             linenumber: options.linenumber
         });
     } else if (feature.id) {
-        options.ids.add(features.id);
+        options.ids.add(feature.id);
     }
 
     feature = rewind(feature);

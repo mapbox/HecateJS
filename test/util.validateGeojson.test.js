@@ -148,3 +148,44 @@ tape('Assert fails according to schema ', (t) => {
 
     t.end();
 });
+
+tape('Duplicate ID Checks', (t) => {
+    let ids = new Set();
+
+    t.deepEquals(validateGeojson.validateFeature({
+        id: 1,
+        type: 'Feature',
+        action: 'modify',
+        properties: {
+            number: 0,
+            street: [{ 'display':'\\N','priority':0 }]
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [23.6,23.5]
+        }
+    }, {
+        ids: ids
+    }), []);
+
+    t.deepEquals(validateGeojson.validateFeature({
+        id: 1,
+        type: 'Feature',
+        action: 'modify',
+        properties: {
+            number: 0,
+            street: [{ 'display':'\\N','priority':0 }]
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [23.6,23.5]
+        }
+    }, {
+        ids: ids
+    }), [{
+        message: 'Feature ID: 1 exists more than once',
+        linenumber: 0
+    }]);
+
+    t.end();
+});
