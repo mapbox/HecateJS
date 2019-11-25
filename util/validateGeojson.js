@@ -36,7 +36,8 @@ function validateGeojson(opts = {}) {
         const errors = validateFeature(feat.toString('utf8'), {
             linenumber: linenumber,
             ignoreRFR: opts.ignoreRHR,
-            schema: schema
+            schema: schema,
+            ids: new Set()
         });
 
         if (errors.length) {
@@ -59,12 +60,14 @@ function validateGeojson(opts = {}) {
  * @param {boolean} options.ignoreRHR Ignore winding order
  * @param {Function} options.schema AJV Function to validate feature properties against a JSON Schema
  * @param {number} options.linenumber Linenumber to output in error object
+ * @param {Set} options.ids Set to keep track of feature id duplicates
  *
  * @returns {Array} Array of errors (empty array if none)
  */
 function validateFeature(line, options) {
     if (!options) options = {};
     if (!options.linenumber) options.linenumber = 0;
+    if (!options.ids) options.ids = new Set();
 
     // list of errors linked to the file name and line number
     const errors = [];
@@ -74,6 +77,15 @@ function validateFeature(line, options) {
         feature = line;
     } else {
         feature = JSON.parse(line);
+    }
+
+    if (feature.id && Set.has(feature.id)) {
+        errors.push({
+            message: `Feature ID: ${feature.id} exists more than once`,
+            linenumber: options.linenumber
+        });
+    } else if (feature.id) {
+        options.ids.add(features.id);
     }
 
     feature = rewind(feature);
