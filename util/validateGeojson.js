@@ -30,7 +30,7 @@ function validateGeojson(opts = {}) {
         schema = ajv.compile(opts.schema);
     }
 
-    let ids = opts.ids ? new Set() : false;
+    const ids = opts.ids ? new Set() : false;
 
     return transform(1, (feat, cb) => {
         if (!feat || !feat.trim()) return cb(null, '');

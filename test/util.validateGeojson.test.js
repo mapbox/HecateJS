@@ -9,7 +9,7 @@ const pipeline = require('stream').pipeline;
 const split = require('split');
 
 const ajv = new Ajv({
-        schemaId: 'auto'
+    schemaId: 'auto'
 });
 
 ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
@@ -150,7 +150,7 @@ tape('Assert fails according to schema ', (t) => {
 });
 
 tape('Duplicate ID Checks', (t) => {
-    let ids = new Set();
+    const ids = new Set();
 
     t.deepEquals(validateGeojson.validateFeature({
         id: 1,
