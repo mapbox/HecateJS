@@ -18,6 +18,7 @@ ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
  * @param {Object} opts Options object
  * @param {boolean} opts.ignoreRHR=false Ignore Right Hand Rule errors
  * @param {Object} opts.schema JSON Schema to validate properties against
+ * @param {boolean} opts.ids If false, disable duplicate ID checking
  */
 function validateGeojson(opts = {}) {
     // Flag to track the feature line number
@@ -29,6 +30,8 @@ function validateGeojson(opts = {}) {
         schema = ajv.compile(opts.schema);
     }
 
+    let ids = opts.ids ? new Set() : false;
+
     return transform(1, (feat, cb) => {
         if (!feat || !feat.trim()) return cb(null, '');
 
@@ -37,7 +40,7 @@ function validateGeojson(opts = {}) {
             linenumber: linenumber,
             ignoreRFR: opts.ignoreRHR,
             schema: schema,
-            ids: new Set()
+            ids: ids
         });
 
         if (errors.length) {
@@ -67,7 +70,6 @@ function validateGeojson(opts = {}) {
 function validateFeature(line, options) {
     if (!options) options = {};
     if (!options.linenumber) options.linenumber = 0;
-    if (!options.ids) options.ids = new Set();
 
     // list of errors linked to the file name and line number
     const errors = [];
@@ -79,12 +81,12 @@ function validateFeature(line, options) {
         feature = JSON.parse(line);
     }
 
-    if (feature.id && options.ids.has(feature.id)) {
+    if (options.ids && feature.id && options.ids.has(feature.id)) {
         errors.push({
             message: `Feature ID: ${feature.id} exists more than once`,
             linenumber: options.linenumber
         });
-    } else if (feature.id) {
+    } else if (options.ids && feature.id) {
         options.ids.add(feature.id);
     }
 
