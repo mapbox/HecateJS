@@ -9,7 +9,7 @@ const pipeline = require('stream').pipeline;
 const split = require('split');
 
 const ajv = new Ajv({
-        schemaId: 'auto'
+    schemaId: 'auto'
 });
 
 ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
@@ -143,6 +143,47 @@ tape('Assert fails according to schema ', (t) => {
         linenumber: 0
     },{
         message: '"type" member required',
+        linenumber: 0
+    }]);
+
+    t.end();
+});
+
+tape('Duplicate ID Checks', (t) => {
+    const ids = new Set();
+
+    t.deepEquals(validateGeojson.validateFeature({
+        id: 1,
+        type: 'Feature',
+        action: 'modify',
+        properties: {
+            number: 0,
+            street: [{ 'display':'\\N','priority':0 }]
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [23.6,23.5]
+        }
+    }, {
+        ids: ids
+    }), []);
+
+    t.deepEquals(validateGeojson.validateFeature({
+        id: 1,
+        type: 'Feature',
+        action: 'modify',
+        properties: {
+            number: 0,
+            street: [{ 'display':'\\N','priority':0 }]
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [23.6,23.5]
+        }
+    }, {
+        ids: ids
+    }), [{
+        message: 'Feature ID: 1 exists more than once',
         linenumber: 0
     }]);
 
