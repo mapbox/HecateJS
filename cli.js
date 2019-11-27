@@ -27,7 +27,6 @@ class Hecate {
         this._ = {
             auth: new (require('./lib/auth'))(this),
             bbox: new (require('./lib/bbox'))(this),
-            bboxHistory: new (require('./lib/bbox-history'))(this),
             webhooks: new (require('./lib/webhooks'))(this),
             tiles: new (require('./lib/tiles'))(this),
             clone: new (require('./lib/clone'))(this),
@@ -46,7 +45,6 @@ class Hecate {
         this.clone = (...opts) => this._.clone.get(...opts);
         this.server = (...opts) => this._.server.get(...opts);
         this.bbox = (...opts) => this._.bbox.get(...opts);
-        this.bboxHistory = (...opts) => this._.bboxHistory.get(...opts);
         this.listDeltas = (...opts) => this._.deltas.list(...opts);
         this.getDelta = (...opts) => this._.deltas.get(...opts);
         this.listBounds = (...opts) => this._.bounds.list(...opts);
@@ -94,7 +92,6 @@ if (require.main === module) {
         console.error('    schema          [--help]    Obtain the JSON schema for a given server');
         console.error('    auth            [--help]    Obtain the JSON Auth document');
         console.error('    bbox            [--help]    Download data via bbox from a given server');
-        console.error('    bboxHistory     [--help]    Download feature history data via bbox from a given server');
         console.error('    clone           [--help]    Download the complete server dataset');
         console.error('    revert          [--help]    Revert data from an specified delta');
         console.error('');
