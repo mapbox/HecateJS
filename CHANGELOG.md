@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v10.3.0
+
+- :tada: Add support for the features history API
+
 ### v10.2.0
 
 - :tada: Add duplicate ID check to import API
