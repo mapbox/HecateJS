@@ -10,6 +10,14 @@
 
 ## Version History
 
+### v10.2.0
+
+- :tada: Add duplicate ID check to import API
+
+### v10.1.0
+
+- :tada: Add automatic schema to features to be imported via the import API
+
 ### v10.0.3
 
 - :arrow_up: Update to latest base dependencies

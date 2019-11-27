@@ -1,70 +1,191 @@
 'use strict';
 
-// Test lib/validateGeojson.js to confirm that the errors and asserts are the expected ones
+const fs = require('fs');
+const Ajv = require('ajv');
 const path = require('path');
 const tape = require('tape');
 const validateGeojson = require('../util/validateGeojson.js');
+const pipeline = require('stream').pipeline;
+const split = require('split');
+
+const ajv = new Ajv({
+    schemaId: 'auto'
+});
+
+ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
 
 // Assert the errors in the geojson file
 tape('Assert fails', (t) => {
-    const pathName = path.resolve(__dirname, '.', './fixtures/invalid-geojson.json');
-    let message;
-    let error;
-    let description;
-    let linenumber;
-
     // Validate the corrupted sample data
-    const geojsonErrs = validateGeojson(pathName);
-    t.ok(geojsonErrs.length > 0, true, 'file is not a valid geoJSON file');
-    for (let item in geojsonErrs) {
-        message = JSON.parse(geojsonErrs[item]);
-        item = parseInt(item);
-
-        switch (item) {
-            case 0:
-                linenumber = 1;
-                error = '[{"message":"\\"type\\" member required"}]';
-                description = 'type member required';
-                break;
-            case 1:
-                linenumber = 2;
-                error = '[{"message":"each element in a position must be a number"}]';
-                description = 'each element in a position must be a number';
-                break;
-            case 2:
-                linenumber = 3;
-                error = '[{"message":"\\"type\\" member required"}]';
-                description = 'type member required';
-                break;
-            case 3:
-                linenumber = 4;
-                error = '[{"message":"Null or Invalid Geometry"},{"message":"\\"geometry\\" member required"}]';
-                description = 'geometry member required';
-                break;
-            case 4:
-                linenumber = 5;
-                description = 'coordinates must be other than [0,0]';
-                error = '["coordinates must be other than [0,0]"]';
-                break;
-            case 5:
-                linenumber = 6;
-                error = '[{"message":"Null or Invalid Geometry"},{"message":"\\"coordinates\\" member required"}]';
-                description = 'coordinates member required';
-                break;
+    t.deepEquals(validateGeojson.validateFeature({
+        'properties': {
+            'number':0,
+            'street':[{ 'display':'\\N','priority':0 }]
+        },
+        'geometry':{
+            'type':'Point',
+            'coordinates': [23.6,23.5]
         }
+    }), [{
+        message: '"type" member required',
+        linenumber: 0
+    }]);
 
-        if (linenumber) {
-            t.equals(message.linenumber, linenumber, `the line number is ${linenumber}`);
-            t.equals(JSON.stringify(message.error), error, description);
+    t.deepEquals(validateGeojson.validateFeature({
+        type: 'Feature',
+        'properties': {
+            'number':0,
+            'street':[{ 'display':'\\N','priority':0 }]
+        },
+        'geometry':{
+            'type':'Point',
+            'coordinates': [null,23.5]
         }
-    }
+    }), [{
+        message: 'each element in a position must be a number',
+        linenumber: 0
+    }]);
+
+    t.deepEquals(validateGeojson.validateFeature({
+        type: 'Feature',
+        'properties': {
+            'number':0,
+            'street':[{ 'display':'\\N','priority':0 }]
+        },
+        'geometry':{
+            'coordinates': [null,23.5]
+        }
+    }), [{
+        message: '"type" member required',
+        linenumber: 0
+    }]);
+
+    t.deepEquals(validateGeojson.validateFeature({
+        type: 'Feature',
+        'properties': {
+            'number':0,
+            'street':[{ 'display':'\\N','priority':0 }]
+        }
+    }), [{
+        message: 'Null or Invalid Geometry',
+        linenumber: 0
+    },{
+        message: '"geometry" member required',
+        linenumber: 0
+    }]);
+
+    t.deepEquals(validateGeojson.validateFeature({
+        type: 'Feature',
+        'properties': {
+            'number':0,
+            'street':[{ 'display':'\\N','priority':0 }]
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [0,0]
+        }
+    }), [{
+        message: 'coordinates must be other than [0,0]',
+        linenumber: 0
+    }]);
+
+    t.deepEquals(validateGeojson.validateFeature({
+        type: 'Feature',
+        'properties': {
+            'number':0,
+            'street':[{ 'display':'\\N','priority':0 }]
+        },
+        geometry: {
+            type: 'Point'
+        }
+    }), [{
+        message: 'Null or Invalid Geometry',
+        linenumber: 0
+    },{
+        message: '"coordinates" member required',
+        linenumber: 0
+    }]);
+
     t.end();
 });
 
 // Confirm that the sample geojson file is a valid geojson file
 tape('Assert valid features', (t) => {
-    const pathName = path.resolve(__dirname, '.', './fixtures/valid-geojson.json');
-    const geojsonErrs = validateGeojson(pathName);
-    t.equals(geojsonErrs.length, 0, 'file is a valid geoJSON file');
+    pipeline(
+        fs.createReadStream(path.resolve(__dirname, '.', './fixtures/valid-geojson.json')),
+        split(),
+        validateGeojson(),
+        (err) => {
+            t.error(err);
+            t.end();
+        }
+    );
+});
+
+tape('Assert fails according to schema ', (t) => {
+    const schemaJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '.', './fixtures/schema.json'), 'utf8'));
+
+    const schema = ajv.compile(schemaJson);
+
+    t.deepEquals(validateGeojson.validateFeature({
+        'properties': {
+            'number':0,
+            'street':[{ 'display':'\\N','priority':0 }]
+        },
+        'geometry':{
+            'type':'Point',
+            'coordinates': [23.6,23.5]
+        }
+    }, {
+        schema: schema
+    }), [{
+        message: 'should have required property \'source\'',
+        linenumber: 0
+    },{
+        message: '"type" member required',
+        linenumber: 0
+    }]);
+
+    t.end();
+});
+
+tape('Duplicate ID Checks', (t) => {
+    const ids = new Set();
+
+    t.deepEquals(validateGeojson.validateFeature({
+        id: 1,
+        type: 'Feature',
+        action: 'modify',
+        properties: {
+            number: 0,
+            street: [{ 'display':'\\N','priority':0 }]
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [23.6,23.5]
+        }
+    }, {
+        ids: ids
+    }), []);
+
+    t.deepEquals(validateGeojson.validateFeature({
+        id: 1,
+        type: 'Feature',
+        action: 'modify',
+        properties: {
+            number: 0,
+            street: [{ 'display':'\\N','priority':0 }]
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [23.6,23.5]
+        }
+    }, {
+        ids: ids
+    }), [{
+        message: 'Feature ID: 1 exists more than once',
+        linenumber: 0
+    }]);
+
     t.end();
 });
