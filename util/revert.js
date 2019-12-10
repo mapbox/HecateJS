@@ -37,7 +37,7 @@
  * @returns {Object} Returns calculated inverse feature
  */
 function inverse(history) {
-    if (history.length === 0) {
+    if (!history || !Array.isArray(history) || history.length === 0) {
         throw new Error('Feature history cannot be empty');
 
     // If the history length is 1, the operation must be a
@@ -48,3 +48,5 @@ function inverse(history) {
 
     
 }
+
+module.exports = inverse;
