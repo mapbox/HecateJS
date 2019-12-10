@@ -52,7 +52,7 @@ function inverse(history) {
         return {
             id: feat.id,
             action: 'delete',
-            version: feat.version,
+            version: 1,
             type: 'Feature',
             properties: null,
             geometry: null
@@ -61,30 +61,24 @@ function inverse(history) {
         const desired = history[history.length - 2];
         const latest = history[history.length - 1];
 
-        if (latest.action === 'delete') {
-            return {
-                id: latest.id,
-                action: 'restore',
-                version: latest.version,
-                properties: desired.properties,
-                geometry: desired.geometry
-            }
-        } else if (latest.action === 'modify') {
-            return {
-                id: latest.id,
-                action: 'modify',
-                version: latest.version,
-                properties: desired.properties,
-                geometry: desired.geometry
-            }
+        let action;
+        if (latest.action === 'modify') {
+            action = 'modify';
+        } else if (latest.action === 'delete') {
+            action = 'restore';
         } else if (latest.action === 'restore') {
-            return {
-                id: latest.id,
-                action: 'delete',
-                version: latest.version,
-                properties: desired.properties,
-                geometry: desired.geometry
-            }
+            action = 'delete';
+        } else {
+            throw new Error(`${latest.action} not supported`);
+        }
+
+        return {
+            id: latest.id,
+            type: 'Feature',
+            action: action,
+            version: latest.version,
+            properties: desired.properties,
+            geometry: desired.geometry
         }
     }
 }
