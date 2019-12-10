@@ -44,9 +44,49 @@ function inverse(history) {
     // create operation, otherwise history is missing
     } else if (history.length >= 1 && history[0].action !== 'create') {
         throw new Error(`Feature: ${history[0].id} missing initial create action`);
-    }
 
-    
+    // Feature has just been created and should be deleted
+    } else if (history.length === 1) {
+        let feat = history[0];
+
+        return {
+            id: feat.id,
+            action: 'delete',
+            version: feat.version,
+            type: 'Feature',
+            properties: null,
+            geometry: null
+        }
+    } else {
+        const desired = history[history.length - 2];
+        const latest = history[history.length - 1];
+
+        if (latest.action === 'delete') {
+            return {
+                id: latest.id,
+                action: 'restore',
+                version: latest.version,
+                properties: desired.properties,
+                geometry: desired.geometry
+            }
+        } else if (latest.action === 'modify') {
+            return {
+                id: latest.id,
+                action: 'modify',
+                version: latest.version,
+                properties: desired.properties,
+                geometry: desired.geometry
+            }
+        } else if (latest.action === 'restore') {
+            return {
+                id: latest.id,
+                action: 'delete',
+                version: latest.version,
+                properties: desired.properties,
+                geometry: desired.geometry
+            }
+        }
+    }
 }
 
 module.exports = inverse;
