@@ -1,4 +1,5 @@
-const Q = require('d3-queue').queue;
+'use strict';
+
 const { promisify } = require('util');
 const Sqlite = require('better-sqlite3');
 
@@ -55,7 +56,7 @@ function inverse(history) {
 
     // Feature has just been created and should be deleted
     } else if (history.length === 1) {
-        let feat = history[0];
+        const feat = history[0];
 
         return {
             id: feat.id,
@@ -64,7 +65,7 @@ function inverse(history) {
             type: 'Feature',
             properties: null,
             geometry: null
-        }
+        };
     } else {
         const desired = history[history.length - 2];
         const latest = history[history.length - 1];
@@ -87,7 +88,7 @@ function inverse(history) {
             version: latest.version,
             properties: desired.properties,
             geometry: desired.geometry
-        }
+        };
     }
 }
 
@@ -145,8 +146,8 @@ async function cache(options, api) {
             delta: i
         });
 
-        for (let feat of delta.features.features) {
-            history = await getFeatureHistory({
+        for (const feat of delta.features.features) {
+            const history = await getFeatureHistory({
                 feature: feat.id
             });
 

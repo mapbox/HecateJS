@@ -118,7 +118,7 @@ tape('Assert fails', (t) => {
     t.deepEquals(validateGeojson.validateFeature({
         id: 1,
         type: 'Feature',
-        action: 'delete',
+        action: 'delete'
     }), [{
         message: 'Feature to delete must have version',
         linenumber: 0
