@@ -92,11 +92,14 @@ function inverse(history) {
 }
 
 /**
+ * Iterate over Sqlite3 database containing features to revert to previous state
  *
+ * Writes inversion to given writable stream
  *
  * @param {Object} db sqlite3 db to iterate over
+ * @param {Stream} stream output stream to write inverted features to
  */
-function iterate(db) {
+function iterate(db, stream) {
     const stmt = db.prepare(`
         SELECT
             feature
@@ -111,7 +114,7 @@ function iterate(db) {
 
         const inv = inverse(history);
 
-        console.error(inv);
+        stream.write(JSON.stringify(inv) + '\n');
     }
 }
 
