@@ -1,3 +1,7 @@
+const Q = require('d3-queue').queue;
+const { promisify } = require('util');
+const sqlite = require('sqlite3');
+
 /**
  * Given the feature history for a single feature,
  * revert the last feature in the history to that
@@ -83,4 +87,62 @@ function inverse(history) {
     }
 }
 
-module.exports = inverse;
+/**
+ * Given a start/end range for a set of deltas, download
+ * each of the deltas, then iterate through each feature,
+ * retreiving it's history and writing it to disk
+ *
+ * @param {Object} options options object
+ * @param {Number} options.start Delta Start ID
+ * @param {Number} options.end Delta End ID
+ */
+async function cache(options, api) {
+    const db = await createCache();
+
+    const getDelta = promisify(api.getDelta);
+    const getFeatureHistory = promisify(api.getFeatureHistory);
+
+    const stmt = db.prepare(`
+        INSERT INTO features (id, feature)
+            VALUES (?, ?);
+    `);
+
+
+    for (let i = options.start; i <= options.end; i++) {
+        const delta = await getDelta({
+            delta: i
+        });
+
+        for (let feat of delta.features.features) {
+            history = await getFeatureHistory({
+                feature: feat.id
+            });
+
+            stmt.run(feat.id, JSON.stringify(history));
+
+        }
+    }
+
+    stmt.finalize();
+    db.close();
+}
+
+function createCache() {
+    return new Promise((resolve, reject) => {
+        const db = new sqlite.Database(`/tmp/revert.${Math.random().toString(36).substring(7)}`);
+
+        db.serialize(() => {
+            db.run(`
+                CREATE TABLE features (
+                    id      BIGINT,
+                    feature TEXT
+                );
+            `);
+
+            return resolve(db);
+        });
+    });
+}
+
+module.exports.inverse = inverse;
+module.exports.cache = cache;

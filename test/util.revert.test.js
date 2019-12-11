@@ -1,5 +1,5 @@
 const test = require('tape');
-const revert = require('../util/revert');
+const revert = require('../util/revert').inverse;
 
 test('Revert', (t) => {
     t.throws(() => {
