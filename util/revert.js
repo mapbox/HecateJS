@@ -107,7 +107,6 @@ async function cache(options, api) {
             VALUES (?, ?);
     `);
 
-
     for (let i = options.start; i <= options.end; i++) {
         const delta = await getDelta({
             delta: i
@@ -124,9 +123,16 @@ async function cache(options, api) {
     }
 
     stmt.finalize();
+    console.error(db)
     db.close();
 }
 
+/**
+ * Create a new reversion sqlite3 database, initialize it with table
+ * definitions, and pass back db object to caller
+ *
+ * @returns {Promise}
+ */
 function createCache() {
     return new Promise((resolve, reject) => {
         const db = new sqlite.Database(`/tmp/revert.${Math.random().toString(36).substring(7)}`);
@@ -134,8 +140,8 @@ function createCache() {
         db.serialize(() => {
             db.run(`
                 CREATE TABLE features (
-                    id      BIGINT,
-                    feature TEXT
+                    id      INTEGER PRIMARY KEY,
+                    feature TEXT NOT NULL
                 );
             `);
 
