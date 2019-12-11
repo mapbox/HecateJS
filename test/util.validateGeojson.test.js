@@ -27,12 +27,19 @@ tape('Assert fails', (t) => {
             'coordinates': [23.6,23.5]
         }
     }), [{
+        message: 'Feature missing action',
+        linenumber: 0
+    },{
+        message: 'All GeoJSON must be type: Feature',
+        linenumber: 0
+    },{
         message: '"type" member required',
         linenumber: 0
     }]);
 
     t.deepEquals(validateGeojson.validateFeature({
         type: 'Feature',
+        action: 'create',
         'properties': {
             'number':0,
             'street':[{ 'display':'\\N','priority':0 }]
@@ -48,12 +55,13 @@ tape('Assert fails', (t) => {
 
     t.deepEquals(validateGeojson.validateFeature({
         type: 'Feature',
-        'properties': {
-            'number':0,
-            'street':[{ 'display':'\\N','priority':0 }]
+        action: 'create',
+        properties: {
+            number: 0,
+            street: [{ 'display':'\\N','priority':0 }]
         },
-        'geometry':{
-            'coordinates': [null,23.5]
+        geometry:{
+            coordinates: [null,23.5]
         }
     }), [{
         message: '"type" member required',
@@ -62,6 +70,7 @@ tape('Assert fails', (t) => {
 
     t.deepEquals(validateGeojson.validateFeature({
         type: 'Feature',
+        action: 'create',
         'properties': {
             'number':0,
             'street':[{ 'display':'\\N','priority':0 }]
@@ -76,6 +85,7 @@ tape('Assert fails', (t) => {
 
     t.deepEquals(validateGeojson.validateFeature({
         type: 'Feature',
+        action: 'create',
         'properties': {
             'number':0,
             'street':[{ 'display':'\\N','priority':0 }]
@@ -91,6 +101,54 @@ tape('Assert fails', (t) => {
 
     t.deepEquals(validateGeojson.validateFeature({
         type: 'Feature',
+        action: 'delete',
+        'properties': {
+            'number':0,
+            'street': [{ 'display':'\\N','priority':0 }]
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [0,0]
+        }
+    }), [{
+        message: 'Feature to delete must have id',
+        linenumber: 0
+    }]);
+
+    t.deepEquals(validateGeojson.validateFeature({
+        id: 1,
+        type: 'Feature',
+        action: 'delete',
+    }), [{
+        message: 'Feature to delete must have version',
+        linenumber: 0
+    },{
+        message: 'Feature to delete should have properties: null',
+        linenumber: 0
+    },{
+        message: 'Feature to delete should have geometry: null',
+        linenumber: 0
+    }]);
+
+    t.deepEquals(validateGeojson.validateFeature({
+        type: 'Feature',
+        action: 'modify',
+        'properties': {
+            'number':0,
+            'street': [{ 'display':'\\N','priority':0 }]
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [1,1]
+        }
+    }), [{
+        message: 'Feature to modify must have id',
+        linenumber: 0
+    }]);
+
+    t.deepEquals(validateGeojson.validateFeature({
+        type: 'Feature',
+        action: 'create',
         'properties': {
             'number':0,
             'street':[{ 'display':'\\N','priority':0 }]
@@ -128,6 +186,7 @@ tape('Assert fails according to schema ', (t) => {
     const schema = ajv.compile(schemaJson);
 
     t.deepEquals(validateGeojson.validateFeature({
+        action: 'create',
         'properties': {
             'number':0,
             'street':[{ 'display':'\\N','priority':0 }]
@@ -139,6 +198,9 @@ tape('Assert fails according to schema ', (t) => {
     }, {
         schema: schema
     }), [{
+        message: 'All GeoJSON must be type: Feature',
+        linenumber: 0
+    },{
         message: 'should have required property \'source\'',
         linenumber: 0
     },{
@@ -156,6 +218,7 @@ tape('Duplicate ID Checks', (t) => {
         id: 1,
         type: 'Feature',
         action: 'modify',
+        version: 2,
         properties: {
             number: 0,
             street: [{ 'display':'\\N','priority':0 }]
@@ -172,6 +235,7 @@ tape('Duplicate ID Checks', (t) => {
         id: 1,
         type: 'Feature',
         action: 'modify',
+        version: 2,
         properties: {
             number: 0,
             street: [{ 'display':'\\N','priority':0 }]
