@@ -1,6 +1,6 @@
 const Q = require('d3-queue').queue;
 const { promisify } = require('util');
-const sqlite = require('sqlite3');
+const Sqlite = require('better-sqlite3');
 
 /**
  * Given the feature history for a single feature,
@@ -41,6 +41,10 @@ const sqlite = require('sqlite3');
  * @returns {Object} Returns calculated inverse feature
  */
 function inverse(history) {
+    history = history.sort((a, b) => {
+        return a.version ? a.version : 1 - b.version ? b.version : 1;
+    });
+
     if (!history || !Array.isArray(history) || history.length === 0) {
         throw new Error('Feature history cannot be empty');
 
@@ -88,6 +92,30 @@ function inverse(history) {
 }
 
 /**
+ *
+ *
+ * @param {Object} db sqlite3 db to iterate over
+ */
+function iterate(db) {
+    const stmt = db.prepare(`
+        SELECT
+            feature
+        FROM
+            features;
+    `);
+
+    for (let history of stmt.iterate()) {
+        history = JSON.parse(history.feature).map((feat) => {
+            return feat.feat;
+        });
+
+        const inv = inverse(history);
+
+        console.error(inv);
+    }
+}
+
+/**
  * Given a start/end range for a set of deltas, download
  * each of the deltas, then iterate through each feature,
  * retreiving it's history and writing it to disk
@@ -95,9 +123,11 @@ function inverse(history) {
  * @param {Object} options options object
  * @param {Number} options.start Delta Start ID
  * @param {Number} options.end Delta End ID
+ *
+ * @returns {Promise}
  */
 async function cache(options, api) {
-    const db = await createCache();
+    const db = createCache();
 
     const getDelta = promisify(api.getDelta);
     const getFeatureHistory = promisify(api.getFeatureHistory);
@@ -122,33 +152,29 @@ async function cache(options, api) {
         }
     }
 
-    stmt.finalize();
-    console.error(db)
-    db.close();
+    return db;
+
 }
 
 /**
  * Create a new reversion sqlite3 database, initialize it with table
  * definitions, and pass back db object to caller
  *
- * @returns {Promise}
+ * @returns {Object} Sqlite3 Database Handler
  */
 function createCache() {
-    return new Promise((resolve, reject) => {
-        const db = new sqlite.Database(`/tmp/revert.${Math.random().toString(36).substring(7)}`);
+    const db = new Sqlite(`/tmp/revert.${Math.random().toString(36).substring(7)}.sqlite`);
 
-        db.serialize(() => {
-            db.run(`
-                CREATE TABLE features (
-                    id      INTEGER PRIMARY KEY,
-                    feature TEXT NOT NULL
-                );
-            `);
+    db.exec(`
+        CREATE TABLE features (
+            id      INTEGER PRIMARY KEY,
+            feature TEXT NOT NULL
+        );
+    `);
 
-            return resolve(db);
-        });
-    });
+    return db;
 }
 
 module.exports.inverse = inverse;
+module.exports.iterate = iterate;
 module.exports.cache = cache;

@@ -21,6 +21,7 @@
     "@mapbox/geojsonhint": "^3.0.0",
     "@turf/turf": "^5.1.6",
     "aws-sdk": "^2.224.1",
+    "better-sqlite3": "^5.4.3",
     "d3-queue": "^3.0.7",
     "geojson-rewind": "^0.3.1",
     "geojson-validation": "^0.2.0",
@@ -32,8 +33,7 @@
     "prompt": "^1.0.0",
     "request": "^2.88.0",
     "requestretry": "^4.0.0",
-    "split": "^1.0.1",
-    "sqlite3": "^4.1.1"
+    "split": "^1.0.1"
   },
   "eslintConfig": {
     "extends": "@mapbox/eslint-config-geocoding"
