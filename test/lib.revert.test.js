@@ -231,9 +231,158 @@ test('Clean revert of multiple deltas', (t) => {
 });
 
 test('Failed revert as feature exists multiple times accross detlas', (t) => {
-    t.end();
+    const hecate = new Hecate({
+        url: 'http://localhost:7777'
+    });
+
+    nock('http://localhost:7777')
+        .get('/api/delta/2')
+            .reply(200, {
+                features: {
+                    type: 'FeatureCollection',
+                    features: [{
+                        id: 1,
+                        version: 1,
+                        action: 'create'
+                    }]
+                }
+            })
+        .get('/api/delta/3')
+            .reply(200, {
+                features: {
+                    type: 'FeatureCollection',
+                    features: [{
+                        id: 1,
+                        version: 2,
+                        action: 'modify'
+                    }]
+                }
+            })
+        .get('/api/data/feature/1/history')
+            .reply(200, [{
+                feat: {
+                    id: 1,
+                    type: 'Feature',
+                    action: 'modify',
+                    version: 2,
+                    properties: {
+                        modified: true
+                    },
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [ 0.0, 0.0 ]
+                    }
+                }
+            },{
+                feat: {
+                    id: 1,
+                    type: 'Feature',
+                    action: 'create',
+                    version: 1,
+                    properties: {
+                        created: true
+                    },
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [ 1.0, 1.0 ]
+                    }
+                }
+            }])
+        .get('/api/data/feature/1/history')
+            .reply(200, [{
+                feat: {
+                    id: 1,
+                    type: 'Feature',
+                    action: 'modify',
+                    version: 2,
+                    properties: {
+                        modified: true
+                    },
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [ 0.0, 0.0 ]
+                    }
+                }
+            },{
+                feat: {
+                    id: 1,
+                    type: 'Feature',
+                    action: 'create',
+                    version: 1,
+                    properties: {
+                        created: true
+                    },
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [ 1.0, 1.0 ]
+                    }
+                }
+            }]);
+
+    hecate._.revert.deltas({
+        output: new PassThrough(),
+        start: 2,
+        end: 3
+    }, (err, res) => {
+        t.equals(err.message, 'Feature: 1 exists multiple times across deltas to revert. reversion not supported');
+        t.end();
+    });
 });
 
 test('Failed revert as feature has been edited since desired revert', (t) => {
-    t.end();
+    const hecate = new Hecate({
+        url: 'http://localhost:7777'
+    });
+
+    nock('http://localhost:7777')
+        .get('/api/delta/2')
+            .reply(200, {
+                features: {
+                    type: 'FeatureCollection',
+                    features: [{
+                        id: 1,
+                        version: 1,
+                        action: 'create'
+                    }]
+                }
+            })
+        .get('/api/data/feature/1/history')
+            .reply(200, [{
+                feat: {
+                    id: 1,
+                    type: 'Feature',
+                    action: 'modify',
+                    version: 2,
+                    properties: {
+                        modified: true
+                    },
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [ 0.0, 0.0 ]
+                    }
+                }
+            },{
+                feat: {
+                    id: 1,
+                    type: 'Feature',
+                    action: 'create',
+                    version: 1,
+                    properties: {
+                        created: true
+                    },
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [ 1.0, 1.0 ]
+                    }
+                }
+            }]);
+
+    hecate._.revert.deltas({
+        output: new PassThrough(),
+        start: 2,
+        end: 2
+    }, (err, res) => {
+        t.equals(err.message, 'Feature: 1 has been subsequenty edited. reversion not supported');
+        t.end();
+    });
 });

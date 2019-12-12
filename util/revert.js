@@ -165,7 +165,15 @@ async function cache(options, api) {
                 feature: feat.id
             });
 
-            stmt.run(feat.id, feat.version, JSON.stringify(history));
+            try {
+                stmt.run(feat.id, feat.version, JSON.stringify(history));
+            } catch (err) {
+                if (err.message === 'UNIQUE constraint failed: features.id') {
+                    throw new Error(`Feature: ${feat.id} exists multiple times across deltas to revert. reversion not supported`);
+                } else {
+                    throw err;
+                }
+            }
 
         }
     }
