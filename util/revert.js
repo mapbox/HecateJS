@@ -122,7 +122,7 @@ function iterate(db, stream) {
             features;
     `);
 
-    for (let row of stmt.iterate()) {
+    for (const row of stmt.iterate()) {
         const history = JSON.parse(row.history).map((feat) => {
             return feat.feat;
         });
