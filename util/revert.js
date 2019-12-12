@@ -38,23 +38,25 @@ const Sqlite = require('better-sqlite3');
  * and versioning
  *
  * @param {Array[Object]} history Array of features accross all verisons of the feature
+ * @param {Number} version feature version that should be rolled back
  *
  * @returns {Object} Returns calculated inverse feature
  */
-function inverse(history) {
-    history = history.sort((a, b) => {
-        return a.version ? a.version : 1 - b.version ? b.version : 1;
-    });
-
+function inverse(history, version) {
     if (!history || !Array.isArray(history) || history.length === 0) {
         throw new Error('Feature history cannot be empty');
 
-    // If the history length is 1, the operation must be a
-    // create operation, otherwise history is missing
+    } else if (!version || isNaN(version)) {
+        throw new Error('Feature version cannot be empty');
+    } else if (version > history.length) {
+        throw new Error('version cannot be higher than feature history');
+
+        // If the history length is 1, the operation must be a
+        // create operation, otherwise history is missing
     } else if (history.length >= 1 && history[0].action !== 'create') {
         throw new Error(`Feature: ${history[0].id} missing initial create action`);
 
-    // Feature has just been created and should be deleted
+        // Feature has just been created and should be deleted
     } else if (history.length === 1) {
         const feat = history[0];
 
@@ -67,8 +69,12 @@ function inverse(history) {
             geometry: null
         };
     } else {
-        const desired = history[history.length - 2];
-        const latest = history[history.length - 1];
+        history = history.sort((a, b) => {
+            return (a.version ? a.version : 1) - (b.version ? b.version : 1);
+        });
+
+        const desired = history[version - 2];
+        const latest = history[version - 1];
 
         let action;
         if (latest.action === 'modify') {
@@ -103,7 +109,8 @@ function inverse(history) {
 function iterate(db, stream) {
     const stmt = db.prepare(`
         SELECT
-            feature
+            version,
+            history
         FROM
             features;
     `);
@@ -137,7 +144,7 @@ async function cache(options, api) {
     const getFeatureHistory = promisify(api.getFeatureHistory);
 
     const stmt = db.prepare(`
-        INSERT INTO features (id, feature)
+        INSERT INTO features (id, version, history)
             VALUES (?, ?);
     `);
 
@@ -172,7 +179,8 @@ function createCache() {
     db.exec(`
         CREATE TABLE features (
             id      INTEGER PRIMARY KEY,
-            feature TEXT NOT NULL
+            version INTEGER,
+            history TEXT NOT NULL
         );
     `);
 
@@ -182,3 +190,4 @@ function createCache() {
 module.exports.inverse = inverse;
 module.exports.iterate = iterate;
 module.exports.cache = cache;
+module.exports.createCache = createCache;

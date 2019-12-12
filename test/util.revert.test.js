@@ -1,42 +1,42 @@
 'use strict';
 
 const test = require('tape');
-const revert = require('../util/revert').inverse;
+const revert = require('../util/revert');
 
-test('Revert', (t) => {
+test('Revert#Inverse', (t) => {
     t.throws(() => {
-        revert();
+        revert.inverse();
     }, /Feature history cannot be empty/, 'Feature history cannot be empty');
 
     t.throws(() => {
-        revert(false);
+        revert.inverse(false);
     }, /Feature history cannot be empty/, 'Feature history cannot be empty');
 
     t.throws(() => {
-        revert({});
+        revert.inverse({});
     }, /Feature history cannot be empty/, 'Feature history cannot be empty');
 
     t.throws(() => {
-        revert([]);
+        revert.inverse([]);
     }, /Feature history cannot be empty/, 'Feature history cannot be empty');
 
     t.throws(() => {
-        revert([{
+        revert.inverse([{
             id: 1
-        }]);
+        }], 1);
     }, /Feature: 1 missing initial create action/, 'Feature: 1 missing initial create action');
 
     t.throws(() => {
-        revert([{
+        revert.inverse([{
             id: 1,
             action: 'create'
         }, {
             id: 1,
             action: 'crazy'
-        }]);
+        }], 2);
     }, /crazy not supported/, 'crazy not supported');
 
-    t.deepEquals(revert([{
+    t.deepEquals(revert.inverse([{
         id: 1,
         action: 'create',
         version: 1,
@@ -59,7 +59,7 @@ test('Revert', (t) => {
             coordinates: [0.0, 0.0]
         }
 
-    }]), {
+    }], 2), {
         id: 1,
         type: 'Feature',
         action: 'modify',
@@ -73,7 +73,7 @@ test('Revert', (t) => {
         }
     }, 'modify->modify');
 
-    t.deepEquals(revert([{
+    t.deepEquals(revert.inverse([{
         id: 1,
         action: 'create',
         version: 1,
@@ -90,7 +90,7 @@ test('Revert', (t) => {
         version: 2,
         properties: null,
         geometry: null
-    }]), {
+    }], 2), {
         id: 1,
         type: 'Feature',
         action: 'restore',
@@ -104,7 +104,7 @@ test('Revert', (t) => {
         }
     }, 'delete => restore');
 
-    t.deepEquals(revert([{
+    t.deepEquals(revert.inverse([{
         id: 1,
         action: 'create',
         version: 1,
@@ -132,7 +132,7 @@ test('Revert', (t) => {
             type: 'Point',
             coordinates: [0,0]
         }
-    }]), {
+    }], 3), {
         id: 1,
         type: 'Feature',
         action: 'delete',
@@ -141,7 +141,7 @@ test('Revert', (t) => {
         geometry: null
     }, 'restore => delete');
 
-    t.deepEquals(revert([{
+    t.deepEquals(revert.inverse([{
         id: 1,
         action: 'create',
         version: 1,
@@ -152,7 +152,7 @@ test('Revert', (t) => {
             type: 'Point',
             coordinates: [1.0, 1.0]
         }
-    }]), {
+    }], 1), {
         id: 1,
         type: 'Feature',
         action: 'delete',
@@ -160,6 +160,18 @@ test('Revert', (t) => {
         properties: null,
         geometry: null
     }, 'create => delete');
+
+    t.end();
+});
+
+test('Revert#createCache', (t) => {
+    const db = revert.createCache();
+
+    t.equals(db.inTransaction, false);
+    t.equals(db.open, true);
+    t.equals(db.memory, false);
+    t.equals(db.readonly, false);
+    t.ok(/\/tmp\/revert\..*.\.sqlite/.test(db.name));
 
     t.end();
 });

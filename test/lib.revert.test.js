@@ -1,8 +1,11 @@
 'use strict';
 
-const test = require('tape').test;
-const revert = new(require('../lib/revert'))({});
+const Hecate = require('../cli.js');
 
+const test = require('tape').test;
+const nock = require('nock');
+
+/**
 // Test revertFeature() when history list size > 3
 test('Assert fails due to missing parameters', (t) => {
     revert.revertFeature(null, 'feature', 'revertToFeature', (err) => { t.deepEquals(err.message, 'The currentFeature cannot undefined.', 'The currentFeature cannot undefined.'); });
@@ -191,3 +194,5 @@ test('Evaluate if feature has changed', (t) => {
     t.deepEquals(revert.hasFeatureChanged({ action: 'delete', geometry: null, properties: null, version: 5 }, { action: 'create', geometry: null, properties: null }), false, 'feature has not changed');
     t.end();
 });
+*/
+
