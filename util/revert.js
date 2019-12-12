@@ -45,8 +45,13 @@ const Sqlite = require('better-sqlite3');
 function inverse(history, version) {
     if (!history || !Array.isArray(history) || history.length === 0) {
         throw new Error('Feature history cannot be empty');
+    } else {
+        history = history.sort((a, b) => {
+            return (a.version ? a.version : 1) - (b.version ? b.version : 1);
+        });
+    }
 
-    } else if (!version || isNaN(version)) {
+    if (!version || isNaN(version)) {
         throw new Error('Feature version cannot be empty');
     } else if (version > history.length) {
         throw new Error('version cannot be higher than feature history');
@@ -55,6 +60,12 @@ function inverse(history, version) {
         // create operation, otherwise history is missing
     } else if (history.length >= 1 && history[0].action !== 'create') {
         throw new Error(`Feature: ${history[0].id} missing initial create action`);
+
+        // If the version to be reverted isn't the last element in the array
+        // it is a "dirty revert" or a revert that could potentially be in conflict
+        // with subsequent changes, these are not currently supported
+    } else if (version < history.length) {
+        throw new Error(`Feature: ${history[0].id} has been subsequenty edited. reversion not supported`);
 
         // Feature has just been created and should be deleted
     } else if (history.length === 1) {
@@ -69,10 +80,6 @@ function inverse(history, version) {
             geometry: null
         };
     } else {
-        history = history.sort((a, b) => {
-            return (a.version ? a.version : 1) - (b.version ? b.version : 1);
-        });
-
         const desired = history[version - 2];
         const latest = history[version - 1];
 
@@ -115,12 +122,12 @@ function iterate(db, stream) {
             features;
     `);
 
-    for (let history of stmt.iterate()) {
-        history = JSON.parse(history.feature).map((feat) => {
+    for (let row of stmt.iterate()) {
+        const history = JSON.parse(row.history).map((feat) => {
             return feat.feat;
         });
 
-        const inv = inverse(history);
+        const inv = inverse(history, row.version);
 
         stream.write(JSON.stringify(inv) + '\n');
     }
@@ -145,7 +152,7 @@ async function cache(options, api) {
 
     const stmt = db.prepare(`
         INSERT INTO features (id, version, history)
-            VALUES (?, ?);
+            VALUES (?, ?, ?);
     `);
 
     for (let i = options.start; i <= options.end; i++) {
@@ -158,7 +165,7 @@ async function cache(options, api) {
                 feature: feat.id
             });
 
-            stmt.run(feat.id, JSON.stringify(history));
+            stmt.run(feat.id, feat.version, JSON.stringify(history));
 
         }
     }
@@ -179,7 +186,7 @@ function createCache() {
     db.exec(`
         CREATE TABLE features (
             id      INTEGER PRIMARY KEY,
-            version INTEGER,
+            version INTEGER NOT NULL,
             history TEXT NOT NULL
         );
     `);
