@@ -7,9 +7,10 @@ const os = require('os');
 const fs = require('fs');
 
 /**
- * Given the feature history for a single feature,
- * revert the last feature in the history to that
- * of the second last
+ * Given the feature history for a single feature and the version of the feature
+ * to be reverted, calculate a feature that can be uploaded which will
+ * restore the state of the feature to that of the version preceding
+ * the version supplied
  *
  * Example:
  *
