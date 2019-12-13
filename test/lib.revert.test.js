@@ -230,7 +230,7 @@ test('Clean revert of multiple deltas', (t) => {
     });
 });
 
-test('Failed revert as feature exists multiple times accross detlas', (t) => {
+test('Failed revert as feature exists multiple times across detlas', (t) => {
     const hecate = new Hecate({
         url: 'http://localhost:7777'
     });

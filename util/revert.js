@@ -2,6 +2,9 @@
 
 const { promisify } = require('util');
 const Sqlite = require('better-sqlite3');
+const path = require('path');
+const os = require('os');
+const fs = require('fs');
 
 /**
  * Given the feature history for a single feature,
@@ -189,7 +192,7 @@ async function cache(options, api) {
  * @returns {Object} Sqlite3 Database Handler
  */
 function createCache() {
-    const db = new Sqlite(`/tmp/revert.${Math.random().toString(36).substring(7)}.sqlite`);
+    const db = new Sqlite(path.resolve(os.tmpdir(), `revert.${Math.random().toString(36).substring(7)}.sqlite`));
 
     db.exec(`
         CREATE TABLE features (
@@ -202,7 +205,16 @@ function createCache() {
     return db;
 }
 
+function cleanCache(db) {
+    const name = db.name;
+
+    db.close();
+
+    fs.unlinkSync(name);
+}
+
 module.exports.inverse = inverse;
 module.exports.iterate = iterate;
 module.exports.cache = cache;
 module.exports.createCache = createCache;
+module.exports.cleanCache = cleanCache;
