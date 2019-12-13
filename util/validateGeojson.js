@@ -47,6 +47,7 @@ function validateGeojson(opts = {}) {
             errors.map((error) => {
                 console.error(error);
             });
+
             throw new Error('Invalid Feature');
         }
 
@@ -90,69 +91,122 @@ function validateFeature(line, options) {
         options.ids.add(feature.id);
     }
 
-    feature = rewind(feature);
-
-    const geojsonErrs = geojsonhint(feature).filter((err) => {
-        if (options.ignoreRHR && err.message === 'Polygons and MultiPolygons should follow the right-hand rule') {
-            return false;
-        } else {
-            return true;
-        }
-    });
-
-    // Validate that the feature has the required properties by the schema
-    if (options.schema) {
-        options.schema(feature.properties);
-        if (options.schema.errors) {
-            options.schema.errors.forEach((e) => {
-                errors.push({
-                    message: e.message,
-                    linenumber: options.linenumber
-                });
-            });
-        }
-    }
-
-    if (
-        !feature.geometry
-        || !feature.geometry.coordinates
-        || !feature.geometry.coordinates.length
-    ) {
+    if (!feature.action) {
         errors.push({
-            'message': 'Null or Invalid Geometry',
+            message: 'Feature missing action',
             linenumber: options.linenumber
         });
     }
 
-    if (geojsonErrs.length) {
-        for (const err of geojsonErrs) {
+    if (feature.action && !['create', 'modify', 'delete', 'restore'].includes(feature.action)) {
+        errors.push({
+            message: 'Invalid action',
+            linenumber: options.linenumber
+        });
+    }
+
+    if (!feature.type || feature.type !== 'Feature') {
+        errors.push({
+            message: 'All GeoJSON must be type: Feature',
+            linenumber: options.linenumber
+        });
+    }
+
+    if (['modify', 'delete', 'restore'].includes(feature.action)) {
+        if (!feature.id) {
             errors.push({
-                message: err.message,
+                message: `Feature to ${feature.action} must have id`,
+                linenumber: options.linenumber
+            });
+        } else if (!feature.version) {
+            errors.push({
+                message: `Feature to ${feature.action} must have version`,
                 linenumber: options.linenumber
             });
         }
-    } else { // if the geojson is invalid, turf will err
-        turf.coordEach(feature, (coords) => {
-            if (coords[0] < -180 || coords[0] > 180) {
-                errors.push({
-                    message: 'longitude must be between -180 and 180',
-                    linenumber: options.linenumber
-                });
-            }
-            if (coords[1] < -90 || coords[1] > 90) {
+    }
 
-                errors.push({
-                    message: 'latitude must be between -90 and 90',
-                    linenumber: options.linenumber
-                });
-            }
-            if (coords[0] === 0 && coords[1] === 0) {
-                errors.push({
-                    message: 'coordinates must be other than [0,0]',
-                    linenumber: options.linenumber
-                });
+    // Delete features are special in that they have null geometry && properties
+    if (feature.action === 'delete') {
+        if (feature.properties === undefined) {
+            errors.push({
+                message: 'Feature to delete should have properties: null',
+                linenumber: options.linenumber
+            });
+        }
+
+        if (feature.geometry === undefined) {
+            errors.push({
+                message: 'Feature to delete should have geometry: null',
+                linenumber: options.linenumber
+            });
+        }
+    // All other features are 100% standard GeoJSON
+    } else {
+        feature = rewind(feature);
+
+        const geojsonErrs = geojsonhint(feature).filter((err) => {
+            if (options.ignoreRHR && err.message === 'Polygons and MultiPolygons should follow the right-hand rule') {
+                return false;
+            } else {
+                return true;
             }
         });
+
+        // Validate that the feature has the required properties by the schema
+        if (options.schema) {
+            options.schema(feature.properties);
+            if (options.schema.errors) {
+                options.schema.errors.forEach((e) => {
+                    errors.push({
+                        message: e.message,
+                        linenumber: options.linenumber
+                    });
+                });
+            }
+        }
+
+        if (
+            !feature.geometry
+            || !feature.geometry.coordinates
+            || !feature.geometry.coordinates.length
+        ) {
+            errors.push({
+                'message': 'Null or Invalid Geometry',
+                linenumber: options.linenumber
+            });
+        }
+
+        if (geojsonErrs.length) {
+            for (const err of geojsonErrs) {
+                errors.push({
+                    message: err.message,
+                    linenumber: options.linenumber
+                });
+            }
+        } else { // if the geojson is invalid, turf will err
+            turf.coordEach(feature, (coords) => {
+                if (coords[0] < -180 || coords[0] > 180) {
+                    errors.push({
+                        message: 'longitude must be between -180 and 180',
+                        linenumber: options.linenumber
+                    });
+                }
+                if (coords[1] < -90 || coords[1] > 90) {
+
+                    errors.push({
+                        message: 'latitude must be between -90 and 90',
+                        linenumber: options.linenumber
+                    });
+                }
+                if (coords[0] === 0 && coords[1] === 0) {
+                    errors.push({
+                        message: 'coordinates must be other than [0,0]',
+                        linenumber: options.linenumber
+                    });
+                }
+            });
+        }
     }
 
     return errors;
