@@ -161,9 +161,9 @@ function cache(options, api) {
                 VALUES (?, ?, ?);
         `);
 
-        delta(options.start - 1);
+        deltai(options.start - 1);
 
-        async function delta(i) {
+        async function deltai(i) {
             if (i <= options.end) {
                 i++;
             } else {
@@ -186,11 +186,13 @@ function cache(options, api) {
                         stmt.run(feat.id, feat.version, JSON.stringify(history));
                     } catch (err) {
                         if (err.message === 'UNIQUE constraint failed: features.id') {
-                            throw new Error(`Feature: ${feat.id} exists multiple times across deltas to revert. reversion not supported`);
+                            return done(new Error(`Feature: ${feat.id} exists multiple times across deltas to revert. reversion not supported`));
                         } else {
-                            throw err;
+                            return done(err);
                         }
                     }
+
+                    return done();
                 }, feat);
             }
 
@@ -198,7 +200,7 @@ function cache(options, api) {
                 if (err) return reject(err);
 
                 process.nextTick(() => {
-                    delta(i);
+                    deltai(i);
                 });
             });
         }
