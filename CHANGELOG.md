@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v11.1.0
+
+- :rocket: 10x speed of delta reversion by running feature history retrieval in parallel
+
 ### v11.0.1
 
 - :rocket: Retire `node-mb-string-size` module in favour of now correct `Buffer.length`
