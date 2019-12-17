@@ -10,6 +10,14 @@
 
 ## Version History
 
+### v11.0.1
+
+- :rocket: Retire `node-mb-string-size` module in favour of now correct `Buffer.length`
+
+### v11.0.0
+
+- :tada: Add substanitally faster and better support for reverting deltas
+
 ### v10.3.0
 
 - :tada: Add support for the features history API

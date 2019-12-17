@@ -1,6 +1,6 @@
 {
   "name": "@mapbox/hecatejs",
-  "version": "11.0.0",
+  "version": "11.0.1",
   "main": "cli.js",
   "repository": "git@github.com:mapcommons/HecateJS",
   "author": "ingalls <ingalls@protonmail.com>",
@@ -28,7 +28,6 @@
     "minimist": "^1.2.0",
     "n-readlines": "^1.0.0 ",
     "nock": "^11.7.0",
-    "node-mb-string-size": "^1.0.3",
     "parallel-transform": "^1.2.0",
     "prompt": "^1.0.0",
     "request": "^2.88.0",
