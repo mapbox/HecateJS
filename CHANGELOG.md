@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v10.3.1
+
+- :rocket: Retire `node-mb-string-size` module in favour of now correct `Buffer.length`
+
 ### v10.3.0
 
 - :tada: Add support for the features history API
