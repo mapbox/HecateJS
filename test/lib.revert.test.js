@@ -77,6 +77,7 @@ test('Clean revert of single delta', (t) => {
                 coordinates: [1, 1]
             }
         }]);
+
         t.end();
     });
 
@@ -385,4 +386,9 @@ test('Failed revert as feature has been edited since desired revert', (t) => {
         t.equals(err.message, 'Feature: 1 has been subsequenty edited. reversion not supported');
         t.end();
     });
+});
+
+test('Restore Nock', (t) => {
+        nock.cleanAll();
+        t.end();
 });

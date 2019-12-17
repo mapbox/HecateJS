@@ -164,7 +164,7 @@ function cache(options, api) {
         deltai(options.start - 1);
 
         async function deltai(i) {
-            if (i <= options.end) {
+            if (i < options.end) {
                 i++;
             } else {
                 return resolve(db);
