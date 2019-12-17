@@ -2,6 +2,7 @@
 
 const { promisify } = require('util');
 const Sqlite = require('better-sqlite3');
+const Q = require('d3-queue').queue;
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
@@ -148,42 +149,62 @@ function iterate(db, stream) {
  *
  * @returns {Promise}
  */
-async function cache(options, api) {
-    const db = createCache();
+function cache(options, api) {
+    return new Promise((resolve, reject) => {
+        const db = createCache();
 
-    const getDelta = promisify(api.getDelta);
-    const getFeatureHistory = promisify(api.getFeatureHistory);
+        const getDelta = promisify(api.getDelta);
+        const getFeatureHistory = promisify(api.getFeatureHistory);
 
-    const stmt = db.prepare(`
-        INSERT INTO features (id, version, history)
-            VALUES (?, ?, ?);
-    `);
+        const stmt = db.prepare(`
+            INSERT INTO features (id, version, history)
+                VALUES (?, ?, ?);
+        `);
 
-    for (let i = options.start; i <= options.end; i++) {
-        const delta = await getDelta({
-            delta: i
-        });
+        deltai(options.start - 1);
 
-        for (const feat of delta.features.features) {
-            const history = await getFeatureHistory({
-                feature: feat.id
-            });
-
-            try {
-                stmt.run(feat.id, feat.version, JSON.stringify(history));
-            } catch (err) {
-                if (err.message === 'UNIQUE constraint failed: features.id') {
-                    throw new Error(`Feature: ${feat.id} exists multiple times across deltas to revert. reversion not supported`);
-                } else {
-                    throw err;
-                }
+        async function deltai(i) {
+            if (i < options.end) {
+                i++;
+            } else {
+                return resolve(db);
             }
 
+            const delta = await getDelta({
+                delta: i
+            });
+
+            const q = new Q(50);
+
+            for (const feat of delta.features.features) {
+                q.defer(async (feat, done) => {
+                    const history = await getFeatureHistory({
+                        feature: feat.id
+                    });
+
+                    try {
+                        stmt.run(feat.id, feat.version, JSON.stringify(history));
+                    } catch (err) {
+                        if (err.message === 'UNIQUE constraint failed: features.id') {
+                            return done(new Error(`Feature: ${feat.id} exists multiple times across deltas to revert. reversion not supported`));
+                        } else {
+                            return done(err);
+                        }
+                    }
+
+                    return done();
+                }, feat);
+            }
+
+            q.awaitAll((err) => {
+                if (err) return reject(err);
+
+                process.nextTick(() => {
+                    deltai(i);
+                });
+            });
         }
-    }
-
-    return db;
-
+    });
 }
 
 /**
