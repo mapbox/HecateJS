@@ -389,6 +389,6 @@ test('Failed revert as feature has been edited since desired revert', (t) => {
 });
 
 test('Restore Nock', (t) => {
-        nock.cleanAll();
-        t.end();
+    nock.cleanAll();
+    t.end();
 });
