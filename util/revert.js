@@ -147,7 +147,9 @@ function iterate(db, stream) {
  * @param {number} options.start Delta Start ID
  * @param {number} options.end Delta End ID
  *
- * @returns {Promise}
+ * @param {Hecate} api Hecate Instance for API calls
+ *
+ * @returns {Promise} Promise containing db instance or error
  */
 function cache(options, api) {
     return new Promise((resolve, reject) => {
@@ -163,6 +165,15 @@ function cache(options, api) {
 
         deltai(options.start - 1);
 
+        /**
+         * Retrieve a single delta at a time, and then
+         * each of it's component feature histories in parallem
+         * commiting each to the database
+         *
+         * @param {number} i delta ID last retrieved
+         *
+         * @return {undefined}
+         */
         async function deltai(i) {
             if (i < options.end) {
                 i++;
@@ -227,6 +238,13 @@ function createCache() {
     return db;
 }
 
+/**
+ * Given a sqlite instance, close and delete it
+ *
+ * @param {Object} db sqlite3 database instance
+ *
+ * @returns {undefined}
+ */
 function cleanCache(db) {
     const name = db.name;
 
