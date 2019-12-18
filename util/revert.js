@@ -42,6 +42,8 @@ const fs = require('fs');
  * See the Hecate docs for more information about feature actions
  * and versioning
  *
+ * @private
+ *
  * @param {Object[]} history Array of features accross all verisons of the feature
  * @param {number} version feature version that should be rolled back
  *
@@ -115,6 +117,8 @@ function inverse(history, version) {
  *
  * Writes inversion to given writable stream
  *
+ * @private
+ *
  * @param {Object} db sqlite3 db to iterate over
  * @param {Stream} stream output stream to write inverted features to
  */
@@ -142,6 +146,8 @@ function iterate(db, stream) {
  * Given a start/end range for a set of deltas, download
  * each of the deltas, then iterate through each feature,
  * retreiving it's history and writing it to disk
+ * 
+ * @private
  *
  * @param {Object} options options object
  * @param {number} options.start Delta Start ID
@@ -169,6 +175,8 @@ function cache(options, api) {
          * Retrieve a single delta at a time, and then
          * each of it's component feature histories in parallem
          * commiting each to the database
+         *
+         * @private
          *
          * @param {number} i delta ID last retrieved
          *
@@ -222,6 +230,8 @@ function cache(options, api) {
  * Create a new reversion sqlite3 database, initialize it with table
  * definitions, and pass back db object to caller
  *
+ * @private
+ *
  * @returns {Object} Sqlite3 Database Handler
  */
 function createCache() {
@@ -240,6 +250,8 @@ function createCache() {
 
 /**
  * Given a sqlite instance, close and delete it
+ *
+ * @private
  *
  * @param {Object} db sqlite3 database instance
  *

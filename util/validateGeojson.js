@@ -15,6 +15,8 @@ ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
 /**
  * Ensure geometries are valid before import
  *
+ * @private
+ *
  * @param {Object} opts Options object
  * @param {boolean} opts.ignoreRHR=false Ignore Right Hand Rule errors
  * @param {Object} opts.schema JSON Schema to validate properties against
@@ -60,6 +62,8 @@ function validateGeojson(opts = {}) {
 
 /**
  * Validate a single feature
+ *
+ * @private
  *
  * @param {Object|string} line Feature to validate
  * @param {Object} options Validation Options

@@ -8,6 +8,7 @@ const Transform = require('stream').Transform;
  * character was present to ensure all data was obtained
  *
  * @class
+ * @private
  */
 class EOT extends Transform {
     /**
