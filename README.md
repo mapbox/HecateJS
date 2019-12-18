@@ -20,8 +20,6 @@ yarn global add '@mapbox/hecatejs'
 
 <h3 align=center>Instantiation</h3>
 
-<details>
-
 Note: if the username & password is not explicitly set, Hecate will fallback to checking for
 a `HECATE_USERNAME` & `HECATE_PASSWORD` environment variable. For the `url` parameter, be sure to include the protocol and (if necessary) port number.
 
@@ -53,8 +51,6 @@ The --url option must be provided for every subcommand but is omitted in this gu
 # Connecting to a local hecate server
 ./cli.js --url 'http://localhost:8000'
 ```
-
-</details>
 
 <h2 align=center>API Documentation</h2>
 
