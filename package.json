@@ -34,16 +34,13 @@
     "requestretry": "^4.0.0",
     "split": "^1.0.1"
   },
-  "eslintConfig": {
-    "extends": "@mapbox/eslint-config-geocoding"
-  },
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "doc": "$(yarn bin)/documentation build --github --format md --output docs/api.md cli.js lib/**",
+    "doc": "documentation build --github --format md --output docs/api.md cli.js lib/**",
     "test": "yarn lint && tape test/*.test.js",
     "coverage": "TESTING=true nyc tape 'test/**/*.js' && nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "lint": "eslint cli.js lib/*.js util/*.js test/*.js"
+    "lint": "documentation lint cli.js lib/** && eslint cli.js lib/*.js util/*.js test/*.js"
   }
 }

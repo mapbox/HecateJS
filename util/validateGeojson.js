@@ -59,7 +59,7 @@ function validateGeojson(opts = {}) {
 /**
  * Validate a single feature
  *
- * @param {Object|String} line Feature to validate
+ * @param {Object|string} line Feature to validate
  * @param {Object} options
  * @param {boolean} options.ignoreRHR Ignore winding order
  * @param {Function} options.schema AJV Function to validate feature properties against a JSON Schema

@@ -42,8 +42,8 @@ const fs = require('fs');
  * See the Hecate docs for more information about feature actions
  * and versioning
  *
- * @param {Array[Object]} history Array of features accross all verisons of the feature
- * @param {Number} version feature version that should be rolled back
+ * @param {Object[]} history Array of features accross all verisons of the feature
+ * @param {number} version feature version that should be rolled back
  *
  * @returns {Object} Returns calculated inverse feature
  */
@@ -144,8 +144,8 @@ function iterate(db, stream) {
  * retreiving it's history and writing it to disk
  *
  * @param {Object} options options object
- * @param {Number} options.start Delta Start ID
- * @param {Number} options.end Delta End ID
+ * @param {number} options.start Delta Start ID
+ * @param {number} options.end Delta End ID
  *
  * @returns {Promise}
  */
@@ -177,7 +177,7 @@ function cache(options, api) {
             const q = new Q(50);
 
             for (const feat of delta.features.features) {
-                q.defer(async (feat, done) => {
+                q.defer(async(feat, done) => {
                     const history = await getFeatureHistory({
                         feature: feat.id
                     });
