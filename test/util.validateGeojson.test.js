@@ -170,9 +170,13 @@ tape('Assert fails', (t) => {
 // Confirm that the sample geojson file is a valid geojson file
 tape('Assert valid features', (t) => {
     pipeline(
+        // By default parallel-transform has a high water mark of 16,
+        // This file has > 16 features to ensure that a reader must be attached
+        // to the transform stream so it finishes properly, otherwise this test will fail
         fs.createReadStream(path.resolve(__dirname, '.', './fixtures/valid-geojson.json')),
         split(),
         validateGeojson(),
+        fs.createWriteStream('/dev/null'),
         (err) => {
             t.error(err);
             t.end();
