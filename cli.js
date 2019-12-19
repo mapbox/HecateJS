@@ -18,7 +18,7 @@ class Hecate {
      * @param {Object} api.auth_rules [optional] If used as a library, an object containing the
      *                              authentication rules of the instance as retrieved from
      *                              /api/auth
-     *                              The CLI will automaticall attempt to populate this value
+     *                              The CLI will automatically attempt to populate this value
      */
     constructor(api = {}) {
         this.url = api.url ? new URL(api.url).toString() : 'http://localhost:8000';
@@ -184,7 +184,7 @@ if (require.main === module) {
         }
 
         /**
-         * Once Hecate instance is instatiated, run the requested command
+         * Once Hecate instance is instantiated, run the requested command
          *
          * @private
          * @returns {undefined}

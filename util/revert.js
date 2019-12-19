@@ -146,7 +146,7 @@ function iterate(db, stream) {
  * Given a start/end range for a set of deltas, download
  * each of the deltas, then iterate through each feature,
  * retreiving it's history and writing it to disk
- * 
+ *
  * @private
  *
  * @param {Object} options options object
