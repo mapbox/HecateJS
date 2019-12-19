@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v11.2.0
+
+- :pencil2: Add JSDoc comments to all functions, and update ESLint & DocumentationJS to enforce this
+
 ### v11.1.0
 
 - :rocket: 10x speed of delta reversion by running feature history retrieval in parallel
