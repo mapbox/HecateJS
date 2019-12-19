@@ -3,6 +3,8 @@
 /**
  * Accepts a bbox as a string or array, and validates (naive with regards to the Antimeridian)
  *
+ * @private
+ *
  * @param {Array|string} bboxInput Array in the format [minX,minY,maxX,maxY] or string in the format minX,minY,maxX,maxY
  * @returns {string} String in the format minX,minY,maxX,maxY
  */

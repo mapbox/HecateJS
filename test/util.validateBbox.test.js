@@ -3,7 +3,11 @@
 const tape = require('tape');
 const validateBbox = require('../util/validateBbox.js');
 
-// From MDN guide to regexp: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+/**
+ * From MDN guide to regexp: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+ * @param {string} string regex string to escape
+ * @return {string} escaped string
+ */
 function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }

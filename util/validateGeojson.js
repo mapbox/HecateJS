@@ -15,10 +15,14 @@ ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
 /**
  * Ensure geometries are valid before import
  *
+ * @private
+ *
  * @param {Object} opts Options object
  * @param {boolean} opts.ignoreRHR=false Ignore Right Hand Rule errors
  * @param {Object} opts.schema JSON Schema to validate properties against
  * @param {boolean} opts.ids If false, disable duplicate ID checking
+ *
+ * @return {Stream} transform stream to validate GeoJSON
  */
 function validateGeojson(opts = {}) {
     // Flag to track the feature line number
@@ -59,8 +63,10 @@ function validateGeojson(opts = {}) {
 /**
  * Validate a single feature
  *
- * @param {Object|String} line Feature to validate
- * @param {Object} options
+ * @private
+ *
+ * @param {Object|string} line Feature to validate
+ * @param {Object} options Validation Options
  * @param {boolean} options.ignoreRHR Ignore winding order
  * @param {Function} options.schema AJV Function to validate feature properties against a JSON Schema
  * @param {number} options.linenumber Linenumber to output in error object

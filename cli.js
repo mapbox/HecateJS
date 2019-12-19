@@ -10,6 +10,16 @@ const settings = require('./package.json');
  * @class Hecate
  */
 class Hecate {
+    /**
+     * @param {Object} api Global API Settings Object
+     * @param {string} api.url URL of Hecate instance to interact with
+     * @param {string} api.username Hecate Username
+     * @param {string} api.password Hecate Password
+     * @param {Object} api.auth_rules [optional] If used as a library, an object containing the
+     *                              authentication rules of the instance as retrieved from
+     *                              /api/auth
+     *                              The CLI will automatically attempt to populate this value
+     */
     constructor(api = {}) {
         this.url = api.url ? new URL(api.url).toString() : 'http://localhost:8000';
         this.user = false;
@@ -173,6 +183,12 @@ if (require.main === module) {
             return run();
         }
 
+        /**
+         * Once Hecate instance is instantiated, run the requested command
+         *
+         * @private
+         * @returns {undefined}
+         */
         function run() {
             if (!subcommand) {
                 hecate[command](argv);

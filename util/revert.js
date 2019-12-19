@@ -42,8 +42,10 @@ const fs = require('fs');
  * See the Hecate docs for more information about feature actions
  * and versioning
  *
- * @param {Array[Object]} history Array of features accross all verisons of the feature
- * @param {Number} version feature version that should be rolled back
+ * @private
+ *
+ * @param {Object[]} history Array of features accross all verisons of the feature
+ * @param {number} version feature version that should be rolled back
  *
  * @returns {Object} Returns calculated inverse feature
  */
@@ -115,6 +117,8 @@ function inverse(history, version) {
  *
  * Writes inversion to given writable stream
  *
+ * @private
+ *
  * @param {Object} db sqlite3 db to iterate over
  * @param {Stream} stream output stream to write inverted features to
  */
@@ -143,11 +147,15 @@ function iterate(db, stream) {
  * each of the deltas, then iterate through each feature,
  * retreiving it's history and writing it to disk
  *
- * @param {Object} options options object
- * @param {Number} options.start Delta Start ID
- * @param {Number} options.end Delta End ID
+ * @private
  *
- * @returns {Promise}
+ * @param {Object} options options object
+ * @param {number} options.start Delta Start ID
+ * @param {number} options.end Delta End ID
+ *
+ * @param {Hecate} api Hecate Instance for API calls
+ *
+ * @returns {Promise} Promise containing db instance or error
  */
 function cache(options, api) {
     return new Promise((resolve, reject) => {
@@ -163,6 +171,17 @@ function cache(options, api) {
 
         deltai(options.start - 1);
 
+        /**
+         * Retrieve a single delta at a time, and then
+         * each of it's component feature histories in parallem
+         * commiting each to the database
+         *
+         * @private
+         *
+         * @param {number} i delta ID last retrieved
+         *
+         * @return {undefined}
+         */
         async function deltai(i) {
             if (i < options.end) {
                 i++;
@@ -177,7 +196,7 @@ function cache(options, api) {
             const q = new Q(50);
 
             for (const feat of delta.features.features) {
-                q.defer(async (feat, done) => {
+                q.defer(async(feat, done) => {
                     const history = await getFeatureHistory({
                         feature: feat.id
                     });
@@ -211,6 +230,8 @@ function cache(options, api) {
  * Create a new reversion sqlite3 database, initialize it with table
  * definitions, and pass back db object to caller
  *
+ * @private
+ *
  * @returns {Object} Sqlite3 Database Handler
  */
 function createCache() {
@@ -227,6 +248,15 @@ function createCache() {
     return db;
 }
 
+/**
+ * Given a sqlite instance, close and delete it
+ *
+ * @private
+ *
+ * @param {Object} db sqlite3 database instance
+ *
+ * @returns {undefined}
+ */
 function cleanCache(db) {
     const name = db.name;
 
