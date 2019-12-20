@@ -10,6 +10,13 @@
 
 ## Version History
 
+### v12.0.0
+
+- :rocket: import module now accepts a stream or a string filepath
+- :rocket: [breaking] Remove ArrayReader in favour of unified stream
+- :white_check_mark: Add first basic integration test for import module
+- :rocket: Have import module query server for upload limits
+
 ### v11.2.0
 
 - :pencil2: Add JSDoc comments to all functions, and update ESLint & DocumentationJS to enforce this
