@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Validate addresses source",
+    "properties": {
+        "venueid": {
+            "description": "ID Hash of Venue",
+            "type": "string"
+        }
+    },
+    "required": [
+        "venueid"
+    ],
+    "title": "Address source",
+    "type": "object"
+}
