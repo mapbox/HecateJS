@@ -55,7 +55,7 @@ function validateGeojson(opts = {}) {
             throw new Error('Invalid Feature');
         }
 
-        return cb(null, feat+'\n');
+        return cb(null, feat + '\n');
     });
 
 }
