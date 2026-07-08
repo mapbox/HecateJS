@@ -47,7 +47,8 @@ class Hecate {
             schema: new (require('./lib/schema'))(this),
             server: new (require('./lib/server'))(this),
             import: new (require('./lib/import'))(this),
-            revert: new (require('./lib/revert'))(this)
+            revert: new (require('./lib/revert'))(this),
+            query: new(require('./lib/query'))(this),
         };
 
         // Add Helper Functions
@@ -104,6 +105,7 @@ if (require.main === module) {
         console.error('    bbox            [--help]    Download data via bbox from a given server');
         console.error('    clone           [--help]    Download the complete server dataset');
         console.error('    revert          [--help]    Revert data from an specified delta');
+        console.error('    query           [--help]    Download the server dataset for a SQL query');
         console.error('');
         console.error('<options>');
         console.error('    --version                   Print the current version of the CLI');

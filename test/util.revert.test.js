@@ -1,5 +1,6 @@
 'use strict';
 
+const os = require('os');
 const test = require('tape');
 const revert = require('../util/revert');
 
@@ -171,7 +172,7 @@ test('Revert#createCache', (t) => {
     t.equals(db.open, true);
     t.equals(db.memory, false);
     t.equals(db.readonly, false);
-    t.ok(/\/tmp\/revert\..*.\.sqlite/.test(db.name));
-
+    const dbPathRE = new RegExp(`${os.tmpdir().replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&')}\/revert\.*.\.sqlite`);
+    t.ok(dbPathRE.test(db.name));
     t.end();
 });
